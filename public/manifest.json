@@ -1,0 +1,28 @@
+{
+  "name": "Daily Coordination",
+  "short_name": "DC",
+  "description": "날씨 기반 AI 코디 추천",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F9F9FD",
+  "theme_color": "#005EA1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
