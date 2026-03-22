@@ -24,11 +24,6 @@ export class AppShell extends LitElement {
         background: var(--dc-bg);
       }
 
-      /* ===== Mobile Header (hidden on desktop) ===== */
-      .mobile-header {
-        display: none;
-      }
-
       /* ===== Desktop Header ===== */
       .desktop-header {
         display: none;
@@ -146,7 +141,24 @@ export class AppShell extends LitElement {
     `,
   ];
 
+  #onHashChange = () => this.requestUpdate();
+
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener('hashchange', this.#onHashChange);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('hashchange', this.#onHashChange);
+  }
+
   #handleLogout() { signOut(this.#supabase.value); }
+
+  #isActive(path) {
+    const hash = window.location.hash.slice(1) || '/';
+    return hash === path ? 'active' : '';
+  }
 
   render() {
     const user = this.#user.value;
@@ -158,8 +170,8 @@ export class AppShell extends LitElement {
       <header class="desktop-header">
         <span class="desktop-brand">오늘 뭐 입지?</span>
         <nav class="desktop-nav">
-          <a class="active" href="#/">오늘의 코디</a>
-          <a href="#/closet">내 옷장</a>
+          <a class="${this.#isActive('/')}" href="#/">오늘의 코디</a>
+          <a class="${this.#isActive('/closet')}" href="#/closet">내 옷장</a>
         </nav>
         <div class="desktop-user">
           <user-avatar name=${name} image-url=${meta.avatar_url ?? ''} size="1.75"></user-avatar>
@@ -173,17 +185,13 @@ export class AppShell extends LitElement {
 
       <!-- Mobile Bottom Nav -->
       <nav class="bottom-nav">
-        <a class="nav-item active" href="#/">
-          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">light_mode</span>
+        <a class="nav-item ${this.#isActive('/')}" href="#/">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${this.#isActive('/') ? '1' : '0'}">light_mode</span>
           <span>코디</span>
         </a>
-        <a class="nav-item" href="#/closet">
-          <span class="material-symbols-outlined">checkroom</span>
+        <a class="nav-item ${this.#isActive('/closet')}" href="#/closet">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${this.#isActive('/closet') ? '1' : '0'}">checkroom</span>
           <span>옷장</span>
-        </a>
-        <a class="nav-item" href="#/profile">
-          <span class="material-symbols-outlined">person</span>
-          <span>내정보</span>
         </a>
       </nav>
     `;

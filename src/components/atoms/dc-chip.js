@@ -1,14 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
-
-const CATEGORY_COLORS = {
-  '아우터': { bg: '#D2E4FF', color: '#005EA1' },
-  '상의': { bg: '#FFE8E8', color: '#AE2F34' },
-  '하의': { bg: '#E8F5E9', color: '#2E7D32' },
-  '신발': { bg: '#FFDEAB', color: '#7B5500' },
-  '액세서리': { bg: '#F3E8FF', color: '#6A1B9A' },
-};
+import { CATEGORY_COLORS } from '../../constants/clothing.js';
 
 export class DcChip extends LitElement {
   static properties = {

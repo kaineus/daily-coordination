@@ -8,6 +8,7 @@ import { authStore } from '../../store/auth.store.js';
 import { HashRouter } from '../../router/routes.js';
 import '../atoms/dc-spinner.js';
 import '../pages/login-page.js';
+import '../pages/closet-page.js';
 import '../templates/app-shell.js';
 
 export class DcApp extends LitElement {
@@ -27,7 +28,7 @@ export class DcApp extends LitElement {
     },
     {
       path: '/closet',
-      render: () => html`<app-shell><p>내 옷장 (준비 중)</p></app-shell>`,
+      render: () => html`<app-shell><closet-page></closet-page></app-shell>`,
     },
     { path: '*', render: () => html`<login-page></login-page>` },
   ]);

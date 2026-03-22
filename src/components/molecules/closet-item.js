@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
-import '../atoms/dc-icon-button.js';
 
 export class ClosetItem extends LitElement {
   static properties = {
@@ -19,41 +18,49 @@ export class ClosetItem extends LitElement {
 
       .item {
         background: var(--dc-surface-lowest);
-        border-radius: var(--dc-radius-md);
+        border-radius: var(--dc-radius-lg);
         padding: var(--dc-space-4);
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        transition: transform 0.3s;
+        box-shadow: var(--dc-shadow-ambient);
+        transition: transform 0.2s;
       }
-      .item:hover { transform: translateX(0.25rem); }
-
-      .info {
-        display: flex;
-        align-items: center;
-        gap: var(--dc-space-4);
-      }
+      .item:active { transform: scale(0.98); }
 
       .color-dot {
         width: 1.5rem;
         height: 1.5rem;
         border-radius: var(--dc-radius-full);
+        margin-right: var(--dc-space-4);
+        flex-shrink: 0;
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
       }
-      .color-dot.white { border: 1px solid var(--dc-outline-variant); }
+      .color-dot.white {
+        border: 1px solid var(--dc-outline-variant);
+        box-shadow: none;
+      }
+
+      .info { flex: 1; }
 
       .name {
-        font-weight: 600;
+        font-size: var(--dc-font-body);
+        font-weight: 700;
         color: var(--dc-text);
       }
 
-      .separator {
-        margin: 0 var(--dc-space-2);
-        color: var(--dc-outline-variant);
-      }
-
       .color-label {
+        font-size: var(--dc-font-caption);
         color: var(--dc-text-secondary);
       }
+
+      .delete-btn {
+        color: var(--dc-outline);
+        padding: var(--dc-space-1);
+        border-radius: var(--dc-radius-full);
+        transition: color 0.2s;
+      }
+      .delete-btn:hover { color: var(--dc-danger); }
+      .delete-btn .material-symbols-outlined { font-size: 1.25rem; }
     `,
   ];
 
@@ -76,15 +83,14 @@ export class ClosetItem extends LitElement {
     const isWhite = this.colorHex.toLowerCase() === '#ffffff';
     return html`
       <div class="item">
+        <div class="color-dot ${isWhite ? 'white' : ''}" style="background: ${this.colorHex}"></div>
         <div class="info">
-          <div class="color-dot ${isWhite ? 'white' : ''}" style="background: ${this.colorHex}"></div>
-          <div>
-            <span class="name">${this.categoryName}</span>
-            <span class="separator">/</span>
-            <span class="color-label">${this.colorName}</span>
-          </div>
+          <p class="name">${this.categoryName}</p>
+          <p class="color-label">${this.colorName}</p>
         </div>
-        <dc-icon-button icon="delete" variant="danger" @click=${this.#handleDelete}></dc-icon-button>
+        <button class="delete-btn" @click=${this.#handleDelete}>
+          <span class="material-symbols-outlined">delete</span>
+        </button>
       </div>
     `;
   }
