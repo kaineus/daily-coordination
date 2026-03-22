@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokens } from '../../styles/tokens.css.js';
+import { materialIcons } from '../../styles/material-icons.css.js';
 
 export class DcIconButton extends LitElement {
   static properties = {
@@ -9,6 +10,7 @@ export class DcIconButton extends LitElement {
 
   static styles = [
     tokens,
+    materialIcons,
     css`
       :host { display: inline-block; }
 

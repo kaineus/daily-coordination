@@ -7,6 +7,7 @@ import { signOut } from '../../services/auth.service.js';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
 import { bp } from '../../styles/breakpoints.css.js';
+import { materialIcons } from '../../styles/material-icons.css.js';
 import '../molecules/user-avatar.js';
 
 export class AppShell extends LitElement {
@@ -16,6 +17,7 @@ export class AppShell extends LitElement {
   static styles = [
     reset,
     tokens,
+    materialIcons,
     css`
       :host {
         display: flex;

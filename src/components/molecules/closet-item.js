@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
+import { materialIcons } from '../../styles/material-icons.css.js';
+import { isWhiteColor } from '../../utils/color.js';
 
 export class ClosetItem extends LitElement {
   static properties = {
@@ -13,6 +15,7 @@ export class ClosetItem extends LitElement {
   static styles = [
     reset,
     tokens,
+    materialIcons,
     css`
       :host { display: block; }
 
@@ -80,7 +83,7 @@ export class ClosetItem extends LitElement {
   }
 
   render() {
-    const isWhite = this.colorHex.toLowerCase() === '#ffffff';
+    const isWhite = isWhiteColor(this.colorHex);
     return html`
       <div class="item">
         <div class="color-dot ${isWhite ? 'white' : ''}" style="background: ${this.colorHex}"></div>

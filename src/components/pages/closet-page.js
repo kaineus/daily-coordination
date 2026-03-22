@@ -3,11 +3,13 @@ import { ContextConsumer } from '@lit/context';
 import { supabaseContext } from '../../contexts/supabase.context.js';
 import { StoreController } from '../../store/store-controller.js';
 import { closetStore } from '../../store/closet.store.js';
-import { getCategories, getUserClothes, deleteClothing } from '../../services/closet.service.js';
+import { getCategories, getUserClothes, deleteClothing, addClothing } from '../../services/closet.service.js';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
 import { bp } from '../../styles/breakpoints.css.js';
-import { TYPE_ORDER, TYPE_ICONS, TYPE_EMOJI } from '../../constants/clothing.js';
+import { materialIcons } from '../../styles/material-icons.css.js';
+import { TYPE_ORDER, TYPE_EMOJI } from '../../constants/clothing.js';
+import { groupByCategory, groupByColor } from '../../utils/closet-grouping.js';
 import '../atoms/dc-button.js';
 import '../atoms/dc-spinner.js';
 import '../molecules/closet-item.js';
@@ -29,6 +31,7 @@ export class ClosetPage extends LitElement {
   static styles = [
     reset,
     tokens,
+    materialIcons,
     css`
       :host { display: block; }
 
@@ -228,31 +231,10 @@ export class ClosetPage extends LitElement {
     if (!error) closetStore.actions.removeItem(id);
   }
 
-  #groupByCategory(clothes) {
-    const filtered = this._filterType === '전체'
-      ? clothes
-      : clothes.filter((c) => c.category?.type === this._filterType);
-    const groups = {};
-    for (const item of filtered) {
-      const type = item.category?.type ?? '기타';
-      if (!groups[type]) groups[type] = [];
-      groups[type].push(item);
-    }
-    return TYPE_ORDER
-      .filter((t) => groups[t]?.length > 0)
-      .map((t) => ({ type: t, icon: TYPE_ICONS[t], emoji: TYPE_EMOJI[t], items: groups[t] }));
-  }
-
-  #groupByColor(clothes) {
-    const groups = {};
-    for (const item of clothes) {
-      const key = item.color_name ?? '기타';
-      if (!groups[key]) groups[key] = { color: item.color, items: [] };
-      groups[key].items.push(item);
-    }
-    return Object.entries(groups).map(([name, g]) => ({
-      type: name, icon: '', emoji: '', colorHex: g.color, items: g.items,
-    }));
+  async #handleAddClothing(e) {
+    const { categoryId, color, colorName } = e.detail;
+    const { data, error } = await addClothing(this.#supabase.value, { categoryId, color, colorName });
+    if (!error && data) closetStore.actions.addItem(data);
   }
 
   render() {
@@ -300,8 +282,8 @@ export class ClosetPage extends LitElement {
 
         <div class="groups">
           ${(groupBy === 'category'
-            ? this.#groupByCategory(clothes)
-            : this.#groupByColor(clothes)
+            ? groupByCategory(clothes, this._filterType)
+            : groupByColor(clothes)
           ).map((group) => html`
             <section>
               <div class="group-header">
@@ -331,7 +313,10 @@ export class ClosetPage extends LitElement {
 
       <add-clothing-modal
         ?open=${this._modalOpen}
+        .categories=${this.#categories.value ?? []}
         @dc-modal-close=${() => (this._modalOpen = false)}
+        @dc-clothing-add=${this.#handleAddClothing}
+        @dc-navigate=${(e) => window.location.hash = e.detail.href}
       ></add-clothing-modal>
     `;
   }

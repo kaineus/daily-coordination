@@ -1,12 +1,8 @@
 import { LitElement, html, css } from 'lit';
-import { ContextConsumer } from '@lit/context';
-import { supabaseContext } from '../../contexts/supabase.context.js';
-import { StoreController } from '../../store/store-controller.js';
-import { closetStore } from '../../store/closet.store.js';
-import { addClothing } from '../../services/closet.service.js';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
 import { bp } from '../../styles/breakpoints.css.js';
+import { materialIcons } from '../../styles/material-icons.css.js';
 import { TYPE_ORDER } from '../../constants/clothing.js';
 import '../atoms/dc-button.js';
 import '../molecules/color-picker.js';
@@ -14,20 +10,17 @@ import '../molecules/color-picker.js';
 export class AddClothingModal extends LitElement {
   static properties = {
     open: { type: Boolean, reflect: true },
+    categories: { type: Array },
     _selectedType: { state: true },
     _selectedCategory: { state: true },
     _selectedColor: { state: true },
     _selectedColorName: { state: true },
-    _submitting: { state: true },
-    _error: { state: true },
   };
-
-  #supabase = new ContextConsumer(this, { context: supabaseContext, subscribe: true });
-  #categories = new StoreController(this, closetStore, (s) => s.categories);
 
   static styles = [
     reset,
     tokens,
+    materialIcons,
     css`
       :host { display: none; }
       :host([open]) { display: block; }
@@ -200,12 +193,11 @@ export class AddClothingModal extends LitElement {
   constructor() {
     super();
     this.open = false;
+    this.categories = [];
     this._selectedType = '';
     this._selectedCategory = null;
     this._selectedColor = '';
     this._selectedColorName = '';
-    this._submitting = false;
-    this._error = '';
   }
 
   #close() {
@@ -214,7 +206,6 @@ export class AddClothingModal extends LitElement {
     this._selectedCategory = null;
     this._selectedColor = '';
     this._selectedColorName = '';
-    this._error = '';
     this.dispatchEvent(new CustomEvent('dc-modal-close', { bubbles: true, composed: true }));
   }
 
@@ -230,24 +221,17 @@ export class AddClothingModal extends LitElement {
     this._selectedColorName = e.detail.name;
   }
 
-  async #submit() {
+  #submit() {
     if (!this._selectedCategory || !this._selectedColor) return;
-    this._submitting = true;
-    this._error = '';
-
-    const { data, error } = await addClothing(this.#supabase.value, {
-      categoryId: this._selectedCategory.id,
-      color: this._selectedColor,
-      colorName: this._selectedColorName,
-    });
-
-    if (error) {
-      this._error = error.message;
-    } else {
-      closetStore.actions.addItem(data);
-      this.#close();
-    }
-    this._submitting = false;
+    this.dispatchEvent(new CustomEvent('dc-clothing-add', {
+      detail: {
+        categoryId: this._selectedCategory.id,
+        color: this._selectedColor,
+        colorName: this._selectedColorName,
+      },
+      bubbles: true, composed: true,
+    }));
+    this.#close();
   }
 
   #handleOverlayClick(e) {
@@ -255,7 +239,7 @@ export class AddClothingModal extends LitElement {
   }
 
   render() {
-    const categories = this.#categories.value ?? [];
+    const categories = this.categories ?? [];
     const subCategories = this._selectedType
       ? categories.filter((c) => c.type === this._selectedType)
       : [];
@@ -318,13 +302,10 @@ export class AddClothingModal extends LitElement {
               </div>
             ` : ''}
 
-            ${this._error ? html`<p class="error-msg">${this._error}</p>` : ''}
-
             <!-- 등록 -->
             <dc-button
               variant="primary"
               ?disabled=${!canSubmit}
-              ?loading=${this._submitting}
               @click=${this.#submit}
             >등록하기</dc-button>
           </div>

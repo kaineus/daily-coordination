@@ -7,6 +7,7 @@ import { authStore } from '../../store/auth.store.js';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
 import { bp } from '../../styles/breakpoints.css.js';
+import { materialIcons } from '../../styles/material-icons.css.js';
 import '../atoms/dc-button.js';
 import '../atoms/dc-input.js';
 import '../atoms/dc-spinner.js';
@@ -27,6 +28,7 @@ export class LoginPage extends LitElement {
   static styles = [
     reset,
     tokens,
+    materialIcons,
     css`
       /* ===== Base (Mobile) ===== */
       :host {

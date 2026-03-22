@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
+import { materialIcons } from '../../styles/material-icons.css.js';
 import '../atoms/dc-button.js';
 
 export class EmptyState extends LitElement {
@@ -15,6 +16,7 @@ export class EmptyState extends LitElement {
   static styles = [
     reset,
     tokens,
+    materialIcons,
     css`
       :host { display: block; }
 
@@ -73,7 +75,12 @@ export class EmptyState extends LitElement {
   }
 
   #handleClick() {
-    if (this.buttonHref) window.location.hash = this.buttonHref;
+    if (this.buttonHref) {
+      this.dispatchEvent(new CustomEvent('dc-navigate', {
+        detail: { href: this.buttonHref },
+        bubbles: true, composed: true,
+      }));
+    }
   }
 
   render() {

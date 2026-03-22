@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
+import { materialIcons } from '../../styles/material-icons.css.js';
 import { CATEGORY_COLORS } from '../../constants/clothing.js';
 
 export class DcChip extends LitElement {
@@ -14,6 +15,7 @@ export class DcChip extends LitElement {
   static styles = [
     reset,
     tokens,
+    materialIcons,
     css`
       :host { display: inline-block; }
 
