@@ -5,3 +5,5 @@ dist/
 .DS_Store
 .stitch/
 .claude/task-state.json
+docs/handoff/latest.md
+.mcp.json
