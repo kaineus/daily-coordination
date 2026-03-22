@@ -124,12 +124,11 @@
 - **배경**: `--color-surface-lowest` (#FFFFFF)
 - **높이**: 64px
 - **shadow**: 위쪽 방향 ambient shadow
-- **탭 구성**:
+- **탭 구성** (2탭):
   | 탭 | 아이콘 | 라벨 | 라우트 |
   |-----|--------|------|--------|
   | 코디 | ☀️ (날씨) | 오늘의 코디 | `/` |
   | 옷장 | 👔 (옷) | 내 옷장 | `/closet` |
-  | 내정보 | 👤 (프로필) | 내 정보 | `/profile` |
 - **활성 상태**: `--color-primary` 아이콘 + 라벨
 - **비활성 상태**: `--color-outline` 아이콘 + 라벨
 
@@ -175,3 +174,5 @@
 |------|--------|----------|
 | 로그인 | `screens/login-screen.html` | `screens/login-screen-desktop.html` |
 | 회원가입 | `screens/signup-screen.html` | `screens/signup-screen-desktop.html` |
+| 내 옷장 | `screens/closet-page.html` | `screens/closet-page-desktop.html` |
+| 옷 등록 모달 | `screens/add-clothing-modal.html` | — |

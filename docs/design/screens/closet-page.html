@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-container": "#ff6b6b",
+              "primary-fixed-dim": "#a0caff",
+              "on-tertiary-fixed-variant": "#5f4100",
+              "on-secondary-fixed-variant": "#8c1520",
+              "tertiary-fixed": "#ffdeab",
+              "surface": "#f9f9fd",
+              "primary-fixed": "#d2e4ff",
+              "surface-container-low": "#f3f3f7",
+              "secondary-fixed": "#ffdad8",
+              "outline-variant": "#c1c7d2",
+              "outline": "#717782",
+              "surface-bright": "#f9f9fd",
+              "inverse-on-surface": "#f0f0f4",
+              "on-background": "#1a1c1f",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#fffbff",
+              "error": "#ba1a1a",
+              "on-error": "#ffffff",
+              "surface-dim": "#d9dade",
+              "surface-container-high": "#e8e8ec",
+              "on-primary-fixed-variant": "#00497e",
+              "primary": "#005ea1",
+              "on-primary-container": "#fdfcff",
+              "secondary": "#ae2f34",
+              "error-container": "#ffdad6",
+              "inverse-surface": "#2e3034",
+              "on-primary": "#ffffff",
+              "on-primary-fixed": "#001c37",
+              "on-error-container": "#93000a",
+              "tertiary-fixed-dim": "#fbbb45",
+              "on-secondary-container": "#6d0010",
+              "secondary-fixed-dim": "#ffb3b0",
+              "surface-tint": "#0061a5",
+              "surface-variant": "#e2e2e6",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary-fixed": "#271900",
+              "primary-container": "#2b78bf",
+              "inverse-primary": "#a0caff",
+              "surface-container-highest": "#e2e2e6",
+              "tertiary": "#7b5500",
+              "background": "#f9f9fd",
+              "on-surface-variant": "#414751",
+              "on-tertiary": "#ffffff",
+              "on-surface": "#1a1c1f",
+              "tertiary-container": "#9a6c00",
+              "surface-container": "#ededf1",
+              "on-secondary-fixed": "#410006"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Be Vietnam Pro"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- Top Header -->
+<header class="sticky top-0 z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl flex justify-between items-center px-4 h-16 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="closet">dresser</span>
+<h1 class="font-manrope font-bold text-2xl tracking-tight text-on-surface">내 옷장</h1>
+</div>
+<button class="bg-primary text-on-primary h-9 px-4 rounded-full flex items-center gap-1 font-bold active:scale-95 transition-transform duration-200 shadow-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+<span class="text-sm">+ 추가</span>
+</button>
+</header>
+<main class="px-5 mt-4 max-w-md mx-auto">
+<!-- Grouping Toggle -->
+<div class="flex gap-3 mb-8">
+<button class="px-4 py-2 rounded-full bg-primary-fixed text-primary font-bold text-sm transition-colors">
+                카테고리순
+            </button>
+<button class="px-4 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-medium text-sm transition-colors">
+                색상별
+            </button>
+</div>
+<!-- Closet Items List -->
+<div class="space-y-12">
+<!-- Group 1: 아우터 -->
+<section class="group-container">
+<div class="flex items-center gap-2 mb-4 px-1">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="jacket">apparel</span>
+<h2 class="text-base font-semibold text-on-surface">아우터</h2>
+<span class="text-outline text-sm font-medium">(3)</span>
+</div>
+<div class="space-y-2">
+<!-- Card 1 -->
+<div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
+<div class="w-6 h-6 rounded-full bg-[#2244AA] mr-4 ring-1 ring-black/5"></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">패딩</p>
+<p class="text-xs text-on-surface-variant">네이비</p>
+</div>
+<button class="text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- Card 2 -->
+<div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
+<div class="w-6 h-6 rounded-full bg-[#D2B48C] mr-4 ring-1 ring-black/5"></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">코트</p>
+<p class="text-xs text-on-surface-variant">베이지</p>
+</div>
+<button class="text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- Card 3 -->
+<div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
+<div class="w-6 h-6 rounded-full bg-[#333333] mr-4 ring-1 ring-black/5"></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">자켓</p>
+<p class="text-xs text-on-surface-variant">블랙</p>
+</div>
+<button class="text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Group 2: 상의 -->
+<section class="group-container">
+<div class="flex items-center gap-2 mb-4 px-1">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="checkroom">checkroom</span>
+<h2 class="text-base font-semibold text-on-surface">상의</h2>
+<span class="text-outline text-sm font-medium">(2)</span>
+</div>
+<div class="space-y-2">
+<!-- Card 1 -->
+<div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
+<div class="w-6 h-6 rounded-full bg-[#FFFFFF] mr-4 border border-outline-variant/30"></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">맨투맨</p>
+<p class="text-xs text-on-surface-variant">화이트</p>
+</div>
+<button class="text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- Card 2 -->
+<div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
+<div class="w-6 h-6 rounded-full bg-[#4488FF] mr-4 ring-1 ring-black/5"></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">셔츠</p>
+<p class="text-xs text-on-surface-variant">파랑</p>
+</div>
+<button class="text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Group 3: 하의 -->
+<section class="group-container">
+<div class="flex items-center gap-2 mb-4 px-1">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="apparel">apparel</span>
+<h2 class="text-base font-semibold text-on-surface">하의</h2>
+<span class="text-outline text-sm font-medium">(2)</span>
+</div>
+<div class="space-y-2">
+<!-- Card 1 -->
+<div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
+<div class="w-6 h-6 rounded-full bg-[#2244AA] mr-4 ring-1 ring-black/5"></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">청바지</p>
+<p class="text-xs text-on-surface-variant">인디고</p>
+</div>
+<button class="text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- Card 2 -->
+<div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
+<div class="w-6 h-6 rounded-full bg-[#999999] mr-4 ring-1 ring-black/5"></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">슬랙스</p>
+<p class="text-xs text-on-surface-variant">그레이</p>
+</div>
+<button class="text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Group 4: 신발 -->
+<section class="group-container">
+<div class="flex items-center gap-2 mb-4 px-1">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="steps">steps</span>
+<h2 class="text-base font-semibold text-on-surface">신발</h2>
+<span class="text-outline text-sm font-medium">(1)</span>
+</div>
+<div class="space-y-2">
+<div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
+<div class="w-6 h-6 rounded-full bg-[#FFFFFF] mr-4 border border-outline-variant/30"></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">운동화</p>
+<p class="text-xs text-on-surface-variant">화이트</p>
+</div>
+<button class="text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Tab Bar -->
+<nav class="fixed bottom-0 left-0 w-full h-[64px] flex justify-around items-center px-6 pb-safe bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl shadow-[0px_-20px_40px_rgba(26,28,31,0.06)] z-50 rounded-t-3xl">
+<a class="flex flex-col items-center justify-center text-[#717782] dark:text-slate-500 px-6 py-2 hover:text-blue-600 dark:hover:text-blue-300 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="wb_sunny">wb_sunny</span>
+<span class="font-manrope text-[10px] font-medium tracking-wide">오늘의 코디</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#005EA1] dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20 rounded-2xl px-6 py-2 active:scale-90 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="checkroom" style="font-variation-settings: 'FILL' 1;">checkroom</span>
+<span class="font-manrope text-[10px] font-bold tracking-wide">내 옷장</span>
+</a>
+</nav>
+</body></html>

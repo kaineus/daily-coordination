@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>오늘 뭐 입지? - 내 옷장</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-fixed-variant": "#8c1520",
+              "background": "#f9f9fd",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary-fixed": "#271900",
+              "secondary-fixed": "#ffdad8",
+              "inverse-primary": "#a0caff",
+              "primary-fixed": "#d2e4ff",
+              "on-secondary-container": "#6d0010",
+              "on-surface": "#1a1c1f",
+              "primary-container": "#2b78bf",
+              "surface-dim": "#d9dade",
+              "on-error": "#ffffff",
+              "tertiary-container": "#9a6c00",
+              "surface-tint": "#0061a5",
+              "error-container": "#ffdad6",
+              "outline-variant": "#c1c7d2",
+              "on-primary-fixed-variant": "#00497e",
+              "surface": "#f9f9fd",
+              "surface-bright": "#f9f9fd",
+              "inverse-surface": "#2e3034",
+              "surface-container-highest": "#e2e2e6",
+              "secondary": "#ae2f34",
+              "on-secondary": "#ffffff",
+              "inverse-on-surface": "#f0f0f4",
+              "tertiary-fixed": "#ffdeab",
+              "primary": "#005ea1",
+              "on-surface-variant": "#414751",
+              "surface-container-high": "#e8e8ec",
+              "on-primary-container": "#fdfcff",
+              "surface-variant": "#e2e2e6",
+              "on-secondary-fixed": "#410006",
+              "surface-container": "#ededf1",
+              "on-primary": "#ffffff",
+              "on-tertiary-container": "#fffbff",
+              "primary-fixed-dim": "#a0caff",
+              "secondary-container": "#ff6b6b",
+              "outline": "#717782",
+              "on-background": "#1a1c1f",
+              "error": "#ba1a1a",
+              "on-error-container": "#93000a",
+              "on-tertiary": "#ffffff",
+              "on-primary-fixed": "#001c37",
+              "tertiary": "#7b5500",
+              "surface-container-low": "#f3f3f7",
+              "secondary-fixed-dim": "#ffb3b0",
+              "tertiary-fixed-dim": "#fbbb45",
+              "on-tertiary-fixed-variant": "#5f4100"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Be Vietnam Pro"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-shift {
+            background-color: #f3f3f7;
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface antialiased">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between px-8 w-full sticky top-0 z-50 h-[56px] bg-white dark:bg-slate-900 shadow-[0px_20px_40px_rgba(26,28,31,0.06)] font-['Manrope'] antialiased tracking-wide text-sm font-medium">
+<div class="flex items-center gap-12">
+<span class="text-xl font-extrabold tracking-tighter text-blue-800 dark:text-blue-300">오늘 뭐 입지?</span>
+<nav class="hidden md:flex gap-8 h-full">
+<a class="flex items-center text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors" href="#">오늘의 코디</a>
+<a class="flex items-center text-blue-700 dark:text-blue-400 border-b-2 border-blue-700 dark:border-blue-400 pb-1 font-bold" href="#">내 옷장</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant">account_circle</span>
+</button>
+</div>
+</header>
+<main class="max-w-[1200px] mx-auto px-8 py-8">
+<!-- Header Section -->
+<section class="flex justify-between items-center mb-10">
+<h1 class="text-[28px] font-extrabold font-headline tracking-tight text-on-surface">내 옷장</h1>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-lg font-medium flex items-center gap-2 shadow-sm hover:opacity-90 transition-opacity active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                옷 등록하기
+            </button>
+</section>
+<!-- Filter Bar -->
+<section class="space-y-6 mb-12">
+<!-- Grouping Toggles -->
+<div class="flex gap-4">
+<button class="px-4 py-1.5 rounded-full text-sm font-medium bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest transition-colors">카테고리순</button>
+<button class="px-4 py-1.5 rounded-full text-sm font-medium text-on-surface-variant hover:bg-surface-container-high transition-colors">색상별</button>
+</div>
+<!-- Category Chips -->
+<div class="flex flex-wrap gap-3">
+<button class="px-5 py-2 rounded-full text-sm font-semibold bg-primary-fixed text-on-primary-fixed-variant border border-outline-variant/15">전체</button>
+<button class="px-5 py-2 rounded-full text-sm font-medium bg-surface-container-lowest text-on-surface-variant border border-outline-variant/15 hover:bg-surface-container-low transition-colors">🧥 아우터</button>
+<button class="px-5 py-2 rounded-full text-sm font-medium bg-surface-container-lowest text-on-surface-variant border border-outline-variant/15 hover:bg-surface-container-low transition-colors">👕 상의</button>
+<button class="px-5 py-2 rounded-full text-sm font-medium bg-surface-container-lowest text-on-surface-variant border border-outline-variant/15 hover:bg-surface-container-low transition-colors">👖 하의</button>
+<button class="px-5 py-2 rounded-full text-sm font-medium bg-surface-container-lowest text-on-surface-variant border border-outline-variant/15 hover:bg-surface-container-low transition-colors">👟 신발</button>
+<button class="px-5 py-2 rounded-full text-sm font-medium bg-surface-container-lowest text-on-surface-variant border border-outline-variant/15 hover:bg-surface-container-low transition-colors">🎩 액세서리</button>
+</div>
+</section>
+<!-- Closet Items Grid -->
+<div class="space-y-16">
+<!-- Group: 아우터 -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<h2 class="text-xl font-bold font-headline text-on-surface">🧥 아우터</h2>
+<span class="text-sm font-medium text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">3</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Item Card -->
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between shadow-[0px_20px_40px_rgba(26,28,31,0.06)] hover:translate-y-[-2px] transition-transform duration-300">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 rounded-full border border-outline-variant/20 shadow-inner" style="background-color: #2244AA;"></div>
+<div>
+<p class="text-[15px] font-semibold text-on-surface">패딩</p>
+<p class="text-xs text-on-surface-variant">네이비</p>
+</div>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<!-- Item Card -->
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between shadow-[0px_20px_40px_rgba(26,28,31,0.06)] hover:translate-y-[-2px] transition-transform duration-300">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 rounded-full border border-outline-variant/20 shadow-inner" style="background-color: #D2B48C;"></div>
+<div>
+<p class="text-[15px] font-semibold text-on-surface">코트</p>
+<p class="text-xs text-on-surface-variant">베이지</p>
+</div>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<!-- Item Card -->
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between shadow-[0px_20px_40px_rgba(26,28,31,0.06)] hover:translate-y-[-2px] transition-transform duration-300">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 rounded-full border border-outline-variant/20 shadow-inner" style="background-color: #333333;"></div>
+<div>
+<p class="text-[15px] font-semibold text-on-surface">자켓</p>
+<p class="text-xs text-on-surface-variant">블랙</p>
+</div>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Group: 상의 -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<h2 class="text-xl font-bold font-headline text-on-surface">👕 상의</h2>
+<span class="text-sm font-medium text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">2</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between shadow-[0px_20px_40px_rgba(26,28,31,0.06)] hover:translate-y-[-2px] transition-transform duration-300">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 rounded-full border border-outline-variant/20 shadow-inner" style="background-color: #ffffff;"></div>
+<div>
+<p class="text-[15px] font-semibold text-on-surface">맨투맨</p>
+<p class="text-xs text-on-surface-variant">화이트</p>
+</div>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between shadow-[0px_20px_40px_rgba(26,28,31,0.06)] hover:translate-y-[-2px] transition-transform duration-300">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 rounded-full border border-outline-variant/20 shadow-inner" style="background-color: #4488FF;"></div>
+<div>
+<p class="text-[15px] font-semibold text-on-surface">셔츠</p>
+<p class="text-xs text-on-surface-variant">블루</p>
+</div>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Group: 하의 -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<h2 class="text-xl font-bold font-headline text-on-surface">👖 하의</h2>
+<span class="text-sm font-medium text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">2</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between shadow-[0px_20px_40px_rgba(26,28,31,0.06)] hover:translate-y-[-2px] transition-transform duration-300">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 rounded-full border border-outline-variant/20 shadow-inner" style="background-color: #2244AA;"></div>
+<div>
+<p class="text-[15px] font-semibold text-on-surface">청바지</p>
+<p class="text-xs text-on-surface-variant">인디고</p>
+</div>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between shadow-[0px_20px_40px_rgba(26,28,31,0.06)] hover:translate-y-[-2px] transition-transform duration-300">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 rounded-full border border-outline-variant/20 shadow-inner" style="background-color: #999999;"></div>
+<div>
+<p class="text-[15px] font-semibold text-on-surface">슬랙스</p>
+<p class="text-xs text-on-surface-variant">그레이</p>
+</div>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Group: 신발 -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<h2 class="text-xl font-bold font-headline text-on-surface">👟 신발</h2>
+<span class="text-sm font-medium text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">1</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-4 rounded-xl flex items-center justify-between shadow-[0px_20px_40px_rgba(26,28,31,0.06)] hover:translate-y-[-2px] transition-transform duration-300">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 rounded-full border border-outline-variant/20 shadow-inner" style="background-color: #ffffff;"></div>
+<div>
+<p class="text-[15px] font-semibold text-on-surface">운동화</p>
+<p class="text-xs text-on-surface-variant">화이트</p>
+</div>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Floating Action Background Texture (Design System Detail) -->
+<div class="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10"></div>
+</body></html>
