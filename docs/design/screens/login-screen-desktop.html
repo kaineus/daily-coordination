@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>오늘 뭐 입지? - Atmospheric Curator Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-dim": "#d9dade",
+              "on-background": "#1a1c1f",
+              "outline": "#717782",
+              "on-primary-fixed": "#001c37",
+              "on-primary-container": "#fdfcff",
+              "surface-container-low": "#f3f3f7",
+              "surface-bright": "#f9f9fd",
+              "primary-fixed-dim": "#a0caff",
+              "surface-variant": "#e2e2e6",
+              "on-primary": "#ffffff",
+              "secondary": "#ae2f34",
+              "primary-fixed": "#d2e4ff",
+              "on-surface": "#1a1c1f",
+              "secondary-fixed-dim": "#ffb3b0",
+              "secondary-fixed": "#ffdad8",
+              "tertiary-fixed": "#ffdeab",
+              "primary": "#005ea1",
+              "on-secondary-fixed-variant": "#8c1520",
+              "inverse-on-surface": "#f0f0f4",
+              "background": "#f9f9fd",
+              "primary-container": "#2b78bf",
+              "on-secondary": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-container": "#9a6c00",
+              "on-surface-variant": "#414751",
+              "on-error": "#ffffff",
+              "on-tertiary-fixed": "#271900",
+              "on-error-container": "#93000a",
+              "tertiary": "#7b5500",
+              "on-tertiary-container": "#fffbff",
+              "surface": "#f9f9fd",
+              "inverse-primary": "#a0caff",
+              "on-tertiary": "#ffffff",
+              "on-secondary-container": "#6d0010",
+              "inverse-surface": "#2e3034",
+              "secondary-container": "#ff6b6b",
+              "on-tertiary-fixed-variant": "#5f4100",
+              "on-primary-fixed-variant": "#00497e",
+              "surface-container-highest": "#e2e2e6",
+              "error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#fbbb45",
+              "surface-container-high": "#e8e8ec",
+              "surface-container": "#ededf1",
+              "error": "#ba1a1a",
+              "on-secondary-fixed": "#410006",
+              "surface-tint": "#0061a5",
+              "outline-variant": "#c1c7d2"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Be Vietnam Pro"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        h1, h2, h3 {
+            font-family: 'Manrope', sans-serif;
+        }
+        .ethereal-gradient {
+            background: linear-gradient(135deg, #005ea1 0%, #2b78bf 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-full">
+<main class="flex h-screen w-full">
+<!-- Left Panel: Branding & Identity -->
+<section class="hidden lg:flex w-1/2 h-full ethereal-gradient relative overflow-hidden flex-col items-center justify-center p-12">
+<!-- Decorative Icons -->
+<div class="absolute inset-0 pointer-events-none opacity-20">
+<span class="material-symbols-outlined absolute text-[120px] text-white top-10 left-10" data-icon="light_mode">light_mode</span>
+<span class="material-symbols-outlined absolute text-[160px] text-white bottom-20 left-20" data-icon="cloud">cloud</span>
+<span class="material-symbols-outlined absolute text-[140px] text-white top-1/4 right-10" data-icon="ac_unit">ac_unit</span>
+<span class="material-symbols-outlined absolute text-[100px] text-white bottom-1/4 right-20" data-icon="filter_drama">filter_drama</span>
+</div>
+<!-- Content Container -->
+<div class="relative z-10 flex flex-col items-center text-center space-y-6">
+<div class="flex flex-col items-center">
+<div class="mb-4 bg-white/10 backdrop-blur-md p-6 rounded-full">
+<span class="material-symbols-outlined text-white text-7xl" data-icon="wb_sunny">wb_sunny</span>
+<span class="material-symbols-outlined text-white text-7xl -ml-6" data-icon="checkroom">checkroom</span>
+</div>
+<h1 class="text-[40px] font-bold text-white tracking-widest uppercase">오늘 뭐 입지?</h1>
+</div>
+<p class="text-[18px] text-white/80 font-medium tracking-wide">
+                    날씨에 맞는 오늘의 코디, AI가 추천해드려요
+                </p>
+</div>
+<!-- Aesthetic Accent -->
+<div class="absolute bottom-12 left-12 text-white/40 text-sm font-label tracking-widest">
+                ATMOSPHERIC CURATOR © 2024
+            </div>
+</section>
+<!-- Right Panel: Login Form -->
+<section class="w-full lg:w-1/2 h-full bg-surface-bright flex flex-col items-center justify-center p-8 md:p-12 relative">
+<div class="w-full max-w-[440px] space-y-8">
+<!-- Header -->
+<div class="space-y-2">
+<h2 class="text-[28px] font-bold text-on-surface tracking-tight">로그인</h2>
+<p class="text-on-surface-variant text-body-md font-medium">계정에 로그인하여 오늘의 코디를 확인하세요</p>
+</div>
+<!-- Google Auth -->
+<button class="w-full h-[52px] bg-white border border-outline-variant/30 rounded-[12px] flex items-center justify-center space-x-3 hover:bg-surface-container transition-all duration-300 shadow-sm">
+<img alt="Google Logo" class="w-5 h-5" data-alt="Google colorful logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC84JcelGRZvi0vEFNwxCseDpqUdA3jszsZ4ttPr2eIDLspi8XvkWFAdKymCTAjCK2c7M0PmYyZjnFb-uZeW3KwgceRTZf012T5SmYSOC6kJivLkswR3gqsMDSnSOynACCAnJ8jXNqpKDC1TewLgN8Af9egdTE_u1kCG9PHAzxeEGFcCxucg0pASXOgHbApRl3TEegV_X8ZNEg1Wwy-luw8WhWZAR3qUhi-uQJzWUjERDHToRmPYahDQLN5HcY9x9R-HyyRTLfrewY"/>
+<span class="text-on-surface font-medium">Google로 시작하기</span>
+</button>
+<!-- Divider -->
+<div class="flex items-center space-x-4">
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+<span class="text-on-surface-variant text-sm font-medium">또는</span>
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+</div>
+<!-- Form -->
+<form class="space-y-5">
+<!-- Email Field -->
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-on-surface-variant ml-1">이메일</label>
+<input class="w-full h-[48px] px-4 bg-surface-container-low border-none rounded-[8px] focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all duration-200 text-on-surface placeholder:text-outline/50" placeholder="example@email.com" type="email"/>
+</div>
+<!-- Password Field -->
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-on-surface-variant ml-1">비밀번호</label>
+<div class="relative">
+<input class="w-full h-[48px] px-4 bg-surface-container-low border-none rounded-[8px] focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all duration-200 text-on-surface placeholder:text-outline/50" placeholder="비밀번호를 입력하세요" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+<div class="flex justify-end">
+<a class="text-sm font-medium text-primary hover:underline decoration-2 underline-offset-4" href="#">비밀번호를 잊으셨나요?</a>
+</div>
+</div>
+<!-- Submit -->
+<button class="w-full h-[52px] bg-primary text-on-primary rounded-[12px] font-bold text-lg hover:opacity-90 active:scale-[0.98] transition-all duration-300 shadow-lg shadow-primary/20" type="submit">
+                        로그인
+                    </button>
+</form>
+<!-- Signup Prompt -->
+<div class="text-center pt-2">
+<p class="text-on-surface-variant font-medium">
+                        계정이 없으신가요? 
+                        <a class="text-primary font-bold hover:underline decoration-2 underline-offset-4 ml-1" href="#">회원가입</a>
+</p>
+</div>
+</div>
+<!-- Bottom Legal Text -->
+<div class="absolute bottom-12 w-full max-w-[440px] px-4 text-center">
+<p class="text-[12px] text-outline leading-relaxed font-medium">
+                    계속 진행하면 <span class="text-on-surface-variant underline cursor-pointer">이용약관</span> 및 <span class="text-on-surface-variant underline cursor-pointer">개인정보처리방침</span>에 동의하는 것으로 간주됩니다
+                </p>
+</div>
+</section>
+</main>
+</body></html>

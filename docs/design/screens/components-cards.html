@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-container": "#fffbff",
+              "on-secondary-fixed-variant": "#8c1520",
+              "secondary": "#ae2f34",
+              "surface-container": "#ededf1",
+              "error-container": "#ffdad6",
+              "surface-tint": "#0061a5",
+              "inverse-primary": "#a0caff",
+              "primary-container": "#2b78bf",
+              "background": "#f9f9fd",
+              "primary": "#005ea1",
+              "on-surface-variant": "#414751",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed-dim": "#fbbb45",
+              "surface-container-lowest": "#ffffff",
+              "on-background": "#1a1c1f",
+              "surface-variant": "#e2e2e6",
+              "outline-variant": "#c1c7d2",
+              "surface": "#f9f9fd",
+              "on-secondary-container": "#6d0010",
+              "on-error-container": "#93000a",
+              "surface-dim": "#d9dade",
+              "surface-container-low": "#f3f3f7",
+              "on-tertiary-fixed": "#271900",
+              "outline": "#717782",
+              "on-primary-container": "#fdfcff",
+              "on-primary-fixed": "#001c37",
+              "tertiary-container": "#9a6c00",
+              "secondary-fixed-dim": "#ffb3b0",
+              "secondary-fixed": "#ffdad8",
+              "secondary-container": "#ff6b6b",
+              "on-surface": "#1a1c1f",
+              "surface-container-highest": "#e2e2e6",
+              "on-tertiary-fixed-variant": "#5f4100",
+              "on-primary-fixed-variant": "#00497e",
+              "on-primary": "#ffffff",
+              "tertiary-fixed": "#ffdeab",
+              "surface-container-high": "#e8e8ec",
+              "inverse-on-surface": "#f0f0f4",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed": "#410006",
+              "inverse-surface": "#2e3034",
+              "tertiary": "#7b5500",
+              "error": "#ba1a1a",
+              "primary-fixed": "#d2e4ff",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#a0caff",
+              "surface-bright": "#f9f9fd"
+            },
+            fontFamily: {
+              "headline": ["Manrope", "sans-serif"],
+              "body": ["Be Vietnam Pro", "sans-serif"],
+              "label": ["Be Vietnam Pro", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "1rem", // 16px as per request
+              "md": "0.75rem", // 12px as per request
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ambient-shadow {
+            box-shadow: 0 20px 40px rgba(26,28,31,0.06);
+        }
+        .weather-sunny { background: linear-gradient(135deg, #FF9966, #FF5E62); }
+        .weather-cloudy { background: linear-gradient(135deg, #BDC3C7, #2C3E50); }
+        .weather-rainy { background: linear-gradient(135deg, #4B79A1, #283E51); }
+        .weather-snowy { background: linear-gradient(135deg, #E0EAFC, #CFDEF3); }
+    </style>
+</head>
+<body class="bg-surface-container-low font-body text-on-surface antialiased">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl dark:bg-slate-900/80 shadow-[0_20px_40px_rgba(26,28,31,0.06)]">
+<div class="flex justify-between items-center px-8 h-20 w-full">
+<div class="text-2xl font-black tracking-tighter text-[#005ea1] dark:text-[#4A90D9]">오늘 뭐 입지?</div>
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-[#005ea1] font-bold border-b-2 border-[#005ea1] font-['Manrope'] tracking-[0.1em] uppercase text-sm" href="#">Daily Style</a>
+<a class="text-slate-400 font-medium font-['Manrope'] tracking-[0.1em] uppercase text-sm hover:text-[#005ea1] transition-colors duration-300" href="#">My Closet</a>
+<a class="text-slate-400 font-medium font-['Manrope'] tracking-[0.1em] uppercase text-sm hover:text-[#005ea1] transition-colors duration-300" href="#">Weather Feed</a>
+</nav>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-outline cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-outline cursor-pointer">account_circle</span>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto pt-32 pb-20 px-8">
+<h1 class="font-headline text-4xl font-extrabold tracking-tight mb-12 text-on-surface">Design System: Card Components</h1>
+<!-- Section 1: Weather Cards -->
+<section class="mb-12">
+<h2 class="font-headline text-xl font-bold tracking-widest uppercase text-primary mb-8 border-l-4 border-primary pl-4">01. Weather Status Variants</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Sunny -->
+<div class="weather-sunny rounded-xl p-6 text-white relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-[12px] font-medium opacity-90 mb-1">서울특별시</p>
+<h3 class="font-headline text-[40px] font-bold leading-tight">18°</h3>
+<div class="flex items-center gap-2 mt-4">
+<span class="material-symbols-outlined text-[24px]" data-icon="light_mode">light_mode</span>
+<span class="text-[16px] font-medium">맑음</span>
+</div>
+<p class="text-[12px] opacity-70 mt-1">강수확률 10%</p>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-[120px] opacity-20 rotate-12 group-hover:scale-110 transition-transform duration-500" data-icon="sunny">sunny</span>
+</div>
+<!-- Cloudy -->
+<div class="weather-cloudy rounded-xl p-6 text-white relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-[12px] font-medium opacity-90 mb-1">서울특별시</p>
+<h3 class="font-headline text-[40px] font-bold leading-tight">14°</h3>
+<div class="flex items-center gap-2 mt-4">
+<span class="material-symbols-outlined text-[24px]" data-icon="cloud">cloud</span>
+<span class="text-[16px] font-medium">흐림</span>
+</div>
+<p class="text-[12px] opacity-70 mt-1">강수확률 30%</p>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-[120px] opacity-20 rotate-12 group-hover:scale-110 transition-transform duration-500" data-icon="cloudy">cloudy</span>
+</div>
+<!-- Rainy -->
+<div class="weather-rainy rounded-xl p-6 text-white relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-[12px] font-medium opacity-90 mb-1">서울특별시</p>
+<h3 class="font-headline text-[40px] font-bold leading-tight">12°</h3>
+<div class="flex items-center gap-2 mt-4">
+<span class="material-symbols-outlined text-[24px]" data-icon="rainy">rainy</span>
+<span class="text-[16px] font-medium">비</span>
+</div>
+<p class="text-[12px] opacity-70 mt-1">강수확률 80%</p>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-[120px] opacity-20 rotate-12 group-hover:scale-110 transition-transform duration-500" data-icon="water_drop">water_drop</span>
+</div>
+<!-- Snowy -->
+<div class="weather-snowy rounded-xl p-6 text-slate-800 relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-[12px] font-medium opacity-70 mb-1">서울특별시</p>
+<h3 class="font-headline text-[40px] font-bold leading-tight text-primary">2°</h3>
+<div class="flex items-center gap-2 mt-4">
+<span class="material-symbols-outlined text-[24px] text-primary" data-icon="ac_unit">ac_unit</span>
+<span class="text-[16px] font-medium">눈</span>
+</div>
+<p class="text-[12px] opacity-60 mt-1">강수확률 40%</p>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-[120px] text-primary opacity-10 rotate-12 group-hover:scale-110 transition-transform duration-500" data-icon="snowing">snowing</span>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-16">
+<!-- Section 2: Outfit Recommendation Card -->
+<div class="lg:col-span-5">
+<h2 class="font-headline text-xl font-bold tracking-widest uppercase text-primary mb-8 border-l-4 border-primary pl-4">02. Outfit Curations</h2>
+<div class="bg-surface-container-lowest rounded-xl p-5 ambient-shadow flex flex-col gap-4">
+<!-- Outer -->
+<div class="group flex gap-5 p-4 rounded-lg hover:bg-surface-container-low transition-all duration-300">
+<div class="w-16 h-16 bg-surface-container-high rounded-xl flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Classic beige trenchcoat on hanger" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7zXefWrHoOYvKqjShAvkEQVUCU_I4o3dxKzoyQBtO9lU5zNLAyVObDkvt3gx24uR8s3kzWe4rV9pqMeHXUP0l18r-jNbx0EsRq7k1Z6Anxh8xSC4K9QglHwRKQ-Hhhs0e4oyzPt7JmNhAM2Yh6oTy_06FIHZpMnvhD_WfxjlsgKRWUtlb2L4CAOVexkOOrWVWc2gVOtIAfbyvv5DwlIHBnyA2FDz1UQc0pqyWqwCP5ZyYEIEplPhZ4IAd3kuznoaAN6NEuaeUP1c"/>
+</div>
+<div class="flex-1">
+<p class="text-[12px] font-medium text-primary uppercase tracking-wider mb-1">아우터</p>
+<h4 class="text-[16px] font-semibold text-on-surface">Classic Beige Trenchcoat</h4>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-3 h-3 rounded-full bg-[#D2B48C]"></div>
+<span class="text-[13px] text-outline">베이지</span>
+</div>
+<p class="text-[14px] text-on-surface-variant mt-2 leading-relaxed">선선한 아침 날씨에 적합한 보온성과 세련된 무드를 줍니다.</p>
+</div>
+</div>
+<!-- Top -->
+<div class="group flex gap-5 p-4 rounded-lg hover:bg-surface-container-low transition-all duration-300">
+<div class="w-16 h-16 bg-surface-container-high rounded-xl flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="White premium cotton t-shirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO99ZvjdhxFVy0Wf5cI-7-M_0uN1LC8oKV671E5LbpmfnbHz3PQzlajABmA8cdgK1oVNG6dxJTiK9Lak_HNqmIPCskB2utygcFlfl-fbjTT0Y-JLb6NDa3kI_a30n1WZ_v4RS-1RH1Y-Qz3Y-c7tbSTf-GQpk0E8kRF3QchbQbVBjdkERhcMj2T6iQhPRlOlDHdnSP1CUZRqYMjr030TOSCuQI_D81UsdNYKGr_jYnBm-wD69Xx9NZrYNeI42_7_1NCb5qUU-saPI"/>
+</div>
+<div class="flex-1">
+<p class="text-[12px] font-medium text-primary uppercase tracking-wider mb-1">상의</p>
+<h4 class="text-[16px] font-semibold text-on-surface">Premium Cotton Tee</h4>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-3 h-3 rounded-full bg-[#FFFFFF] border border-outline-variant"></div>
+<span class="text-[13px] text-outline">화이트</span>
+</div>
+<p class="text-[14px] text-on-surface-variant mt-2 leading-relaxed">이너로 활용하기 좋은 쾌적한 텍스처의 면 소재입니다.</p>
+</div>
+</div>
+<!-- Bottom -->
+<div class="group flex gap-5 p-4 rounded-lg hover:bg-surface-container-low transition-all duration-300">
+<div class="w-16 h-16 bg-surface-container-high rounded-xl flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Straight fit blue denim" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwFDcWgbs2XZvPhy6gWf0F1FQrtNIEfVkBh1LkqJKtpAF1YVC5DLZc3m9OQO3G6Zo61wr__Y4pZCRctfcjGmoABmHc35l08dmcBKDIBkzCBtKTmeOS-CU-ePQu2Eudc2EWIB6SPCtVm8OT6sd6gHQ_3YnMC7cAM7WsGEFxX6W_a_wpGJvyUMdLoUHxZnTFbh9iyUl7bAs1N0e8i--MhIynzFc1y9d65tQ4v6IFMnbLUdD93tFuys5LhMe2y4eY45HXBEFzTYQx9xM"/>
+</div>
+<div class="flex-1">
+<p class="text-[12px] font-medium text-primary uppercase tracking-wider mb-1">하의</p>
+<h4 class="text-[16px] font-semibold text-on-surface">Straight Fit Denim</h4>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-3 h-3 rounded-full bg-[#4A69BD]"></div>
+<span class="text-[13px] text-outline">인디고</span>
+</div>
+<p class="text-[14px] text-on-surface-variant mt-2 leading-relaxed">트렌치코트와 가장 잘 어울리는 클래식한 데님 팬츠입니다.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3 & 4 -->
+<div class="lg:col-span-7 space-y-12">
+<!-- Section 3: Closet Item Card -->
+<div>
+<h2 class="font-headline text-xl font-bold tracking-widest uppercase text-primary mb-8 border-l-4 border-primary pl-4">03. Closet Inventory</h2>
+<div class="grid gap-4">
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest rounded-md p-4 flex items-center justify-between group hover:translate-x-1 transition-transform duration-300">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 rounded-full bg-[#001c37]"></div>
+<div>
+<span class="text-on-surface font-semibold">패딩</span>
+<span class="mx-2 text-outline-variant">/</span>
+<span class="text-on-surface-variant">네이비</span>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-outline hover:bg-error-container hover:text-error transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest rounded-md p-4 flex items-center justify-between group hover:translate-x-1 transition-transform duration-300">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 rounded-full bg-[#2C3E50]"></div>
+<div>
+<span class="text-on-surface font-semibold">청바지</span>
+<span class="mx-2 text-outline-variant">/</span>
+<span class="text-on-surface-variant">인디고</span>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-outline hover:bg-error-container hover:text-error transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface-container-lowest rounded-md p-4 flex items-center justify-between group hover:translate-x-1 transition-transform duration-300">
+<div class="flex items-center gap-4">
+<div class="w-6 h-6 rounded-full bg-[#FFFFFF] border border-outline-variant"></div>
+<div>
+<span class="text-on-surface font-semibold">운동화</span>
+<span class="mx-2 text-outline-variant">/</span>
+<span class="text-on-surface-variant">화이트</span>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-outline hover:bg-error-container hover:text-error transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Section 4: Empty State Card -->
+<div>
+<h2 class="font-headline text-xl font-bold tracking-widest uppercase text-primary mb-8 border-l-4 border-primary pl-4">04. Zero State</h2>
+<div class="bg-surface-container-lowest rounded-xl p-12 ambient-shadow flex flex-col items-center text-center">
+<div class="w-20 h-20 bg-surface-container-low rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-[48px] text-primary/40" data-icon="checkroom">checkroom</span>
+</div>
+<h3 class="text-[20px] font-bold text-on-surface mb-2 tracking-tight">옷장에 옷을 먼저 등록해주세요</h3>
+<p class="text-[14px] text-on-surface-variant max-w-xs mb-8 leading-relaxed">
+                            카테고리와 색상으로 내 옷을 등록하면 날씨에 맞는 최적의 스타일을 추천해 드립니다.
+                        </p>
+<button class="px-8 py-3 bg-primary text-on-primary rounded-lg font-bold hover:bg-primary-container transition-all shadow-sm active:scale-95 duration-200">
+                            옷 등록하기
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Side Navigation Anchor (Hidden on Desktop) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-low/95 backdrop-blur-lg flex justify-around items-center py-4 z-50">
+<div class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined" data-icon="stylus">stylus</span>
+<span class="text-[10px] font-medium mt-1">Daily Style</span>
+</div>
+<div class="flex flex-col items-center text-slate-500">
+<span class="material-symbols-outlined" data-icon="checkroom">checkroom</span>
+<span class="text-[10px] font-medium mt-1">My Closet</span>
+</div>
+<div class="flex flex-col items-center text-slate-500">
+<span class="material-symbols-outlined" data-icon="filter_drama">filter_drama</span>
+<span class="text-[10px] font-medium mt-1">Weather</span>
+</div>
+<div class="flex flex-col items-center text-slate-500">
+<span class="material-symbols-outlined" data-icon="auto_awesome_motion">auto_awesome_motion</span>
+<span class="text-[10px] font-medium mt-1">Collections</span>
+</div>
+</div>
+<!-- Contextual FAB -->
+<button class="fixed right-8 bottom-8 md:bottom-12 w-14 h-14 bg-secondary-container text-white rounded-full flex items-center justify-center ambient-shadow hover:scale-110 active:scale-95 transition-all duration-300 z-40">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</body></html>

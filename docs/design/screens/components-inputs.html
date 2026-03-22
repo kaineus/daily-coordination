@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Pretendard:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#0061a5",
+                        "primary": "#005ea1",
+                        "outline": "#717782",
+                        "inverse-on-surface": "#f0f0f4",
+                        "surface": "#f9f9fd",
+                        "primary-fixed-dim": "#a0caff",
+                        "on-secondary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#ededf1",
+                        "primary-fixed": "#d2e4ff",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1a1c1f",
+                        "on-primary-fixed": "#001c37",
+                        "surface-container-high": "#e8e8ec",
+                        "on-secondary-fixed": "#410006",
+                        "tertiary-container": "#9a6c00",
+                        "surface-variant": "#e2e2e6",
+                        "surface-container-highest": "#e2e2e6",
+                        "secondary": "#ae2f34",
+                        "secondary-fixed": "#ffdad8",
+                        "on-primary-fixed-variant": "#00497e",
+                        "tertiary": "#7b5500",
+                        "on-tertiary-fixed": "#271900",
+                        "surface-container-low": "#f3f3f7",
+                        "outline-variant": "#c1c7d2",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#6d0010",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#414751",
+                        "on-secondary-fixed-variant": "#8c1520",
+                        "on-background": "#1a1c1f",
+                        "inverse-surface": "#2e3034",
+                        "surface-dim": "#d9dade",
+                        "on-primary-container": "#fdfcff",
+                        "secondary-fixed-dim": "#ffb3b0",
+                        "secondary-container": "#ff6b6b",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#a0caff",
+                        "on-tertiary-fixed-variant": "#5f4100",
+                        "background": "#f9f9fd",
+                        "tertiary-fixed-dim": "#fbbb45",
+                        "tertiary-fixed": "#ffdeab",
+                        "surface-bright": "#f9f9fd",
+                        "on-tertiary-container": "#fffbff",
+                        "error": "#ba1a1a",
+                        "primary-container": "#2b78bf"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"],
+                        "pretendard": ["Pretendard"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #F9F9FD;
+            font-family: 'Pretendard', sans-serif;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar Shell -->
+<header class="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] sticky top-0 z-50 flex justify-between items-center w-full px-8 py-4 max-w-full">
+<div class="text-xl font-bold tracking-tighter text-blue-600 dark:text-blue-400 font-['Manrope']">오늘 뭐 입지?</div>
+<nav class="hidden md:flex gap-8 font-['Manrope'] tracking-wide text-sm font-semibold">
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-500 transition-colors" href="#">Style Guide</a>
+<a class="text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 pb-1" href="#">Components</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-500 transition-colors" href="#">Patterns</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-500 transition-colors" href="#">Tokens</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all rounded-full">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+<button class="p-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all rounded-full">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<div class="flex">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-16 bg-slate-50 dark:bg-slate-950 flex flex-col gap-1 py-8 pr-4 overflow-y-auto hidden md:flex">
+<div class="px-6 mb-6">
+<h2 class="text-sm font-bold text-on-surface-variant font-pretendard">Components</h2>
+<p class="text-[10px] text-outline">v1.0.4</p>
+</div>
+<nav class="flex flex-col gap-1 font-['Pretendard'] text-sm leading-relaxed">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:translate-x-1 transition-transform hover:text-blue-500" href="#">
+<span class="material-symbols-outlined" data-icon="smart_button">smart_button</span> Buttons
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-900/20 rounded-r-full" href="#">
+<span class="material-symbols-outlined" data-icon="input">input</span> Form Elements
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:translate-x-1 transition-transform hover:text-blue-500" href="#">
+<span class="material-symbols-outlined" data-icon="match_case">match_case</span> Typography
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:translate-x-1 transition-transform hover:text-blue-500" href="#">
+<span class="material-symbols-outlined" data-icon="view_quilt">view_quilt</span> Cards
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:translate-x-1 transition-transform hover:text-blue-500" href="#">
+<span class="material-symbols-outlined" data-icon="menu">menu</span> Navigation
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:translate-x-1 transition-transform hover:text-blue-500" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span> Feedback
+                </a>
+</nav>
+<div class="mt-auto px-4 pb-20">
+<button class="w-full py-3 bg-primary text-on-primary rounded-xl text-xs font-bold shadow-sm">Request Component</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-8 md:p-12 space-y-8 bg-surface">
+<!-- Page Header -->
+<section class="mb-12">
+<h1 class="text-4xl font-extrabold font-headline tracking-tight text-on-surface mb-2">FORM ELEMENTS</h1>
+<p class="text-on-surface-variant font-body leading-relaxed max-w-2xl">
+                    The Atmospheric Curator design system uses subtle background shifts and high-end typography to guide user input without the clutter of heavy borders.
+                </p>
+</section>
+<!-- 1. Text Input States -->
+<section class="space-y-6">
+<h2 class="text-xl font-bold font-pretendard text-primary">텍스트 입력 (Text Input)</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Default -->
+<div class="space-y-2">
+<label class="text-[12px] font-medium text-outline-variant font-label px-1">기본 (Default)</label>
+<div class="h-12 w-full bg-surface-container-low rounded-[8px] flex items-center px-4">
+<input class="bg-transparent border-none w-full focus:ring-0 text-[14px] text-on-surface placeholder:text-outline/50" placeholder="example@email.com" type="text"/>
+</div>
+</div>
+<!-- Focus -->
+<div class="space-y-2">
+<label class="text-[12px] font-medium text-primary font-label px-1">포커스 (Focus)</label>
+<div class="h-12 w-full bg-surface-variant rounded-[8px] flex items-center px-4 relative border-b-2 border-primary">
+<input class="bg-transparent border-none w-full focus:ring-0 text-[14px] text-on-surface" type="text" value="example@email.com"/>
+</div>
+</div>
+<!-- Error -->
+<div class="space-y-2">
+<label class="text-[12px] font-medium text-error font-label px-1">에러 (Error)</label>
+<div class="h-12 w-full bg-surface-container-low rounded-[8px] flex items-center px-4 border border-error">
+<input class="bg-transparent border-none w-full focus:ring-0 text-[14px] text-on-surface" type="text" value="invalid-email"/>
+</div>
+<p class="text-[12px] text-error font-label px-1">올바른 이메일을 입력하세요</p>
+</div>
+<!-- Disabled -->
+<div class="space-y-2 opacity-40">
+<label class="text-[12px] font-medium text-outline-variant font-label px-1">비활성 (Disabled)</label>
+<div class="h-12 w-full bg-surface-container-low rounded-[8px] flex items-center px-4 cursor-not-allowed">
+<input class="bg-transparent border-none w-full focus:ring-0 text-[14px] text-on-surface cursor-not-allowed" disabled="" type="text" value="example@email.com"/>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Password Input States -->
+<section class="space-y-6 pt-8">
+<h2 class="text-xl font-bold font-pretendard text-primary">비밀번호 입력 (Password Input)</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Hidden -->
+<div class="space-y-2">
+<label class="text-[12px] font-medium text-on-surface-variant font-label px-1">비밀번호 숨김</label>
+<div class="h-12 w-full bg-surface-container-low rounded-[8px] flex items-center px-4 justify-between group focus-within:bg-surface-variant focus-within:border-b-2 focus-within:border-primary">
+<input class="bg-transparent border-none w-full focus:ring-0 text-[14px] text-on-surface tracking-widest" type="password" value="password123"/>
+<span class="material-symbols-outlined text-outline cursor-pointer" data-icon="visibility">visibility</span>
+</div>
+<p class="text-[12px] text-outline font-label px-1">8자 이상 입력하세요</p>
+</div>
+<!-- Visible -->
+<div class="space-y-2">
+<label class="text-[12px] font-medium text-on-surface-variant font-label px-1">비밀번호 표시</label>
+<div class="h-12 w-full bg-surface-container-low rounded-[8px] flex items-center px-4 justify-between focus-within:bg-surface-variant focus-within:border-b-2 focus-within:border-primary">
+<input class="bg-transparent border-none w-full focus:ring-0 text-[14px] text-on-surface" type="text" value="password123"/>
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="visibility_off">visibility_off</span>
+</div>
+<p class="text-[12px] text-outline font-label px-1">8자 이상 입력하세요</p>
+</div>
+</div>
+</section>
+<!-- 3. Label + Helper Pattern -->
+<section class="space-y-6 pt-8">
+<h2 class="text-xl font-bold font-pretendard text-primary">라벨 및 도움말 패턴 (Label + Helper)</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="p-8 bg-surface-container-lowest rounded-2xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] space-y-4">
+<h3 class="text-sm font-bold text-outline uppercase tracking-wider mb-4">Standard Pattern</h3>
+<div class="space-y-1">
+<label class="text-[12px] font-medium text-on-surface-variant font-label">사용자 이름</label>
+<div class="h-12 w-full bg-surface-container-low rounded-[8px] flex items-center px-4">
+<input class="bg-transparent border-none w-full focus:ring-0 text-[14px]" placeholder="이름을 입력하세요" type="text"/>
+</div>
+<p class="text-[12px] text-outline font-label">프로필에 표시될 이름입니다.</p>
+</div>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-2xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] space-y-4">
+<h3 class="text-sm font-bold text-outline uppercase tracking-wider mb-4">Error Pattern</h3>
+<div class="space-y-1">
+<label class="text-[12px] font-medium text-error font-label">사용자 이름</label>
+<div class="h-12 w-full bg-surface-container-low rounded-[8px] flex items-center px-4 border border-error">
+<input class="bg-transparent border-none w-full focus:ring-0 text-[14px]" type="text" value="!"/>
+</div>
+<p class="text-[12px] text-error font-label">특수문자는 사용할 수 없습니다.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Select / Dropdown -->
+<section class="space-y-6 pt-8">
+<h2 class="text-xl font-bold font-pretendard text-primary">드롭다운 (Select / Dropdown)</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+<!-- Closed -->
+<div class="space-y-2">
+<label class="text-[12px] font-medium text-on-surface-variant font-label px-1">카테고리 선택</label>
+<div class="h-12 w-full bg-surface-container-low rounded-[8px] flex items-center justify-between px-4 cursor-pointer">
+<span class="text-[14px] text-on-surface">상의</span>
+<span class="material-symbols-outlined text-outline" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+</div>
+<!-- Open -->
+<div class="space-y-2">
+<label class="text-[12px] font-medium text-on-surface-variant font-label px-1">목록 펼침</label>
+<div class="w-full bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden">
+<div class="px-4 py-3 hover:bg-surface-container-low cursor-pointer text-[14px]">아우터</div>
+<div class="px-4 py-3 bg-primary-fixed text-on-primary-fixed font-bold flex items-center justify-between cursor-pointer text-[14px]">
+                                상의
+                                <span class="material-symbols-outlined text-primary text-sm" data-icon="check">check</span>
+</div>
+<div class="px-4 py-3 hover:bg-surface-container-low cursor-pointer text-[14px]">하의</div>
+<div class="px-4 py-3 hover:bg-surface-container-low cursor-pointer text-[14px]">신발</div>
+<div class="px-4 py-3 hover:bg-surface-container-low cursor-pointer text-[14px]">액세서리</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Color Picker -->
+<section class="space-y-6 pt-8 pb-12">
+<h2 class="text-xl font-bold font-pretendard text-primary">컬러 피커 (Color Picker)</h2>
+<div class="p-10 bg-surface-container-lowest rounded-3xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)]">
+<div class="grid grid-cols-4 sm:grid-cols-7 md:grid-cols-13 gap-6 justify-items-center">
+<!-- Swatches -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm" style="background-color: #FF4444;"></div>
+<span class="text-[10px] text-outline font-medium">Red</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm" style="background-color: #FF8844;"></div>
+<span class="text-[10px] text-outline font-medium">Orange</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm" style="background-color: #FFCC00;"></div>
+<span class="text-[10px] text-outline font-medium">Yellow</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm" style="background-color: #44BB44;"></div>
+<span class="text-[10px] text-outline font-medium">Green</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 -m-1 rounded-full border-2 border-white shadow-lg ring-2 ring-primary flex items-center justify-center" style="background-color: #4488FF;">
+<span class="material-symbols-outlined text-white text-xs" data-icon="check">check</span>
+</div>
+<span class="text-[10px] text-primary font-bold">Blue</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm" style="background-color: #2244AA;"></div>
+<span class="text-[10px] text-outline font-medium">Navy</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm" style="background-color: #8844CC;"></div>
+<span class="text-[10px] text-outline font-medium">Purple</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm" style="background-color: #FF88AA;"></div>
+<span class="text-[10px] text-outline font-medium">Pink</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant shadow-sm" style="background-color: #FFFFFF;"></div>
+<span class="text-[10px] text-outline font-medium">White</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm" style="background-color: #999999;"></div>
+<span class="text-[10px] text-outline font-medium">Gray</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm" style="background-color: #333333;"></div>
+<span class="text-[10px] text-outline font-medium">Black</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm" style="background-color: #8B4513;"></div>
+<span class="text-[10px] text-outline font-medium">Brown</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-outline-variant/20 shadow-sm" style="background-color: #D2B48C;"></div>
+<span class="text-[10px] text-outline font-medium">Beige</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- BottomNavBar for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] flex justify-around items-center py-3 px-4 z-50">
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="smart_button">smart_button</span>
+<span class="text-[10px]">Buttons</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-blue-600 font-bold">
+<span class="material-symbols-outlined" data-icon="input" style="font-variation-settings: 'FILL' 1;">input</span>
+<span class="text-[10px]">Forms</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="view_quilt">view_quilt</span>
+<span class="text-[10px]">Cards</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+<span class="text-[10px]">Menu</span>
+</div>
+</nav>
+</body></html>

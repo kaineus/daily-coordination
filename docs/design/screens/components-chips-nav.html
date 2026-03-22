@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>오늘 뭐 입지? - Design System Reference</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-tint": "#0061a5",
+              "on-tertiary-fixed": "#271900",
+              "secondary-fixed": "#ffdad8",
+              "error": "#ba1a1a",
+              "surface-dim": "#d9dade",
+              "surface-container-low": "#f3f3f7",
+              "tertiary-container": "#9a6c00",
+              "on-surface-variant": "#414751",
+              "on-primary-container": "#fdfcff",
+              "secondary": "#ae2f34",
+              "outline-variant": "#c1c7d2",
+              "primary-fixed-dim": "#a0caff",
+              "on-tertiary": "#ffffff",
+              "inverse-surface": "#2e3034",
+              "on-error": "#ffffff",
+              "on-secondary-container": "#6d0010",
+              "on-tertiary-fixed-variant": "#5f4100",
+              "primary-container": "#2b78bf",
+              "primary-fixed": "#d2e4ff",
+              "on-secondary-fixed": "#410006",
+              "secondary-container": "#ff6b6b",
+              "inverse-on-surface": "#f0f0f4",
+              "on-background": "#1a1c1f",
+              "on-primary": "#ffffff",
+              "tertiary": "#7b5500",
+              "on-secondary-fixed-variant": "#8c1520",
+              "surface-bright": "#f9f9fd",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed-dim": "#fbbb45",
+              "error-container": "#ffdad6",
+              "on-primary-fixed-variant": "#00497e",
+              "background": "#f9f9fd",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-high": "#e8e8ec",
+              "outline": "#717782",
+              "on-error-container": "#93000a",
+              "secondary-fixed-dim": "#ffb3b0",
+              "primary": "#005ea1",
+              "surface-container": "#ededf1",
+              "inverse-primary": "#a0caff",
+              "surface-variant": "#e2e2e6",
+              "on-surface": "#1a1c1f",
+              "tertiary-fixed": "#ffdeab",
+              "on-tertiary-container": "#fffbff",
+              "surface-container-highest": "#e2e2e6",
+              "surface": "#f9f9fd",
+              "on-primary-fixed": "#001c37"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Be Vietnam Pro"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .chip-base {
+            height: 32px;
+            padding: 0 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .material-symbols-outlined {
+            font-size: 16px !important;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface p-8 max-w-5xl mx-auto space-y-12">
+<!-- Header -->
+<header class="mb-12">
+<h1 class="text-display-lg font-headline font-extrabold tracking-tight text-primary mb-2">Component Reference Sheet</h1>
+<p class="text-on-surface-variant">Atmospheric Curator Design System - Chips &amp; Navigation Clusters</p>
+</header>
+<!-- 1. Category Chips Section -->
+<section>
+<h2 class="text-headline-md font-headline font-bold mb-6 text-on-surface">1. Category Chips</h2>
+<div class="space-y-6 bg-surface-container-low p-8 rounded-xl">
+<!-- Row 1: All Default -->
+<div class="flex flex-wrap gap-4 items-center">
+<span class="text-xs font-bold text-outline w-16 uppercase">Row 1</span>
+<div class="flex gap-2">
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">apparel</span>아우터</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">dry_cleaning</span>상의</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">checkroom</span>하의</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">step_into</span>신발</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">watch</span>액세서리</button>
+</div>
+</div>
+<!-- Row 2: 아우터 selected -->
+<div class="flex flex-wrap gap-4 items-center">
+<span class="text-xs font-bold text-outline w-16 uppercase">Row 2</span>
+<div class="flex gap-2">
+<button class="chip-base bg-[#D2E4FF] text-primary font-bold"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">apparel</span>아우터</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">dry_cleaning</span>상의</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">checkroom</span>하의</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">step_into</span>신발</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">watch</span>액세서리</button>
+</div>
+</div>
+<!-- Row 3: 상의 + 하의 selected -->
+<div class="flex flex-wrap gap-4 items-center">
+<span class="text-xs font-bold text-outline w-16 uppercase">Row 3</span>
+<div class="flex gap-2">
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">apparel</span>아우터</button>
+<button class="chip-base bg-[#FFE8E8] text-secondary font-bold"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dry_cleaning</span>상의</button>
+<button class="chip-base bg-[#E8F5E9] text-green-800 font-bold"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">checkroom</span>하의</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">step_into</span>신발</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant"><span class="material-symbols-outlined">watch</span>액세서리</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Filter Chips Section -->
+<section>
+<h2 class="text-headline-md font-headline font-bold mb-6 text-on-surface">2. Filter Chips</h2>
+<div class="bg-surface-container-low p-8 rounded-xl">
+<div class="flex flex-wrap gap-3">
+<button class="chip-base bg-surface-container-high text-on-surface-variant">봄</button>
+<button class="chip-base bg-primary-fixed text-primary font-bold ring-1 ring-primary/20">
+                    여름 <span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant">가을</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant">겨울</button>
+<button class="chip-base bg-primary-fixed text-primary font-bold ring-1 ring-primary/20">
+                    출근 <span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<button class="chip-base bg-surface-container-high text-on-surface-variant">캐주얼</button>
+</div>
+</div>
+</section>
+<!-- 3. Mobile Bottom Tab Bar Section -->
+<section>
+<h2 class="text-headline-md font-headline font-bold mb-6 text-on-surface">3. Mobile Bottom Tab Bar (64px)</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- State 1: 코디 Active -->
+<div class="space-y-2">
+<p class="text-[10px] font-bold text-outline-variant uppercase tracking-widest ml-1">Active: 코디</p>
+<nav class="h-[64px] bg-surface-container-lowest flex items-center justify-around shadow-[0px_-10px_30px_rgba(0,0,0,0.04)] rounded-xl overflow-hidden px-4">
+<div class="flex flex-col items-center gap-0.5 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">light_mode</span>
+<span class="text-[10px] font-bold">코디</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-outline">
+<span class="material-symbols-outlined">checkroom</span>
+<span class="text-[10px] font-medium">옷장</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-outline">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">내정보</span>
+</div>
+</nav>
+</div>
+<!-- State 2: 옷장 Active -->
+<div class="space-y-2">
+<p class="text-[10px] font-bold text-outline-variant uppercase tracking-widest ml-1">Active: 옷장</p>
+<nav class="h-[64px] bg-surface-container-lowest flex items-center justify-around shadow-[0px_-10px_30px_rgba(0,0,0,0.04)] rounded-xl overflow-hidden px-4">
+<div class="flex flex-col items-center gap-0.5 text-outline">
+<span class="material-symbols-outlined">light_mode</span>
+<span class="text-[10px] font-medium">코디</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">checkroom</span>
+<span class="text-[10px] font-bold">옷장</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-outline">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">내정보</span>
+</div>
+</nav>
+</div>
+<!-- State 3: 내정보 Active -->
+<div class="space-y-2">
+<p class="text-[10px] font-bold text-outline-variant uppercase tracking-widest ml-1">Active: 내정보</p>
+<nav class="h-[64px] bg-surface-container-lowest flex items-center justify-around shadow-[0px_-10px_30px_rgba(0,0,0,0.04)] rounded-xl overflow-hidden px-4">
+<div class="flex flex-col items-center gap-0.5 text-outline">
+<span class="material-symbols-outlined">light_mode</span>
+<span class="text-[10px] font-medium">코디</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-outline">
+<span class="material-symbols-outlined">checkroom</span>
+<span class="text-[10px] font-medium">옷장</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-[10px] font-bold">내정보</span>
+</div>
+</nav>
+</div>
+</div>
+</section>
+<!-- 4. Desktop Top Navigation Bar Section -->
+<section>
+<h2 class="text-headline-md font-headline font-bold mb-6 text-on-surface">4. Desktop Top Navigation Bar (56px)</h2>
+<div class="bg-surface-container-low p-8 rounded-xl flex flex-col gap-6">
+<header class="h-[56px] bg-surface-container-lowest rounded-lg shadow-sm flex items-center justify-between px-8">
+<div class="flex items-center gap-2">
+<span class="text-2xl font-black tracking-widest text-primary uppercase font-headline">오늘 뭐 입지?</span>
+</div>
+<nav class="flex gap-8 items-center h-full">
+<a class="h-full flex items-center text-sm font-bold text-primary border-b-2 border-primary relative top-[1px]" href="#">오늘의 코디</a>
+<a class="h-full flex items-center text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="#">내 옷장</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 cursor-pointer hover:bg-surface-container px-3 py-1.5 rounded-full transition-all">
+<span class="text-xs font-semibold text-on-surface-variant">Fashionista Lee</span>
+<span class="material-symbols-outlined text-outline">account_circle</span>
+</div>
+</div>
+</header>
+<p class="text-sm text-outline-variant italic">* Underline indicates the active state within the 56px height cluster.</p>
+</div>
+</section>
+<!-- Footer Meta -->
+<footer class="mt-20 border-t border-outline-variant/30 pt-8 text-center">
+<p class="text-[10px] font-bold tracking-widest text-outline uppercase">© Atmospheric Curator UI Kit V1.0</p>
+</footer>
+</body></html>

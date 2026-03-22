@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed-variant": "#5f4100",
+              "on-error": "#ffffff",
+              "on-primary": "#ffffff",
+              "surface-dim": "#d9dade",
+              "outline": "#717782",
+              "secondary-fixed-dim": "#ffb3b0",
+              "tertiary": "#7b5500",
+              "secondary-container": "#ff6b6b",
+              "on-tertiary-fixed": "#271900",
+              "on-secondary-fixed": "#410006",
+              "error": "#ba1a1a",
+              "on-surface-variant": "#414751",
+              "background": "#f9f9fd",
+              "secondary": "#ae2f34",
+              "tertiary-fixed-dim": "#fbbb45",
+              "inverse-primary": "#a0caff",
+              "surface-container-high": "#e8e8ec",
+              "surface": "#f9f9fd",
+              "on-background": "#1a1c1f",
+              "on-secondary": "#ffffff",
+              "primary": "#005ea1",
+              "on-tertiary": "#ffffff",
+              "primary-fixed": "#d2e4ff",
+              "surface-container-highest": "#e2e2e6",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed-dim": "#a0caff",
+              "on-secondary-container": "#6d0010",
+              "secondary-fixed": "#ffdad8",
+              "primary-container": "#2b78bf",
+              "surface-bright": "#f9f9fd",
+              "outline-variant": "#c1c7d2",
+              "on-surface": "#1a1c1f",
+              "inverse-surface": "#2e3034",
+              "inverse-on-surface": "#f0f0f4",
+              "surface-container": "#ededf1",
+              "on-primary-fixed": "#001c37",
+              "on-secondary-fixed-variant": "#8c1520",
+              "on-primary-fixed-variant": "#00497e",
+              "on-error-container": "#93000a",
+              "tertiary-container": "#9a6c00",
+              "surface-variant": "#e2e2e6",
+              "on-tertiary-container": "#fffbff",
+              "on-primary-container": "#fdfcff",
+              "surface-container-low": "#f3f3f7",
+              "tertiary-fixed": "#ffdeab",
+              "surface-tint": "#0061a5"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Be Vietnam Pro"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #005ea1 0%, #2b78bf 100%);
+        }
+        .ethereal-shadow {
+            box-shadow: 0px 20px 40px rgba(26, 28, 31, 0.06);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body text-on-background min-h-screen flex flex-col">
+<!-- Hero Section -->
+<section class="hero-gradient h-[397px] w-full flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+<!-- Decorative abstract element for "Atmospheric" feel -->
+<div class="absolute top-[-10%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[-20%] left-[-5%] w-80 h-80 bg-primary-container/30 rounded-full blur-3xl"></div>
+<div class="z-10 flex flex-col items-center">
+<div class="mb-4 bg-white/20 backdrop-blur-md p-4 rounded-full">
+<span class="material-symbols-outlined text-white text-5xl" style="font-variation-settings: 'FILL' 1;">checkroom</span>
+</div>
+<h1 class="font-headline font-extrabold text-3xl text-white tracking-widest mb-2">오늘 뭐 입지?</h1>
+<p class="text-white/80 text-sm font-medium tracking-tight">날씨에 맞는 오늘의 코디, AI가 추천해드려요</p>
+</div>
+</section>
+<!-- Login Form Card (Overlapping) -->
+<main class="flex-1 px-6 -mt-16 pb-12 z-20">
+<div class="max-w-md mx-auto bg-surface-container-lowest rounded-[24px] ethereal-shadow p-8">
+<!-- Social Login -->
+<button class="w-full flex items-center justify-center gap-3 bg-white border border-outline-variant/30 py-3.5 rounded-xl hover:bg-surface-container-low transition-colors duration-300">
+<img alt="Google Logo" class="w-5 h-5" data-alt="Google colorful G logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjqpwHkSmUMQM4R0h6WqzvdY75ZTe-y7NUuHIUf3RmX_ylK8x_oVwhGaXVk7h9GV2ThrDBo69Xr_4LWmaNLsISNWCELnpXLi6mF-SqMgbpPGDvT4IkWKMTpgi8YaAZn_9LGy5u10J7Zyybg5-DAJxbUAhRaicaiaRp9n0VBIA8OdXHYR-iWKwvCtvZQ6IARlfk1Km4WyJix0encG1n70HXWjWpNS6Uub5sa5J3pmyC9tbTPIAiEGrOo8U4AhDtz5Fkjev8MpSq3AM"/>
+<span class="text-on-surface font-semibold text-sm">Google로 시작하기</span>
+</button>
+<!-- Divider -->
+<div class="flex items-center my-8">
+<div class="flex-1 h-[1px] bg-outline-variant/20"></div>
+<span class="px-4 text-xs text-outline font-medium">또는</span>
+<div class="flex-1 h-[1px] bg-outline-variant/20"></div>
+</div>
+<!-- Email Login Form -->
+<form class="space-y-5">
+<div class="space-y-2">
+<label class="block text-xs font-bold text-on-surface-variant ml-1 tracking-wider uppercase">이메일</label>
+<input class="w-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary/20 rounded-xl px-4 py-3.5 text-sm placeholder:text-outline/60 transition-all" placeholder="example@email.com" type="email"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center ml-1">
+<label class="block text-xs font-bold text-on-surface-variant tracking-wider uppercase">비밀번호</label>
+<button class="text-primary text-[10px] font-bold uppercase tracking-tighter" type="button">비밀번호를 잊으셨나요?</button>
+</div>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary/20 rounded-xl px-4 py-3.5 text-sm placeholder:text-outline/60 transition-all" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline/60 cursor-pointer text-lg">visibility</span>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-sm shadow-lg shadow-primary/20 active:scale-[0.98] transition-all mt-4" type="submit">
+                    로그인
+                </button>
+</form>
+<!-- Sign Up Link -->
+<div class="mt-8 text-center">
+<p class="text-xs text-on-surface-variant">
+                    계정이 없으신가요? <a class="text-primary font-bold ml-1 hover:underline underline-offset-4" href="#">회원가입</a>
+</p>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-auto py-8 px-8 text-center">
+<p class="text-[10px] leading-relaxed text-outline/70 max-w-xs mx-auto">
+            계속 진행하면 <span class="underline decoration-outline/30">이용약관</span> 및 <span class="underline decoration-outline/30">개인정보처리방침</span>에 동의하는 것으로 간주됩니다
+        </p>
+</footer>
+</body></html>
