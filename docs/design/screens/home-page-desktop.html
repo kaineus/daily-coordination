@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-container": "#fdfcff",
+              "inverse-primary": "#a0caff",
+              "secondary": "#ae2f34",
+              "surface-tint": "#0061a5",
+              "on-error-container": "#93000a",
+              "inverse-on-surface": "#f0f0f4",
+              "on-secondary-container": "#6d0010",
+              "primary-fixed-dim": "#a0caff",
+              "on-tertiary-container": "#fffbff",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#fbbb45",
+              "surface-container-low": "#f3f3f7",
+              "on-secondary-fixed": "#410006",
+              "error": "#ba1a1a",
+              "surface-container-high": "#e8e8ec",
+              "surface-container": "#ededf1",
+              "tertiary": "#7b5500",
+              "secondary-container": "#ff6b6b",
+              "error-container": "#ffdad6",
+              "surface-dim": "#d9dade",
+              "secondary-fixed": "#ffdad8",
+              "primary-fixed": "#d2e4ff",
+              "on-background": "#1a1c1f",
+              "background": "#f9f9fd",
+              "surface": "#f9f9fd",
+              "secondary-fixed-dim": "#ffb3b0",
+              "tertiary-fixed": "#ffdeab",
+              "outline-variant": "#c1c7d2",
+              "on-primary": "#ffffff",
+              "on-tertiary-fixed-variant": "#5f4100",
+              "on-secondary": "#ffffff",
+              "inverse-surface": "#2e3034",
+              "surface-container-highest": "#e2e2e6",
+              "on-surface": "#1a1c1f",
+              "surface-variant": "#e2e2e6",
+              "on-primary-fixed": "#001c37",
+              "tertiary-container": "#9a6c00",
+              "on-error": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "outline": "#717782",
+              "on-primary-fixed-variant": "#00497e",
+              "on-tertiary-fixed": "#271900",
+              "on-surface-variant": "#414751",
+              "surface-bright": "#f9f9fd",
+              "primary-container": "#2b78bf",
+              "primary": "#005ea1",
+              "on-secondary-fixed-variant": "#8c1520"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Pretendard", "Be Vietnam Pro"],
+              "label": ["Pretendard", "Be Vietnam Pro"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Pretendard', sans-serif; }
+        .glass-nav { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); }
+        .weather-gradient { background: linear-gradient(135deg, #FFC107, #FF6B6B); }
+        .curve-gradient { background: linear-gradient(to bottom, rgba(0, 94, 161, 0.1), transparent); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 glass-nav shadow-[0px_20px_40px_rgba(26,28,31,0.06)]">
+<div class="flex justify-between items-center w-full px-12 py-6 max-w-[1200px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black tracking-tighter text-primary">오늘 뭐 입지?</span>
+<div class="hidden md:flex gap-8 font-headline tracking-widest uppercase text-sm font-semibold">
+<a class="text-blue-700 border-b-2 border-blue-600 pb-1" href="#">오늘의 코디</a>
+<a class="text-slate-500 hover:text-blue-500 transition-colors" href="#">내 옷장</a>
+<a class="text-slate-500 hover:text-blue-500 transition-colors" href="#">날씨 지도</a>
+<a class="text-slate-500 hover:text-blue-500 transition-colors" href="#">스타일 커뮤니티</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<span class="text-sm font-medium text-on-surface-variant">홍길동</span>
+<img alt="User profile avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-sm" data-alt="Close up portrait of a young man smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8qOCaxJPSpZ1uU2KIPhpdTb10pIYstGCLWcc2Qa_B-bN3FONuoV7aC5nIrUAi8OJVvlmCeZeP_D4UjSzF_ZbBiAtQYcJCd1QVaSSRXWaqK37vM7jo87bANi_Al-Iz5tE2IPkH1fZtlosOfxsCrHgYrez4StV0IlLJDRMf1oSh9DW-su22R2ungTpiGjrDnMDziJvJZMH71gkozuvg0vi8gmlXLKq68xcILT1mZLBiEun4Tku2mao0kIbR56GBV2U4Vi9Hs3o3GPQ"/>
+</div>
+<div class="flex gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined cursor-pointer hover:opacity-80 transition-all">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:opacity-80 transition-all">settings</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-32 pb-24 max-w-[1200px] mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-[45%_55%] gap-8">
+<!-- Left Column: Weather -->
+<section class="flex flex-col gap-6">
+<!-- Weather Hero Card -->
+<div class="weather-gradient rounded-[20px] p-10 text-white relative overflow-hidden shadow-xl">
+<div class="relative z-10">
+<p class="text-xl font-medium opacity-90">서울특별시</p>
+<div class="flex items-center mt-2">
+<h1 class="text-8xl font-extrabold tracking-tighter">18°</h1>
+<div class="ml-6">
+<span class="material-symbols-outlined text-7xl text-yellow-300 drop-shadow-[0_0_20px_rgba(253,224,71,0.8)]" style="font-variation-settings: 'FILL' 1;">light_mode</span>
+<p class="text-2xl font-semibold mt-1">맑음</p>
+</div>
+</div>
+<div class="flex gap-4 mt-12">
+<div class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">swap_vert</span>
+<span class="text-sm font-medium">11° / 22°</span>
+</div>
+<div class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">humidity_low</span>
+<span class="text-sm font-medium">10%</span>
+</div>
+<div class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">air</span>
+<span class="text-sm font-medium">2.3m/s</span>
+</div>
+</div>
+</div>
+<!-- Abstract Background Graphic -->
+<div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+</div>
+<!-- Temperature Curve Chart -->
+<div class="bg-surface-container-lowest rounded-2xl p-8 shadow-sm">
+<div class="flex justify-between items-center mb-10">
+<h3 class="text-lg font-bold text-on-surface">시간대별 날씨</h3>
+<span class="text-sm text-on-surface-variant">오늘, 5월 14일</span>
+</div>
+<div class="relative h-48 w-full mt-12">
+<!-- Chart SVG (Bezier Curve) -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 800 150">
+<defs>
+<lineargradient id="curveGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:rgba(0, 94, 161, 0.15);stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:rgba(255, 255, 255, 0);stop-opacity:1"></stop>
+</lineargradient>
+</defs>
+<path d="M0,120 C100,100 200,80 250,50 S400,20 500,40 S700,120 800,130 L800,150 L0,150 Z" fill="url(#curveGradient)"></path>
+<path d="M0,120 C100,100 200,80 250,50 S400,20 500,40 S700,120 800,130" fill="none" stroke="#005EA1" stroke-width="3"></path>
+<!-- Current Time Vertical Line -->
+<line stroke="#005EA1" stroke-dasharray="4 4" stroke-width="1" x1="250" x2="250" y1="0" y2="150"></line>
+<circle cx="250" cy="50" fill="#005EA1" r="6" stroke="white" stroke-width="2"></circle>
+</svg>
+<!-- Points Labels -->
+<div class="absolute inset-0 flex justify-between items-end pb-2">
+<div class="flex flex-col items-center -mb-8">
+<span class="text-xs font-semibold mb-20 text-on-surface-variant">11°</span>
+<span class="material-symbols-outlined text-sm mb-1 text-yellow-500">light_mode</span>
+<span class="text-[10px] text-on-surface-variant">06시</span>
+</div>
+<div class="flex flex-col items-center -mb-8">
+<span class="text-xs font-semibold mb-24 text-on-surface-variant">14°</span>
+<span class="material-symbols-outlined text-sm mb-1 text-yellow-500">light_mode</span>
+<span class="text-[10px] text-on-surface-variant">09시</span>
+</div>
+<div class="flex flex-col items-center -mb-8">
+<span class="text-xs font-bold mb-32 text-primary">18°</span>
+<span class="material-symbols-outlined text-sm mb-1 text-yellow-500">light_mode</span>
+<span class="text-[10px] font-bold text-primary">12시</span>
+</div>
+<div class="flex flex-col items-center -mb-8">
+<span class="text-xs font-semibold mb-36 text-on-surface-variant">20°</span>
+<span class="material-symbols-outlined text-sm mb-1 text-slate-400">partly_cloudy_day</span>
+<span class="text-[10px] text-on-surface-variant">15시</span>
+</div>
+<div class="flex flex-col items-center -mb-8">
+<span class="text-xs font-semibold mb-28 text-on-surface-variant">17°</span>
+<span class="material-symbols-outlined text-sm mb-1 text-slate-400">cloud</span>
+<span class="text-[10px] text-on-surface-variant">18시</span>
+</div>
+<div class="flex flex-col items-center -mb-8">
+<span class="text-xs font-semibold mb-20 text-on-surface-variant">13°</span>
+<span class="material-symbols-outlined text-sm mb-1 text-slate-400">cloud</span>
+<span class="text-[10px] text-on-surface-variant">21시</span>
+</div>
+<div class="flex flex-col items-center -mb-8">
+<span class="text-xs font-semibold mb-16 text-on-surface-variant">11°</span>
+<span class="material-symbols-outlined text-sm mb-1 text-yellow-500">light_mode</span>
+<span class="text-[10px] text-on-surface-variant">00시</span>
+</div>
+<div class="flex flex-col items-center -mb-8">
+<span class="text-xs font-semibold mb-12 text-on-surface-variant">9°</span>
+<span class="material-symbols-outlined text-sm mb-1 text-yellow-500">light_mode</span>
+<span class="text-[10px] text-on-surface-variant">03시</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: AI Outfit -->
+<section class="flex flex-col gap-6">
+<h2 class="text-[28px] font-bold text-on-surface flex items-center gap-2">
+                    오늘의 코디 <span class="material-symbols-outlined text-secondary-container">auto_awesome</span>
+</h2>
+<div class="bg-surface-container-lowest rounded-2xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] p-10 flex flex-col gap-8">
+<!-- AI Summary -->
+<div>
+<h3 class="text-2xl font-semibold text-on-surface leading-tight">선선한 봄 날씨에 어울리는<br/>캐주얼 코디</h3>
+<div class="flex gap-2 mt-4">
+<div class="w-3 h-3 rounded-full bg-[#E2E8F0]"></div>
+<div class="w-3 h-3 rounded-full bg-[#1A1C1F]"></div>
+<div class="w-3 h-3 rounded-full bg-[#005EA1]"></div>
+<div class="w-3 h-3 rounded-full bg-[#FFDAD6]"></div>
+</div>
+</div>
+<!-- Outfit Grid -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-6 rounded-xl flex flex-col items-center transition-transform hover:scale-[1.02] cursor-pointer">
+<span class="text-xs font-bold text-on-surface-variant mb-4 self-start">아우터</span>
+<img alt="Beige Trench Coat" class="w-32 h-32 object-contain mix-blend-multiply mb-2" data-alt="Stylish beige trench coat flat lay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTQKUowR4q8YMQxFY_yQMmTm2lfBzLOz4Lr1p6jJndtt-Yt64D_Hx5ZNco4BP9G8yyprJ9WoDxON9tzfB9kITI3-upe7Vv8ATfMjrrkC5ugJmTnWi6QBk5vhRuXxdQL1TR6lOmB4aOZcqs6t1xIEVC3Zx_LHrcRtHSKYwFv2322ZLYVHuADxTDAsTZKbwHgCJO5OZVBxjCKFLO7wIZA8G1ebz_g4fTfLgaAIP-Y2Kcbp3ATRNK6N-6g7d_n7W0gZYokInZFQl0uQs"/>
+<p class="text-sm font-medium">베이지 트렌치 코트</p>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl flex flex-col items-center transition-transform hover:scale-[1.02] cursor-pointer">
+<span class="text-xs font-bold text-on-surface-variant mb-4 self-start">상의</span>
+<img alt="White T-shirt" class="w-32 h-32 object-contain mix-blend-multiply mb-2" data-alt="Classic white cotton t-shirt minimal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJpQafAk3l5NbGhnTqyNexusgT8-_bI1_DS5oS2JX3mKIiZ8YjVtIrAND6GD2l0kjae2JE0h4mdq4Nho48WVTs_KVG6SmHF1RoSXqrw8xSPTv1STZg5uNzth19lGSYJHlYMe1NOJz58NhgEUwxUthx4IPGDW56zrsZ6nY5TOlFE_2iMnzo6N7OBTWKPgkSD6QQOfGIFhKGqt6mV5cOG7jldhFCrmygDursgwkvdRczxLX_Z0OS6OipwoV52WK_5akTZx8ge-Nm8ik"/>
+<p class="text-sm font-medium">화이트 코튼 티셔츠</p>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl flex flex-col items-center transition-transform hover:scale-[1.02] cursor-pointer">
+<span class="text-xs font-bold text-on-surface-variant mb-4 self-start">하의</span>
+<img alt="Blue Jeans" class="w-32 h-32 object-contain mix-blend-multiply mb-2" data-alt="Straight fit blue denim jeans" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG1hOyK9IGNwJ5Kz-LG1TqMLwWmKMwwEjmSSUPOmFFg_1Tm0E1kDAwebCWqbiG1YkWxovTmOiA5szTtf_bF-YYagPKNVHCoSb04f5V0-pahIJYUoqYM7VHyqdJD59k57qd9uKzFW4xaOaIMzzdKrP6TxoaCfV2HksUyZAXJ4JwhKnru1FmE-L8l34TX33VvNTkXYY0kK2WuXXn-gfmg5yysJygSnbWRqoEAb34FMJo2IvRpYCfjaxbwhOo8LRVEBvVUVpN4LLqVuA"/>
+<p class="text-sm font-medium">스트레이트 생지 데님</p>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl flex flex-col items-center transition-transform hover:scale-[1.02] cursor-pointer">
+<span class="text-xs font-bold text-on-surface-variant mb-4 self-start">신발</span>
+<img alt="White Sneakers" class="w-32 h-32 object-contain mix-blend-multiply mb-2" data-alt="Clean white leather sneakers fashion" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc5saC-vx_iA3hlLdffafopmRWwzksMKOtMxoNAcWo7KhR8M3aXAvRu952HtnFFwJrzA4sQRoYEkeXdkVAnykGHS_DA2DoJQ0Zg7ojwWnMHpAgWZJCCJJv-YQiQhs9BauW5UiV4rNA1DX-vYocmdklw2O1Ht2eZd9pt87yHb9VOrVOi1VMetk9Nl1QPQ8nHkFB-t59lCz1qSyKS9XOpWDV5S-QaV7hnIgIvEKYUH2HO6QSjkLWOfswoYUcds79qHH8b65x_GDHGls"/>
+<p class="text-sm font-medium">클래식 레더 스니커즈</p>
+</div>
+</div>
+<!-- AI Tip Box -->
+<div class="bg-primary/5 border-l-4 border-primary p-6 rounded-r-xl">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-xl">info</span>
+<span class="font-bold text-primary text-sm uppercase tracking-wider">AI Styling Tip</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                            오후부터는 기온이 20도까지 올라가 다소 따뜻할 수 있으니, 가벼운 트렌치 코트를 활용해 체온 조절을 하는 것이 좋습니다. 화사한 화이트 티셔츠와 데님 조합으로 세련된 데일리룩을 완성해보세요.
+                        </p>
+</div>
+<!-- Recommendation Button -->
+<button class="w-[200px] mx-auto bg-secondary-container text-on-primary py-4 rounded-xl font-bold shadow-lg hover:brightness-110 active:scale-95 transition-all">
+                        다른 코디 추천
+                    </button>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-slate-100 bg-slate-50 mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 max-w-[1200px] mx-auto gap-4">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="text-lg font-bold text-slate-400">오늘 뭐 입지?</span>
+<p class="font-['Pretendard'] leading-relaxed text-xs text-slate-400">© 2024 오늘 뭐 입지? Atmospheric Curator. All rights reserved.</p>
+</div>
+<div class="flex gap-8">
+<a class="text-xs text-slate-400 hover:text-slate-600 underline underline-offset-4" href="#">이용약관</a>
+<a class="text-xs text-slate-400 hover:text-slate-600 underline underline-offset-4" href="#">개인정보처리방침</a>
+<a class="text-xs text-slate-400 hover:text-slate-600 underline underline-offset-4" href="#">고객센터</a>
+<a class="text-xs text-slate-400 hover:text-slate-600 underline underline-offset-4" href="#">광고문의</a>
+</div>
+</div>
+</footer>
+</body></html>

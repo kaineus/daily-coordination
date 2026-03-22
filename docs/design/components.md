@@ -31,15 +31,31 @@
 ## 2. Cards
 
 ### Weather Card
-- **배경**: primary → primary-container 그라데이션 (135deg)
+- **배경**: 하늘상태별 그라데이션 (DESIGN.md 하늘상태 매핑 참조)
 - **텍스트**: white
 - **radius**: 16px
 - **패딩**: 24px
 - **내용**:
   - 위치명 (Caption)
-  - 기온 (Display, 28px Bold)
-  - 날씨 상태 아이콘 + 텍스트 (Body)
-  - 강수 확률 (Caption)
+  - 현재 기온 (Display, 28px Bold)
+  - 하늘상태 아이콘 + 텍스트 (Body)
+  - 최저/최고 기온 (Body, white 90%) — "최저 11° · 최고 22°"
+  - 강수확률 + 풍속 (Caption, white 70%) — "강수확률 10% · 풍속 2.3m/s"
+
+### Hourly Weather Item (시간대별 날씨)
+- **컨테이너**: 가로 스크롤 (overflow-x: auto, snap scroll, 스크롤바 숨김)
+- **각 아이템**: 80px 너비
+- **배경**: `--color-surface-lowest` (#FFFFFF)
+- **radius**: 12px
+- **패딩**: 16px 8px (세로/가로)
+- **내용** (세로 중앙 정렬):
+  - 시각 (Caption, 12px, on-surface-variant) — "09시"
+  - 하늘상태 아이콘 (24px)
+  - 기온 (Title, 16px SemiBold, on-surface) — "14°"
+  - 풍속 (Caption, 10px, outline) — "2.1m/s"
+- **차트 효과**: 기온에 따라 아이템 내 온도 텍스트 위치를 수직으로 조정하여 시각적 온도 변화 표현
+- **간격**: 아이템 간 12px gap
+- **데스크톱**: 스크롤 없이 한 줄 배치, 각 100px 너비
 
 ### Outfit Recommendation Card
 - **배경**: `--color-surface-lowest` (#FFFFFF)
@@ -144,15 +160,41 @@
 - 메시지: "오늘의 코디를 추천하려면 옷이 필요해요"
 - 옷장 페이지 링크 버튼
 
-## 7. Weather Icons
+## 7. Weather Icons (커스텀 일러스트)
 
-| 날씨 | 아이콘 | 배경 그라데이션 |
-|------|--------|----------------|
-| 맑음 | ☀️ | warm yellow → orange |
-| 흐림 | ☁️ | light gray → white |
-| 비 | 🌧️ | blue → gray |
-| 눈 | ❄️ | white → light blue |
-| 바람 | 💨 | — |
+이모지 대신 **커스텀 SVG 스타일 일러스트 아이콘** 사용. 레퍼런스: `screens/components-weather-icons.html`
+
+| 상태 | 스타일 | 글로우 색상 | 배경 그라데이션 (135deg) |
+|------|--------|-----------|------------------------|
+| 맑음 | 황금빛 태양 + 그라데이션 광선 | #FFC107 | `#FFC107` → `#FF6B6B` |
+| 구름많음 | 태양 + 회색 구름 | #E8E8EC | `#E8E8EC` → `#FFFFFF` |
+| 흐림 | 겹친 회색 구름 | #C1C7D2 | `#C1C7D2` → `#E8E8EC` |
+| 비 | 어두운 구름 + 빗방울 | #005EA1 | `#005EA1` → `#717782` |
+| 눈 | 흰/아이스블루 구름 + 눈꽃 | #D2E4FF | `#FFFFFF` → `#D2E4FF` |
+| 비/눈 | 혼합 구름 + 빗방울/눈꽃 | #005EA1 | `#005EA1` → `#D2E4FF` |
+
+### 아이콘 사이즈
+| 용도 | 사이즈 | 글로우 |
+|------|--------|--------|
+| 데스크톱 히어로 | 64~96px | O (radial glow) |
+| 모바일 날씨 카드 | 48~80px | O |
+| 시간대별 차트 | 20~24px | X (compact) |
+
+## 8. Temperature Curve Chart (기온 곡선 차트)
+
+시간대별 날씨를 **부드러운 곡선 라인 차트**로 시각화.
+
+- **라인**: `--color-primary` (#005EA1), 2px, SVG bezier curve
+- **채우기**: 곡선 아래 `--color-primary-fixed` (#D2E4FF) 20% opacity → transparent 그라데이션
+- **데이터 포인트**:
+  - 도트: 8px 원형 (primary outline, white fill)
+  - 현재 시간: 12px 원형 (primary filled) + 수직 점선
+  - 기온 라벨: 도트 위 (14px Bold)
+  - 아이콘: 곡선 아래 (20px, 커스텀 일러스트)
+  - 시각: 아이콘 아래 (12px, on-surface-variant)
+- **모바일**: 가로 스크롤, 8개 시간대, snap scroll
+- **데스크톱**: 스크롤 없이 전체 표시
+- **카드**: white bg, 16px radius, 20px padding
 
 ## Stitch 참조
 
@@ -168,6 +210,7 @@
 | 카드 시스템 | `screens/components-cards.html` | `a9d66c7f247b4b4fbd29bc641bdca601` |
 | 칩 & 네비게이션 | `screens/components-chips-nav.html` | `4852dfbc421b41fa965fa09c38011e6c` |
 | 아이콘 & 날씨 | `screens/components-icons.html` | `02993d2df3824b66b386f68b4d65b421` |
+| 커스텀 날씨 아이콘 | `screens/components-weather-icons.html` | `f36d016bd2134fe7a2735e3ef8e7e6aa` |
 
 ### 화면 스크린
 | 화면 | 모바일 | 데스크톱 |
@@ -176,3 +219,4 @@
 | 회원가입 | `screens/signup-screen.html` | `screens/signup-screen-desktop.html` |
 | 내 옷장 | `screens/closet-page.html` | `screens/closet-page-desktop.html` |
 | 옷 등록 모달 | `screens/add-clothing-modal.html` | — |
+| 홈 (오늘의 코디) | `screens/home-page.html` | `screens/home-page-desktop.html` |
