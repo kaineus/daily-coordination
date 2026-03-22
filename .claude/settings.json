@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/write-handoff.sh",
+            "timeout": 5,
+            "statusMessage": "핸드오프 확인 중..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/check-handoff.sh",
+            "timeout": 5,
+            "statusMessage": "핸드오프 확인 중..."
+          }
+        ]
+      }
+    ]
+  }
+}

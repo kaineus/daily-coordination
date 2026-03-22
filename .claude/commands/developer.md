@@ -22,35 +22,121 @@ description: Developer 역할 활성화
 - `package.json` — 의존성 및 스크립트
 
 ## 기술 스택
+- **Frontend**: Vanilla JS + Vite + Lit (A2UI 렌더러)
+- **A2UI**: v0.9 — AI 코디 추천 UI 동적 생성
 - **Backend**: Supabase
   - `@supabase/supabase-js`로 Auth, DB, Storage, Realtime 연동
-  - 환경변수: SUPABASE_URL, SUPABASE_ANON_KEY (.env에 저장)
-
-### Vanilla JS + A2UI 사용 시
-- A2UI v0.9: 선언적 JSON UI 프로토콜
-- 컴포넌트: Row, Column, Text, Button, TextField, Card, Modal, Tabs
-- 데이터 바인딩: JSON Pointer (RFC 6901)
-- 렌더러: Lit 기반 웹 컴포넌트 (`@a2ui/web-lib`)
-- 플랫 컴포넌트 리스트 + ID 참조 방식
-
-### React 사용 시
-- 표준 React 컴포넌트 아키텍처
-- Stitch HTML 출력을 참조하여 스타일링
-- DESIGN.md의 토큰을 CSS 변수 또는 테마로 추출
+  - 환경변수: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (.env)
+- **렌더러**: Lit 기반 웹 컴포넌트 (`@a2ui/web-lib`)
 
 ## 프로젝트 구조 (src/)
 ```
 src/
 ├── index.html
-├── main.js
+├── main.js              # 앱 진입점, 라우터
 ├── styles/
-│   └── theme.css          # DESIGN.md 기반 디자인 토큰
-├── components/             # UI 컴포넌트
-├── services/
-│   └── supabase.js        # Supabase 클라이언트
-├── pages/                  # 페이지 단위 뷰
-└── utils/
+│   └── theme.css        # DESIGN.md 기반 디자인 토큰
+├── components/          # 재사용 UI 컴포넌트
+├── services/            # 외부 통신 (Supabase, API)
+│   └── supabase.js
+├── pages/               # 페이지 단위 뷰
+├── a2ui/                # A2UI 렌더러 초기화
+└── utils/               # 순수 유틸리티 함수
 ```
+
+---
+
+## 코딩 원칙 (항상 적용)
+
+### 레이어 분리 및 의존성 방향 (단방향)
+```
+pages → components, services, utils
+components → utils (services 직접 호출 금지)
+services → utils (DOM 조작 금지)
+utils → 순수 함수만 (아무것도 import하지 않음)
+```
+
+### 변수 & 함수
+- `const` 우선, `let` 필요시만, `var` 금지
+- 매개변수 3개 이상이면 객체 구조분해: `function create({ name, color, category })`
+- 한 함수는 30줄 이내. 초과 시 작은 함수로 분해
+
+### 비동기 처리
+- `async/await` + `try/catch` 필수
+- 독립적 비동기 작업은 `Promise.all`로 병렬 실행
+- services에서 `throw`, pages에서 `catch` 후 사용자 피드백
+
+### DOM 조작
+- 이벤트 위임 사용 (부모에 한 번 등록, `e.target.closest()`)
+- DOM 배치 업데이트 (`DocumentFragment`)
+- 사용자 입력은 `textContent` 또는 `escapeHTML()` 사용 (XSS 방지)
+
+### 명명 규칙
+| 대상 | 패턴 | 예시 |
+|------|------|------|
+| 파일 | kebab-case | `weather-card.js` |
+| 함수 | camelCase | `fetchWeather()` |
+| 클래스 | PascalCase | `WeatherCard` |
+| 상수 | UPPER_SNAKE | `API_BASE_URL` |
+| CSS 클래스 | kebab-case | `.weather-card` |
+
+### import 순서
+```js
+// 1. 외부 라이브러리
+// 2. 내부 services
+// 3. 내부 components
+// 4. utils
+// 5. 스타일
+```
+
+### Supabase 패턴
+```js
+// 클라이언트 싱글톤 (services/supabase.js)
+import { createClient } from '@supabase/supabase-js';
+export const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
+
+// 쿼리: select에 join 명시, error 체크 필수
+const { data, error } = await supabase
+  .from('user_clothes')
+  .select('*, clothing_categories(name, type, icon)')
+  .eq('user_id', userId);
+if (error) throw error;
+```
+
+### 라우팅 (Hash-based)
+```js
+const routes = {
+  '': () => import('./pages/login.js'),
+  'home': () => import('./pages/home.js'),
+  'closet': () => import('./pages/closet.js'),
+};
+```
+
+### 보안
+- API 키는 프론트엔드에 노출 금지 (Supabase anon key는 RLS로 보호되므로 예외)
+- 서버 전용 키(Gemini, 기상청)는 Edge Function에서만 사용
+- 외부 API 호출은 Edge Function 프록시를 통해
+
+### 환경변수 (Vite)
+- 클라이언트 노출 변수: `VITE_` 접두사 필수
+- `import.meta.env.VITE_*`로 접근
+
+---
+
+## 최신 문서 참조
+
+새로운 API나 패턴이 필요할 때 context7 MCP로 최신 문서 확인:
+- MDN Web Docs: `/mdn/content`
+- Vite: `/websites/vite_dev`
+- Lit: `/lit/lit.dev`
+- Supabase: `/supabase/supabase`
+
+심화 리팩토링이 필요하면 `/refactor` 커맨드를 사용.
+
+---
 
 ## 워크플로우
 1. 요구사항과 디자인 문서 읽기
