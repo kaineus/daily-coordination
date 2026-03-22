@@ -1,19 +1,17 @@
-import { authStore } from '../store/auth.store.js';
-
 /**
- * Supabase Auth 이벤트를 구독하여 authStore에 반영
+ * Supabase Auth 이벤트를 구독하여 콜백으로 세션 변경 전달
  */
-export function initAuth(supabase) {
+export function initAuth(supabase, onSessionChange) {
   // 현재 세션 확인
   supabase.auth.getSession().then(({ data: { session } }) => {
-    authStore.actions.setSession(session);
+    onSessionChange(session);
   });
 
   // 세션 변경 감지
   const {
     data: { subscription },
   } = supabase.auth.onAuthStateChange((_event, session) => {
-    authStore.actions.setSession(session);
+    onSessionChange(session);
   });
 
   return subscription;

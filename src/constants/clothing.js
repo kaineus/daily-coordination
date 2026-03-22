@@ -23,3 +23,11 @@ export const CATEGORY_COLORS = {
   '신발': { bg: '#FFDEAB', color: '#7B5500' },
   '액세서리': { bg: '#F3E8FF', color: '#6A1B9A' },
 };
+
+export const TYPE_MATERIAL_ICONS = {
+  '아우터': 'checkroom',
+  '상의': 'apparel',
+  '하의': 'layers',
+  '신발': 'steps',
+  '액세서리': 'watch',
+};

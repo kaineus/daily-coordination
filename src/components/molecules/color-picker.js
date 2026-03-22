@@ -1,22 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
-
-const PRESETS = [
-  { name: '검정', hex: '#333333' },
-  { name: '흰색', hex: '#FFFFFF' },
-  { name: '회색', hex: '#808080' },
-  { name: '네이비', hex: '#1E3A8A' },
-  { name: '베이지', hex: '#F5E6D3' },
-  { name: '브라운', hex: '#4B3621' },
-  { name: '민트', hex: '#34D399' },
-  { name: '빨강', hex: '#FF4444' },
-  { name: '주황', hex: '#FF8844' },
-  { name: '노랑', hex: '#FFCC00' },
-  { name: '초록', hex: '#44BB44' },
-  { name: '파랑', hex: '#4488FF' },
-  { name: '분홍', hex: '#FF88AA' },
-];
+import { COLOR_PRESETS } from '../../constants/colors.js';
 
 export class ColorPicker extends LitElement {
   static properties = {
@@ -95,7 +80,7 @@ export class ColorPicker extends LitElement {
     const hasSelection = !!this.value;
     return html`
       <div class="grid ${hasSelection ? '' : 'no-selection'}">
-        ${PRESETS.map((p) => {
+        ${COLOR_PRESETS.map((p) => {
           const sel = this.value === p.hex;
           const isWhite = p.hex === '#FFFFFF';
           return html`

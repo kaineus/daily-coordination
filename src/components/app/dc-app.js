@@ -8,6 +8,7 @@ import { authStore } from '../../store/auth.store.js';
 import { HashRouter } from '../../router/routes.js';
 import '../atoms/dc-spinner.js';
 import '../pages/login-page.js';
+import '../pages/home-page.js';
 import '../pages/closet-page.js';
 import '../templates/app-shell.js';
 
@@ -24,7 +25,7 @@ export class DcApp extends LitElement {
     { path: '/login', render: () => html`<login-page></login-page>` },
     {
       path: '/',
-      render: () => html`<app-shell><p>오늘의 코디 (준비 중)</p></app-shell>`,
+      render: () => html`<app-shell><home-page></home-page></app-shell>`,
     },
     {
       path: '/closet',
@@ -49,7 +50,9 @@ export class DcApp extends LitElement {
   constructor() {
     super();
     // Supabase auth 초기화 (router보다 먼저)
-    initAuth(supabase);
+    initAuth(supabase, (session) => {
+      authStore.actions.setSession(session);
+    });
   }
 
   render() {
