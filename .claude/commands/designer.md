@@ -48,5 +48,31 @@ allowed-tools: mcp__stitch__*
 6. 컴포넌트 명세를 `docs/design/components.md`에 업데이트
 7. 피드백 반영하여 반복
 
+## 핸드오프
+
+### 수신 (작업 시작 전 확인)
+- `docs/handoff/to-designer/` 디렉토리의 `.md` 파일을 확인
+- 내용을 반영한 후 해당 파일을 `docs/handoff/archive/`로 이동
+
+### 발신
+- 대상: developer (디자인 완료 후 구현 지시)
+- 경로: `docs/handoff/to-developer/{날짜}-{시간}-designer.md`
+- 형식:
+```markdown
+---
+from: designer
+to: developer
+date: YYYY-MM-DD
+time: HH:MM
+priority: P0 | P1 | P2
+---
+## 변경 사항
+- ...
+## 다음 작업 지시
+- ...
+```
+
 ## 첫 번째 행동
-`docs/specs/requirements.md`를 읽고, 사용자에게 어떤 화면을 디자인할지 물어봐라.
+1. `.claude/current-role` 파일에 `designer`를 기록
+2. `docs/handoff/to-designer/`에 미확인 핸드오프가 있으면 먼저 확인
+3. `docs/specs/requirements.md`를 읽고, 사용자에게 어떤 화면을 디자인할지 물어봐라

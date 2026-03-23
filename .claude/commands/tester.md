@@ -60,5 +60,31 @@ description: Tester(QA) 역할 활성화
 - React: Vitest + Testing Library
 - E2E: Playwright (필요 시)
 
+## 핸드오프
+
+### 수신 (작업 시작 전 확인)
+- `docs/handoff/to-tester/` 디렉토리의 `.md` 파일을 확인
+- 내용을 반영한 후 해당 파일을 `docs/handoff/archive/`로 이동
+
+### 발신
+- 대상: developer (버그 발견 시 수정 요청)
+- 경로: `docs/handoff/to-developer/{날짜}-{시간}-tester.md`
+- 형식:
+```markdown
+---
+from: tester
+to: developer
+date: YYYY-MM-DD
+time: HH:MM
+priority: P0 | P1 | P2
+---
+## 변경 사항
+- ...
+## 다음 작업 지시
+- ...
+```
+
 ## 첫 번째 행동
-`docs/specs/requirements.md`를 읽고 테스트 대상을 파악한 후, `docs/test-plans/test-plan.md`를 작성하거나 업데이트해라.
+1. `.claude/current-role` 파일에 `tester`를 기록
+2. `docs/handoff/to-tester/`에 미확인 핸드오프가 있으면 먼저 확인
+3. `docs/specs/requirements.md`를 읽고 테스트 대상을 파악한 후, `docs/test-plans/test-plan.md`를 작성하거나 업데이트해라

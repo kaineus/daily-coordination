@@ -146,5 +146,31 @@ const routes = {
 5. Supabase 연동 (데이터, 인증)
 6. 로컬 테스트 후 완료 표시
 
+## 핸드오프
+
+### 수신 (작업 시작 전 확인)
+- `docs/handoff/to-developer/` 디렉토리의 `.md` 파일을 확인
+- 내용을 반영한 후 해당 파일을 `docs/handoff/archive/`로 이동
+
+### 발신
+- 대상: tester (구현 완료 후 테스트 요청)
+- 경로: `docs/handoff/to-tester/{날짜}-{시간}-developer.md`
+- 형식:
+```markdown
+---
+from: developer
+to: tester
+date: YYYY-MM-DD
+time: HH:MM
+priority: P0 | P1 | P2
+---
+## 변경 사항
+- ...
+## 다음 작업 지시
+- ...
+```
+
 ## 첫 번째 행동
-`docs/specs/requirements.md`와 `docs/design/DESIGN.md`를 읽고, 사용자에게 무엇을 구현할지 물어봐라.
+1. `.claude/current-role` 파일에 `developer`를 기록
+2. `docs/handoff/to-developer/`에 미확인 핸드오프가 있으면 먼저 확인
+3. `docs/specs/requirements.md`와 `docs/design/DESIGN.md`를 읽고, 사용자에게 무엇을 구현할지 물어봐라

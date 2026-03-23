@@ -1,14 +1,29 @@
 #!/bin/bash
-# PM/Designer/Developer/Tester 세션 종료(Stop) 시 호출
-# stdin으로 세션 정보를 받아 handoff 파일 생성 여부 판단
+# Stop 훅: 세션 종료 시 핸드오프 작성을 유도
 
-HANDOFF_DIR="$(git rev-parse --show-toplevel 2>/dev/null)/docs/handoff"
-mkdir -p "$HANDOFF_DIR"
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+ROLE_FILE="$ROOT/.claude/current-role"
 
-# 현재 세션의 역할을 판단하기 어려우므로,
-# Stop 훅에서는 systemMessage로 사용자에게 핸드오프 작성을 유도
+# 현재 역할 읽기
+ROLE="unknown"
+if [ -f "$ROLE_FILE" ]; then
+  ROLE=$(cat "$ROLE_FILE" | tr -d '[:space:]')
+fi
+
+# 역할별 핸드오프 가능 대상
+case "$ROLE" in
+  pm)       TARGETS="designer, developer, tester" ;;
+  designer) TARGETS="developer" ;;
+  developer) TARGETS="tester" ;;
+  tester)   TARGETS="developer" ;;
+  *)        TARGETS="designer, developer, tester" ;;
+esac
+
+DATE=$(date +%Y-%m-%d)
+TIME=$(date +%H:%M)
+
 cat <<EOF
 {
-  "systemMessage": "[Handoff] 세션을 종료합니다. 다른 세션에 전달할 내용이 있다면, 종료 전에 사용자에게 핸드오프 메모 작성 여부를 물어보세요. 작성 시 docs/handoff/latest.md에 저장하세요. 형식:\n---\nfrom: [역할]\nto: [대상 역할들]\ndate: $(date +%Y-%m-%d)\ntime: $(date +%H:%M)\n---\n## 변경 사항\n## 다음 작업 지시"
+  "systemMessage": "[Handoff] 세션을 종료합니다 (역할: ${ROLE}). 다른 세션에 전달할 내용이 있다면 핸드오프를 작성하세요.\n\n전달 가능 대상: ${TARGETS}\n파일 경로: docs/handoff/to-{대상역할}/${DATE}-${TIME}-${ROLE}.md\n\n형식:\n---\nfrom: ${ROLE}\nto: [대상 역할]\ndate: ${DATE}\ntime: ${TIME}\npriority: P0 | P1 | P2\n---\n## 변경 사항\n- ...\n## 다음 작업 지시\n- ...\n\n또한, 본인에게 할당된 핸드오프(docs/handoff/to-${ROLE}/) 중 처리 완료된 건이 있으면 archive/로 이동하세요."
 }
 EOF

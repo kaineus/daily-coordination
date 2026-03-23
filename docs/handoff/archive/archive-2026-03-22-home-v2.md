@@ -32,8 +32,8 @@ requirements.md가 업데이트됨. 반드시 읽고 시작할 것.
 
 #### 환경변수
 ```
-GEMINI_API_KEY=AIzaSyDpU0E6p-GQ7e_aCKb7tYqJv1aP6U2NZJY
-KMA_API_KEY=Dz7emwAcRuC-3psAHBbgeQ
+GEMINI_API_KEY=(Supabase Secrets에서 관리)
+KMA_API_KEY=(Supabase Secrets에서 관리)
 ```
 
 #### 구현 순서

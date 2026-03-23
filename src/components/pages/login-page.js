@@ -12,6 +12,8 @@ import '../atoms/dc-button.js';
 import '../atoms/dc-input.js';
 import '../atoms/dc-spinner.js';
 
+const IN_APP_REGEX = /KAKAOTALK|Line|FBAN|FBAV|Instagram|Twitter|Snapchat|WhatsApp|Telegram/i;
+
 export class LoginPage extends LitElement {
   static properties = {
     _mode: { state: true },
@@ -20,6 +22,7 @@ export class LoginPage extends LitElement {
     _passwordConfirm: { state: true },
     _message: { state: true },
     _submitting: { state: true },
+    _isInApp: { state: true },
   };
 
   #supabase = new ContextConsumer(this, { context: supabaseContext, subscribe: true });
@@ -155,6 +158,44 @@ export class LoginPage extends LitElement {
 
       /* ===== Form Header (Desktop) ===== */
       .form-header { display: none; }
+
+      /* ===== In-App Browser Banner ===== */
+      .inapp-banner {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--dc-space-3);
+        padding: var(--dc-space-4);
+        background: rgba(255, 193, 7, 0.12);
+        border-radius: var(--dc-radius-md);
+        margin-bottom: var(--dc-space-6);
+      }
+      .inapp-banner .material-symbols-outlined {
+        font-size: 1.25rem;
+        color: #F59E0B;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .inapp-text {
+        font-size: var(--dc-font-caption);
+        color: var(--dc-text);
+        line-height: 1.5;
+      }
+      .inapp-text strong { font-weight: 700; }
+      .open-browser-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--dc-space-1);
+        margin-top: var(--dc-space-2);
+        padding: var(--dc-space-1) var(--dc-space-3);
+        background: rgba(255, 193, 7, 0.2);
+        border-radius: var(--dc-radius-sm);
+        font-size: var(--dc-font-caption);
+        font-weight: 600;
+        color: #92400E;
+        cursor: pointer;
+      }
+      .open-browser-btn:active { opacity: 0.7; }
+      .open-browser-btn .material-symbols-outlined { font-size: 0.875rem; }
 
       /* ===== Google Button ===== */
       .google-btn {
@@ -370,6 +411,7 @@ export class LoginPage extends LitElement {
     this._passwordConfirm = '';
     this._message = null;
     this._submitting = false;
+    this._isInApp = IN_APP_REGEX.test(navigator.userAgent);
   }
 
   #switchMode(mode) {
@@ -413,6 +455,34 @@ export class LoginPage extends LitElement {
   }
 
   #handleGoogle() { signInWithGoogle(this.#supabase.value); }
+
+  #openInBrowser() {
+    const url = window.location.href;
+    // Android: Chrome intent
+    if (/Android/i.test(navigator.userAgent)) {
+      window.location.href = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end`;
+      return;
+    }
+    // iOS/기타: 새 탭으로 시도 (일부 인앱 브라우저에서 기본 브라우저로 열림)
+    window.open(url, '_blank');
+  }
+
+  #renderInAppBanner() {
+    if (!this._isInApp) return '';
+    return html`
+      <div class="inapp-banner">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="inapp-text">
+          <strong>인앱 브라우저에서는 Google 로그인이 제한됩니다.</strong><br>
+          Safari 또는 Chrome에서 열어주세요.
+          <button class="open-browser-btn" @click=${this.#openInBrowser}>
+            <span class="material-symbols-outlined">open_in_new</span>
+            브라우저에서 열기
+          </button>
+        </div>
+      </div>
+    `;
+  }
 
   render() {
     return this._mode === 'login' ? this.#renderLogin() : this.#renderSignup();
@@ -479,6 +549,7 @@ export class LoginPage extends LitElement {
               <p>계정에 로그인하여 오늘의 코디를 확인하세요</p>
             </div>
 
+            ${this.#renderInAppBanner()}
             ${this.#renderGoogleBtn()}
             <div class="divider"><span>또는</span></div>
 

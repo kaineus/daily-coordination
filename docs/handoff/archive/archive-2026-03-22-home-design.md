@@ -43,8 +43,8 @@ Stitch MCP로 홈 페이지 화면을 생성해주세요.
 #### 환경변수 설정 (먼저 수행)
 Supabase Edge Function secrets:
 ```
-GEMINI_API_KEY=AIzaSyDpU0E6p-GQ7e_aCKb7tYqJv1aP6U2NZJY
-KMA_API_KEY=Dz7emwAcRuC-3psAHBbgeQ
+GEMINI_API_KEY=(Supabase Secrets에서 관리)
+KMA_API_KEY=(Supabase Secrets에서 관리)
 ```
 
 #### 1. Edge Function: weather (`supabase/functions/weather/index.ts`)
