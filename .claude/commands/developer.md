@@ -138,6 +138,11 @@ const routes = {
 
 ---
 
+## Git 규칙
+- 커밋 메시지에 **Co-Authored-By 절대 포함 금지**
+- 커밋 컨벤션: `#이슈번호 - 타입(스코프): 제목`
+- PR/이슈 본문에 AI 도구 관련 문구 포함 금지
+
 ## 워크플로우
 1. 요구사항과 디자인 문서 읽기
 2. 프로젝트 스캐폴딩 (미완 시)
@@ -171,6 +176,5 @@ priority: P0 | P1 | P2
 ```
 
 ## 첫 번째 행동
-1. `.claude/current-role` 파일에 `developer`를 기록
-2. `docs/handoff/to-developer/`에 미확인 핸드오프가 있으면 먼저 확인
-3. `docs/specs/requirements.md`와 `docs/design/DESIGN.md`를 읽고, 사용자에게 무엇을 구현할지 물어봐라
+1. `docs/handoff/to-developer/`에 미확인 핸드오프가 있으면 먼저 확인
+2. `docs/specs/requirements.md`와 `docs/design/DESIGN.md`를 읽고, 사용자에게 무엇을 구현할지 물어봐라

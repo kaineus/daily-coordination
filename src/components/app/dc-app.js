@@ -10,6 +10,7 @@ import '../atoms/dc-spinner.js';
 import '../pages/login-page.js';
 import '../pages/home-page.js';
 import '../pages/closet-page.js';
+import '../pages/chat-page.js';
 import '../templates/app-shell.js';
 
 export class DcApp extends LitElement {
@@ -30,6 +31,10 @@ export class DcApp extends LitElement {
     {
       path: '/closet',
       render: () => html`<app-shell><closet-page></closet-page></app-shell>`,
+    },
+    {
+      path: '/closet/chat',
+      render: () => html`<chat-page></chat-page>`,
     },
     { path: '*', render: () => html`<login-page></login-page>` },
   ]);

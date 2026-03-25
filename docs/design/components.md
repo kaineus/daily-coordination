@@ -196,6 +196,82 @@
 - **데스크톱**: 스크롤 없이 전체 표시
 - **카드**: white bg, 16px radius, 20px padding
 
+## 9. Chat Components (F4 자연어 옷 등록)
+
+### Message Bubble (AI)
+- **배경**: `--color-surface-container-lowest` (#FFFFFF) — 모바일 / `--color-surface-container-low` (#F3F3F7) — 데스크톱
+- **radius**: 16px (bubble-ai: bottom-left 4px)
+- **패딩**: 16px 20px
+- **shadow**: `0px 4px 12px rgba(26,28,31,0.04)`
+- **아바타**: 28px 원형, `--color-primary-fixed` 배경, `auto_awesome` 아이콘 (filled)
+- **타임스탬프**: Caption (10px), outline 색상
+
+### Message Bubble (User)
+- **배경**: `--color-primary` (#005EA1)
+- **텍스트**: `--color-on-primary` (#FFFFFF)
+- **radius**: 16px (bubble-user: bottom-right 4px)
+- **패딩**: 12px 16px
+- **최대 너비**: 모바일 75%, 데스크톱 65%
+- **타임스탬프**: 10px, white/60%
+
+### Parsed Item Card
+- **배경**: `--color-surface-container-lowest`
+- **radius**: 12px
+- **패딩**: 14px 16px
+- **shadow**: `0px 4px 12px rgba(26,28,31,0.04)`
+- **내용**:
+  - 카테고리 아이콘 (40px 정사각, `surface-container-low` 배경, 8px radius)
+  - 카테고리명 (Body, semibold)
+  - 색상 도트 (14px 원형) + 색상명 (Caption)
+  - 체크 아이콘 (우측, `--color-success` filled)
+- **데스크톱**: 복수 카드 가로 배치 (flex-row)
+- **모바일**: 세로 스택 (flex-col)
+
+### Suggestion Chip (되묻기)
+- **배경**: `--color-surface-container-lowest` — 모바일 / `--color-surface-container-low` — 데스크톱
+- **radius**: full (pill)
+- **패딩**: 8px 14px
+- **폰트**: Body (14px), medium
+- **텍스트**: `--color-on-surface-variant`
+- **shadow**: `0px 2px 8px rgba(26,28,31,0.04)` (모바일)
+- **선택/hover**: 배경 → `--color-primary-fixed`, 텍스트 → `--color-on-primary-fixed-variant`
+- **내용**: 카테고리 이모지 + 카테고리명
+
+### Chat Input Bar
+- **위치**: 하단 sticky (모바일), 채팅 패널 하단 (데스크톱)
+- **배경**: white/80% + backdrop-blur-xl (모바일) / surface-container-lowest (데스크톱)
+- **입력 필드**: `--color-surface-container-low` 배경, 16px radius, 44px 최소 높이
+- **전송 버튼**: 44px 원형, `--color-primary` 배경, `send` 아이콘
+- **빠른 제안 칩**: 입력바 아래, 가로 스크롤, `surface-container-low` 배경, Caption (12px)
+
+### Typing Indicator
+- **3개 도트**: 8px 원형, `--color-outline`
+- **애니메이션**: 순차적 bounce (1.4s interval, 0.2s delay)
+- **컨테이너**: AI 버블과 동일한 스타일
+
+### Success Feedback
+- **체크 아이콘**: 20px 원형, `success/15%` 배경, `check` 아이콘 (success, filled)
+- **애니메이션**: pop-in (0.4s ease-out)
+- **텍스트**: "등록 완료!" — `--color-success`, semibold
+- **서브텍스트**: 등록된 아이템 요약 — `--color-on-surface-variant`
+
+### Action Buttons (확인/수정)
+- **등록하기**: Primary Button 스타일, flex-1, 40px 높이, 12px radius
+- **수정**: `--color-surface-container-high` 배경, `--color-on-surface-variant` 텍스트, 40px 높이
+
+## 10. Closet Page Entry Point (AI 등록 버튼)
+
+### AI Register Button
+- **위치**: 헤더 우측, 기존 "+" 버튼 왼쪽
+- **배경**: `--color-primary-fixed` (#D2E4FF)
+- **텍스트**: `--color-on-primary-fixed-variant` (#00497E)
+- **radius**: full (pill)
+- **높이**: 36px
+- **패딩**: 0 14px
+- **아이콘**: `auto_awesome` (filled, 16px)
+- **라벨**: "AI 등록" (14px, semibold)
+- **액션**: 채팅 등록 화면으로 이동
+
 ## Stitch 참조
 
 ### 프로젝트
@@ -220,3 +296,4 @@
 | 내 옷장 | `screens/closet-page.html` | `screens/closet-page-desktop.html` |
 | 옷 등록 모달 | `screens/add-clothing-modal.html` | — |
 | 홈 (오늘의 코디) | `screens/home-page.html` | `screens/home-page-desktop.html` |
+| AI 채팅 등록 | `screens/chat-register.html` | `screens/chat-register-desktop.html` |

@@ -68,6 +68,23 @@ export class ClosetPage extends LitElement {
       .add-btn:active { transform: scale(0.95); }
       .add-btn .material-symbols-outlined { font-size: 1.125rem; }
 
+      .ai-btn {
+        display: flex;
+        align-items: center;
+        gap: var(--dc-space-1);
+        height: 2.25rem;
+        padding: 0 var(--dc-space-3);
+        background: var(--dc-primary-light);
+        color: var(--dc-primary-hover);
+        border-radius: var(--dc-radius-full);
+        font-size: var(--dc-font-body);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .ai-btn:active { transform: scale(0.95); }
+      .ai-btn .material-symbols-outlined { font-size: 1rem; }
+
       /* ===== Toggles & Filters ===== */
       .group-toggle {
         display: flex;
@@ -245,10 +262,16 @@ export class ClosetPage extends LitElement {
     return html`
       <div class="page-header">
         <h1>내 옷장</h1>
-        <button class="add-btn" @click=${() => (this._modalOpen = true)}>
-          <span class="material-symbols-outlined">add</span>
-          <span>추가</span>
-        </button>
+        <div style="display:flex;gap:var(--dc-space-2)">
+          <button class="ai-btn" @click=${() => (window.location.hash = '/closet/chat')}>
+            <span class="material-symbols-outlined">auto_awesome</span>
+            <span>AI 등록</span>
+          </button>
+          <button class="add-btn" @click=${() => (this._modalOpen = true)}>
+            <span class="material-symbols-outlined">add</span>
+            <span>추가</span>
+          </button>
+        </div>
       </div>
 
       ${loading ? html`<div class="loading"><dc-spinner size="2"></dc-spinner></div>`

@@ -4,10 +4,13 @@
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
 ROLE_FILE="$ROOT/.claude/current-role"
 
-# 현재 역할 읽기
-ROLE="unknown"
-if [ -f "$ROLE_FILE" ]; then
+# 현재 역할 읽기: 환경변수 우선, 없으면 파일 폴백
+if [ -n "$CLAUDE_ROLE" ]; then
+  ROLE="$CLAUDE_ROLE"
+elif [ -f "$ROLE_FILE" ]; then
   ROLE=$(cat "$ROLE_FILE" | tr -d '[:space:]')
+else
+  ROLE="unknown"
 fi
 
 # 역할별 핸드오프 가능 대상

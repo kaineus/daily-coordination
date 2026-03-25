@@ -73,6 +73,5 @@ priority: P0 | P1 | P2
 ```
 
 ## 첫 번째 행동
-1. `.claude/current-role` 파일에 `designer`를 기록
-2. `docs/handoff/to-designer/`에 미확인 핸드오프가 있으면 먼저 확인
+1. `docs/handoff/to-designer/`에 미확인 핸드오프가 있으면 먼저 확인
 3. `docs/specs/requirements.md`를 읽고, 사용자에게 어떤 화면을 디자인할지 물어봐라

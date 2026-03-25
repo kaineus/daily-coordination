@@ -20,15 +20,24 @@
 - 배포: Vercel 또는 Netlify
 
 ## 멀티세션 워크플로우
-4개의 Claude Code 세션이 역할별로 동작한다.
-세션 시작 시 해당 슬래시 커맨드를 실행하여 역할을 활성화:
+4개의 Claude Code 세션(cmux pane)이 역할별로 동작한다.
 
-| 세션 | 커맨드 | 역할 |
-|------|--------|------|
-| 1 | `/pm` | 요구사항 정의, 세션 간 조율 |
-| 2 | `/designer` | Stitch MCP로 UI 디자인 |
-| 3 | `/developer` | 구현 |
-| 4 | `/tester` | 테스트 계획 및 자동화 |
+### 역할 설정
+각 pane에서 `CLAUDE_ROLE` 환경변수를 설정한 후 세션을 시작:
+```bash
+export CLAUDE_ROLE=pm        # Pane 1
+export CLAUDE_ROLE=designer  # Pane 2
+export CLAUDE_ROLE=developer # Pane 3
+export CLAUDE_ROLE=tester    # Pane 4
+```
+훅은 `CLAUDE_ROLE` 환경변수를 우선 읽고, 없으면 `.claude/current-role` 파일을 폴백으로 사용한다.
+
+| 세션 | 환경변수 | 커맨드 | 역할 |
+|------|---------|--------|------|
+| 1 | `CLAUDE_ROLE=pm` | `/pm` | 요구사항 정의, 세션 간 조율 |
+| 2 | `CLAUDE_ROLE=designer` | `/designer` | Stitch MCP로 UI 디자인 |
+| 3 | `CLAUDE_ROLE=developer` | `/developer` | 구현 |
+| 4 | `CLAUDE_ROLE=tester` | `/tester` | 테스트 계획 및 자동화 |
 
 ## 세션 간 협업 규칙
 세션은 `docs/` 폴더를 통해 작업 결과를 공유한다.

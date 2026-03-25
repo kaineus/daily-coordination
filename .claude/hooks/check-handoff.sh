@@ -5,13 +5,15 @@ ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
 ROLE_FILE="$ROOT/.claude/current-role"
 HANDOFF_DIR="$ROOT/docs/handoff"
 
-# 현재 역할 읽기 (없으면 종료)
-if [ ! -f "$ROLE_FILE" ]; then
+# 현재 역할 읽기: 환경변수 우선, 없으면 파일 폴백
+if [ -n "$CLAUDE_ROLE" ]; then
+  ROLE="$CLAUDE_ROLE"
+elif [ -f "$ROLE_FILE" ]; then
+  ROLE=$(cat "$ROLE_FILE" | tr -d '[:space:]')
+else
   echo '{}'
   exit 0
 fi
-
-ROLE=$(cat "$ROLE_FILE" | tr -d '[:space:]')
 
 # PM은 수신하지 않음 (docs/ 직접 확인)
 if [ "$ROLE" = "pm" ]; then

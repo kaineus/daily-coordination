@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary-container": "#ff6b6b",
+          "primary-fixed-dim": "#a0caff",
+          "primary-fixed": "#d2e4ff",
+          "surface": "#f9f9fd",
+          "surface-container-low": "#f3f3f7",
+          "surface-container": "#ededf1",
+          "surface-container-high": "#e8e8ec",
+          "surface-container-lowest": "#ffffff",
+          "surface-variant": "#e2e2e6",
+          "outline-variant": "#c1c7d2",
+          "outline": "#717782",
+          "on-background": "#1a1c1f",
+          "on-surface": "#1a1c1f",
+          "on-surface-variant": "#414751",
+          "primary": "#005ea1",
+          "primary-container": "#2b78bf",
+          "on-primary": "#ffffff",
+          "on-primary-fixed-variant": "#00497e",
+          "secondary": "#ae2f34",
+          "error": "#ba1a1a",
+          "on-error": "#ffffff",
+          "success": "#4caf50",
+          "background": "#f9f9fd",
+        },
+        fontFamily: {
+          "headline": ["Manrope"],
+          "body": ["Be Vietnam Pro"],
+          "label": ["Be Vietnam Pro"]
+        },
+        borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  body { font-family: 'Be Vietnam Pro', sans-serif; }
+  .font-manrope { font-family: 'Manrope', sans-serif; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Chat bubble tails */
+  .bubble-ai { border-bottom-left-radius: 4px; }
+  .bubble-user { border-bottom-right-radius: 4px; }
+
+  /* Typing indicator animation */
+  @keyframes typing {
+    0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+    30% { opacity: 1; transform: translateY(-4px); }
+  }
+  .typing-dot:nth-child(1) { animation: typing 1.4s infinite 0s; }
+  .typing-dot:nth-child(2) { animation: typing 1.4s infinite 0.2s; }
+  .typing-dot:nth-child(3) { animation: typing 1.4s infinite 0.4s; }
+
+  /* Success checkmark */
+  @keyframes pop-in {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .animate-pop-in { animation: pop-in 0.4s ease-out forwards; }
+</style>
+<style>
+  body { min-height: max(884px, 100dvh); }
+</style>
+</head>
+
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+
+<!-- ====== Header ====== -->
+<header class="sticky top-0 z-50 bg-white/70 backdrop-blur-xl flex items-center px-4 h-14 gap-3">
+  <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors">
+    <span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+  </button>
+  <div class="flex-1">
+    <h1 class="font-manrope font-bold text-base tracking-tight text-on-surface">AI 옷 등록</h1>
+    <p class="text-[11px] text-outline">자연어로 옷을 등록해보세요</p>
+  </div>
+  <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors">
+    <span class="material-symbols-outlined text-on-surface-variant text-[20px]">more_vert</span>
+  </button>
+</header>
+
+<!-- ====== Chat Area ====== -->
+<main class="flex-1 overflow-y-auto px-4 py-4 space-y-4 no-scrollbar">
+
+  <!-- ── Welcome Message (AI) ── -->
+  <div class="flex gap-2.5 items-end max-w-[85%]">
+    <div class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+    </div>
+    <div class="bg-surface-container-lowest rounded-2xl bubble-ai px-4 py-3 shadow-[0px_4px_12px_rgba(26,28,31,0.04)]">
+      <p class="text-sm text-on-surface leading-relaxed">안녕하세요! 옷을 등록해드릴게요. <br/>어떤 옷을 가지고 계신가요? 😊</p>
+      <p class="text-[10px] text-outline mt-1.5">오전 9:00</p>
+    </div>
+  </div>
+
+  <!-- ── User Message 1 ── -->
+  <div class="flex justify-end">
+    <div class="bg-primary text-on-primary rounded-2xl bubble-user px-4 py-3 max-w-[75%]">
+      <p class="text-sm leading-relaxed">검정 패딩이랑 베이지 니트 등록해줘</p>
+      <p class="text-[10px] text-white/60 mt-1.5 text-right">오전 9:01</p>
+    </div>
+  </div>
+
+  <!-- ── AI Response: Parsed Result Cards ── -->
+  <div class="flex gap-2.5 items-end max-w-[90%]">
+    <div class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+    </div>
+    <div class="space-y-2 flex-1">
+      <!-- Text bubble -->
+      <div class="bg-surface-container-lowest rounded-2xl bubble-ai px-4 py-3 shadow-[0px_4px_12px_rgba(26,28,31,0.04)]">
+        <p class="text-sm text-on-surface leading-relaxed">2개를 찾았어요! 확인해주세요.</p>
+      </div>
+      <!-- Parsed Item Card 1 -->
+      <div class="bg-surface-container-lowest rounded-xl px-4 py-3.5 shadow-[0px_4px_12px_rgba(26,28,31,0.04)] flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-lg">🧥</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-on-surface">패딩</p>
+          <div class="flex items-center gap-1.5 mt-0.5">
+            <div class="w-3.5 h-3.5 rounded-full bg-[#333333] ring-1 ring-black/10"></div>
+            <span class="text-xs text-on-surface-variant">검정</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-success text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+      </div>
+      <!-- Parsed Item Card 2 -->
+      <div class="bg-surface-container-lowest rounded-xl px-4 py-3.5 shadow-[0px_4px_12px_rgba(26,28,31,0.04)] flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-lg">👕</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-on-surface">니트</p>
+          <div class="flex items-center gap-1.5 mt-0.5">
+            <div class="w-3.5 h-3.5 rounded-full bg-[#F5E6D3] ring-1 ring-black/10"></div>
+            <span class="text-xs text-on-surface-variant">베이지</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-success text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+      </div>
+      <!-- Action Buttons -->
+      <div class="flex gap-2">
+        <button class="flex-1 h-10 bg-primary text-on-primary rounded-xl text-sm font-semibold active:scale-[0.97] transition-transform">
+          등록하기
+        </button>
+        <button class="h-10 px-4 bg-surface-container-high text-on-surface-variant rounded-xl text-sm font-medium active:scale-[0.97] transition-transform">
+          수정
+        </button>
+      </div>
+      <p class="text-[10px] text-outline">오전 9:01</p>
+    </div>
+  </div>
+
+  <!-- ── User Message 2 ── -->
+  <div class="flex justify-end">
+    <div class="bg-primary text-on-primary rounded-2xl bubble-user px-4 py-3 max-w-[75%]">
+      <p class="text-sm leading-relaxed">갈색 옷 하나 추가</p>
+      <p class="text-[10px] text-white/60 mt-1.5 text-right">오전 9:02</p>
+    </div>
+  </div>
+
+  <!-- ── AI Response: Clarification with Chips ── -->
+  <div class="flex gap-2.5 items-end max-w-[90%]">
+    <div class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+    </div>
+    <div class="space-y-2.5 flex-1">
+      <div class="bg-surface-container-lowest rounded-2xl bubble-ai px-4 py-3 shadow-[0px_4px_12px_rgba(26,28,31,0.04)]">
+        <p class="text-sm text-on-surface leading-relaxed">어떤 종류의 옷인가요?</p>
+      </div>
+      <!-- Suggestion Chips -->
+      <div class="flex flex-wrap gap-2">
+        <button class="px-3.5 py-2 rounded-full bg-surface-container-lowest text-sm text-on-surface-variant font-medium shadow-[0px_2px_8px_rgba(26,28,31,0.04)] active:bg-primary-fixed active:text-on-primary-fixed-variant transition-colors">
+          🧥 코트
+        </button>
+        <button class="px-3.5 py-2 rounded-full bg-surface-container-lowest text-sm text-on-surface-variant font-medium shadow-[0px_2px_8px_rgba(26,28,31,0.04)] active:bg-primary-fixed active:text-on-primary-fixed-variant transition-colors">
+          🧥 자켓
+        </button>
+        <button class="px-3.5 py-2 rounded-full bg-surface-container-lowest text-sm text-on-surface-variant font-medium shadow-[0px_2px_8px_rgba(26,28,31,0.04)] active:bg-primary-fixed active:text-on-primary-fixed-variant transition-colors">
+          👕 니트
+        </button>
+        <button class="px-3.5 py-2 rounded-full bg-surface-container-lowest text-sm text-on-surface-variant font-medium shadow-[0px_2px_8px_rgba(26,28,31,0.04)] active:bg-primary-fixed active:text-on-primary-fixed-variant transition-colors">
+          👕 맨투맨
+        </button>
+        <button class="px-3.5 py-2 rounded-full bg-surface-container-lowest text-sm text-on-surface-variant font-medium shadow-[0px_2px_8px_rgba(26,28,31,0.04)] active:bg-primary-fixed active:text-on-primary-fixed-variant transition-colors">
+          👖 슬랙스
+        </button>
+        <button class="px-3.5 py-2 rounded-full bg-surface-container-lowest text-sm text-on-surface-variant font-medium shadow-[0px_2px_8px_rgba(26,28,31,0.04)] active:bg-primary-fixed active:text-on-primary-fixed-variant transition-colors">
+          기타...
+        </button>
+      </div>
+      <p class="text-[10px] text-outline">오전 9:02</p>
+    </div>
+  </div>
+
+  <!-- ── User selects chip (shown as user message) ── -->
+  <div class="flex justify-end">
+    <div class="bg-primary text-on-primary rounded-2xl bubble-user px-4 py-3 max-w-[75%]">
+      <p class="text-sm leading-relaxed">코트</p>
+      <p class="text-[10px] text-white/60 mt-1.5 text-right">오전 9:02</p>
+    </div>
+  </div>
+
+  <!-- ── AI Response: Single Parsed Card ── -->
+  <div class="flex gap-2.5 items-end max-w-[90%]">
+    <div class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+    </div>
+    <div class="space-y-2 flex-1">
+      <div class="bg-surface-container-lowest rounded-2xl bubble-ai px-4 py-3 shadow-[0px_4px_12px_rgba(26,28,31,0.04)]">
+        <p class="text-sm text-on-surface leading-relaxed">브라운 코트, 등록할게요!</p>
+      </div>
+      <!-- Parsed Item Card -->
+      <div class="bg-surface-container-lowest rounded-xl px-4 py-3.5 shadow-[0px_4px_12px_rgba(26,28,31,0.04)] flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-lg">🧥</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-on-surface">코트</p>
+          <div class="flex items-center gap-1.5 mt-0.5">
+            <div class="w-3.5 h-3.5 rounded-full bg-[#8B4513] ring-1 ring-black/10"></div>
+            <span class="text-xs text-on-surface-variant">브라운</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-success text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+      </div>
+      <!-- Action Buttons -->
+      <div class="flex gap-2">
+        <button class="flex-1 h-10 bg-primary text-on-primary rounded-xl text-sm font-semibold active:scale-[0.97] transition-transform">
+          등록하기
+        </button>
+        <button class="h-10 px-4 bg-surface-container-high text-on-surface-variant rounded-xl text-sm font-medium active:scale-[0.97] transition-transform">
+          수정
+        </button>
+      </div>
+      <p class="text-[10px] text-outline">오전 9:02</p>
+    </div>
+  </div>
+
+  <!-- ── Success Feedback ── -->
+  <div class="flex gap-2.5 items-end max-w-[85%]">
+    <div class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+    </div>
+    <div class="bg-surface-container-lowest rounded-2xl bubble-ai px-4 py-3 shadow-[0px_4px_12px_rgba(26,28,31,0.04)]">
+      <div class="flex items-center gap-2 mb-1">
+        <div class="w-5 h-5 rounded-full bg-success/15 flex items-center justify-center animate-pop-in">
+          <span class="material-symbols-outlined text-success text-[14px]" style="font-variation-settings: 'FILL' 1;">check</span>
+        </div>
+        <p class="text-sm font-semibold text-success">등록 완료!</p>
+      </div>
+      <p class="text-sm text-on-surface-variant leading-relaxed">브라운 코트가 옷장에 추가됐어요.<br/>더 등록할 옷이 있으면 말씀해주세요!</p>
+      <p class="text-[10px] text-outline mt-1.5">오전 9:03</p>
+    </div>
+  </div>
+
+  <!-- ── Typing Indicator (Optional State) ── -->
+  <div class="flex gap-2.5 items-end max-w-[85%] hidden" id="typing-indicator">
+    <div class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0">
+      <span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+    </div>
+    <div class="bg-surface-container-lowest rounded-2xl bubble-ai px-4 py-3 shadow-[0px_4px_12px_rgba(26,28,31,0.04)]">
+      <div class="flex gap-1.5 items-center h-5">
+        <div class="w-2 h-2 rounded-full bg-outline typing-dot"></div>
+        <div class="w-2 h-2 rounded-full bg-outline typing-dot"></div>
+        <div class="w-2 h-2 rounded-full bg-outline typing-dot"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ====== Input Bar ====== -->
+<div class="sticky bottom-0 z-50 bg-white/80 backdrop-blur-xl border-t border-surface-variant/30 px-4 py-3 pb-safe">
+  <div class="flex items-end gap-2 max-w-md mx-auto">
+    <div class="flex-1 relative">
+      <div class="bg-surface-container-low rounded-2xl px-4 py-3 pr-12 min-h-[44px] flex items-center">
+        <span class="text-sm text-outline">옷을 알려주세요...</span>
+      </div>
+    </div>
+    <button class="w-11 h-11 bg-primary rounded-full flex items-center justify-center flex-shrink-0 active:scale-90 transition-transform shadow-lg shadow-primary/20">
+      <span class="material-symbols-outlined text-on-primary text-[20px]">send</span>
+    </button>
+  </div>
+  <!-- Quick action chips -->
+  <div class="flex gap-2 mt-2 overflow-x-auto no-scrollbar max-w-md mx-auto">
+    <button class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-low text-xs text-on-surface-variant font-medium">
+      "검정 패딩"
+    </button>
+    <button class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-low text-xs text-on-surface-variant font-medium">
+      "베이지 니트"
+    </button>
+    <button class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-low text-xs text-on-surface-variant font-medium">
+      "네이비 슬랙스"
+    </button>
+    <button class="whitespace-nowrap px-3 py-1.5 rounded-full bg-surface-container-low text-xs text-on-surface-variant font-medium">
+      "흰 운동화"
+    </button>
+  </div>
+</div>
+
+</body></html>

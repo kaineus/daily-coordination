@@ -85,6 +85,5 @@ priority: P0 | P1 | P2
 ```
 
 ## 첫 번째 행동
-1. `.claude/current-role` 파일에 `tester`를 기록
-2. `docs/handoff/to-tester/`에 미확인 핸드오프가 있으면 먼저 확인
+1. `docs/handoff/to-tester/`에 미확인 핸드오프가 있으면 먼저 확인
 3. `docs/specs/requirements.md`를 읽고 테스트 대상을 파악한 후, `docs/test-plans/test-plan.md`를 작성하거나 업데이트해라
