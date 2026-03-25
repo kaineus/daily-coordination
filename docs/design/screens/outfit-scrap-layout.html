@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface": "#f9f9fd",
+          "surface-container-low": "#f3f3f7",
+          "surface-container": "#ededf1",
+          "surface-container-high": "#e8e8ec",
+          "surface-container-lowest": "#ffffff",
+          "surface-variant": "#e2e2e6",
+          "outline-variant": "#c1c7d2",
+          "outline": "#717782",
+          "on-background": "#1a1c1f",
+          "on-surface": "#1a1c1f",
+          "on-surface-variant": "#414751",
+          "primary": "#005ea1",
+          "primary-fixed": "#d2e4ff",
+          "primary-container": "#2b78bf",
+          "on-primary": "#ffffff",
+          "on-primary-fixed-variant": "#00497e",
+          "secondary-container": "#ff6b6b",
+          "secondary": "#ae2f34",
+          "background": "#f9f9fd",
+        },
+        fontFamily: {
+          "headline": ["Manrope"],
+          "body": ["Be Vietnam Pro"],
+          "label": ["Be Vietnam Pro"]
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  body { font-family: 'Be Vietnam Pro', sans-serif; }
+  .font-manrope { font-family: 'Manrope', sans-serif; }
+
+  /* Scrap paper torn-edge effect */
+  .scrap-shadow {
+    box-shadow:
+      2px 3px 8px rgba(26, 28, 31, 0.08),
+      0 1px 2px rgba(26, 28, 31, 0.04);
+  }
+  .scrap-shadow-hover {
+    box-shadow:
+      4px 6px 16px rgba(26, 28, 31, 0.12),
+      0 2px 4px rgba(26, 28, 31, 0.06);
+  }
+
+  /* Tape decoration */
+  .tape {
+    background: linear-gradient(135deg, rgba(210,228,255,0.7) 0%, rgba(210,228,255,0.4) 100%);
+    backdrop-filter: blur(4px);
+  }
+</style>
+<style>
+  body { min-height: max(884px, 100dvh); }
+</style>
+</head>
+
+<body class="bg-background text-on-background font-body antialiased">
+
+<!-- Page Title -->
+<div class="px-5 pt-6 pb-2">
+  <h2 class="text-[20px] font-semibold tracking-tight text-on-surface font-manrope">오늘의 코디</h2>
+  <p class="text-xs text-on-surface-variant mt-1">선선한 봄 날씨에 어울리는 캐주얼 코디</p>
+</div>
+
+<!-- ====== Scrap Layout Container ====== -->
+<div class="mx-5 bg-surface-container-lowest rounded-[20px] p-6 shadow-[0_10px_30px_rgba(0,0,0,0.04)] border border-outline-variant/10 relative overflow-hidden">
+
+  <!-- Background texture: subtle grid -->
+  <div class="absolute inset-0 opacity-[0.03]" style="background-image: repeating-linear-gradient(0deg, #1a1c1f 0px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, #1a1c1f 0px, transparent 1px, transparent 40px);"></div>
+
+  <!-- ====== Scrap Items — Magazine Layout ====== -->
+  <div class="relative min-h-[420px]">
+
+    <!-- Outer (아우터) — 좌상단, 살짝 기울기 -->
+    <div class="absolute top-0 left-0 w-[52%] scrap-shadow hover:scrap-shadow-hover transition-shadow duration-300 cursor-pointer" style="transform: rotate(-2deg);">
+      <!-- Tape decoration -->
+      <div class="tape absolute -top-2 left-1/2 -translate-x-1/2 w-12 h-5 rounded-sm z-10 opacity-80"></div>
+      <div class="bg-white rounded-lg p-4 relative">
+        <!-- SVG Clothing Illustration (placeholder using inline SVG) -->
+        <div class="aspect-[4/3] rounded-md flex items-center justify-center mb-3 overflow-hidden" style="background: linear-gradient(135deg, #f8f8fc 0%, #ededf1 100%);">
+          <svg viewBox="0 0 120 100" width="100" height="84" class="drop-shadow-sm">
+            <!-- Jacket SVG simplified -->
+            <path d="M35 20 L25 45 L30 47 L35 30 L40 85 L80 85 L85 30 L90 47 L95 45 L85 20 L75 15 L65 20 L60 18 L55 20 L45 15 Z"
+                  fill="#F5E6D3" stroke="#e0d5c5" stroke-width="1"/>
+            <path d="M55 20 L55 85 M65 20 L65 85" stroke="#e0d5c5" stroke-width="0.5" opacity="0.5"/>
+            <circle cx="58" cy="50" r="1.5" fill="#d4c4b0"/>
+            <circle cx="58" cy="60" r="1.5" fill="#d4c4b0"/>
+            <circle cx="58" cy="70" r="1.5" fill="#d4c4b0"/>
+          </svg>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 rounded-full bg-[#F5E6D3] ring-1 ring-black/10 flex-shrink-0"></div>
+          <div>
+            <p class="text-xs font-bold text-on-surface leading-tight">가디건</p>
+            <p class="text-[10px] text-on-surface-variant">베이지</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top (상의) — 우상단, 반대 기울기 -->
+    <div class="absolute top-4 right-0 w-[44%] scrap-shadow hover:scrap-shadow-hover transition-shadow duration-300 cursor-pointer" style="transform: rotate(1.5deg);">
+      <div class="tape absolute -top-2 right-6 w-10 h-5 rounded-sm z-10 opacity-80"></div>
+      <div class="bg-white rounded-lg p-4 relative">
+        <div class="aspect-[4/3] rounded-md flex items-center justify-center mb-3 overflow-hidden" style="background: linear-gradient(135deg, #f8f8fc 0%, #ededf1 100%);">
+          <svg viewBox="0 0 120 100" width="90" height="75" class="drop-shadow-sm">
+            <!-- T-shirt SVG -->
+            <path d="M30 20 L20 35 L35 40 L35 85 L85 85 L85 40 L100 35 L90 20 L75 25 Q60 32 45 25 Z"
+                  fill="#FFFFFF" stroke="#e0e0e4" stroke-width="1"/>
+            <path d="M45 25 Q60 32 75 25" fill="none" stroke="#e0e0e4" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 rounded-full bg-[#FFFFFF] border border-outline-variant/30 flex-shrink-0"></div>
+          <div>
+            <p class="text-xs font-bold text-on-surface leading-tight">맨투맨</p>
+            <p class="text-[10px] text-on-surface-variant">화이트</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom (하의) — 좌하단 -->
+    <div class="absolute bottom-12 left-2 w-[46%] scrap-shadow hover:scrap-shadow-hover transition-shadow duration-300 cursor-pointer" style="transform: rotate(1deg);">
+      <div class="tape absolute -top-2 left-4 w-10 h-5 rounded-sm z-10 opacity-80"></div>
+      <div class="bg-white rounded-lg p-4 relative">
+        <div class="aspect-[4/3] rounded-md flex items-center justify-center mb-3 overflow-hidden" style="background: linear-gradient(135deg, #f8f8fc 0%, #ededf1 100%);">
+          <svg viewBox="0 0 120 100" width="90" height="75" class="drop-shadow-sm">
+            <!-- Jeans SVG -->
+            <path d="M35 10 L30 15 L28 90 L48 90 L55 50 L65 50 L72 90 L92 90 L90 15 L85 10 Z"
+                  fill="#2244AA" stroke="#1a3580" stroke-width="1"/>
+            <path d="M55 50 L55 10 M65 50 L65 10" stroke="#1a3580" stroke-width="0.5" opacity="0.3"/>
+            <path d="M35 10 L85 10" fill="none" stroke="#1a3580" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 rounded-full bg-[#2244AA] ring-1 ring-black/10 flex-shrink-0"></div>
+          <div>
+            <p class="text-xs font-bold text-on-surface leading-tight">청바지</p>
+            <p class="text-[10px] text-on-surface-variant">인디고</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shoes (신발) — 우하단 -->
+    <div class="absolute bottom-0 right-1 w-[42%] scrap-shadow hover:scrap-shadow-hover transition-shadow duration-300 cursor-pointer" style="transform: rotate(-1.5deg);">
+      <div class="tape absolute -top-2 right-8 w-11 h-5 rounded-sm z-10 opacity-80"></div>
+      <div class="bg-white rounded-lg p-4 relative">
+        <div class="aspect-[4/3] rounded-md flex items-center justify-center mb-3 overflow-hidden" style="background: linear-gradient(135deg, #f8f8fc 0%, #ededf1 100%);">
+          <svg viewBox="0 0 120 80" width="90" height="60" class="drop-shadow-sm">
+            <!-- Sneaker SVG -->
+            <path d="M20 50 L20 40 Q20 30 35 28 L70 25 Q85 24 90 30 L100 40 L105 45 Q108 52 100 55 L20 55 Z"
+                  fill="#FFFFFF" stroke="#e0e0e4" stroke-width="1"/>
+            <path d="M20 50 L100 50" stroke="#e0e0e4" stroke-width="1.5"/>
+            <ellipse cx="45" cy="38" rx="3" ry="2" fill="#e0e0e4"/>
+            <ellipse cx="55" cy="36" rx="3" ry="2" fill="#e0e0e4"/>
+            <ellipse cx="65" cy="34" rx="3" ry="2" fill="#e0e0e4"/>
+          </svg>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-4 rounded-full bg-[#FFFFFF] border border-outline-variant/30 flex-shrink-0"></div>
+          <div>
+            <p class="text-xs font-bold text-on-surface leading-tight">운동화</p>
+            <p class="text-[10px] text-on-surface-variant">화이트</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ====== AI Summary & Tip ====== -->
+  <div class="mt-6 relative z-10">
+    <!-- Handwritten-style note -->
+    <div class="bg-primary/5 rounded-xl p-4 border border-primary/10">
+      <p class="text-[13px] leading-relaxed text-on-surface-variant">
+        <span class="font-semibold text-on-surface">💡 스타일 팁</span><br/>
+        오늘은 일교차가 11도! 밝은 톤으로 통일하면 깔끔해요. 실내에선 가디건을 벗어도 화이트 맨투맨이 단독으로 잘 어울려요.
+      </p>
+    </div>
+  </div>
+
+  <!-- Color Palette Preview -->
+  <div class="mt-4 flex items-center gap-3 relative z-10">
+    <span class="text-[10px] text-outline font-medium uppercase tracking-wider">Colors</span>
+    <div class="flex gap-1.5">
+      <div class="w-5 h-5 rounded-full bg-[#F5E6D3] ring-1 ring-black/5"></div>
+      <div class="w-5 h-5 rounded-full bg-[#FFFFFF] border border-outline-variant/30"></div>
+      <div class="w-5 h-5 rounded-full bg-[#2244AA] ring-1 ring-black/5"></div>
+      <div class="w-5 h-5 rounded-full bg-[#FFFFFF] border border-outline-variant/30"></div>
+    </div>
+    <span class="text-[10px] text-outline ml-auto">무난한 톤 매칭</span>
+  </div>
+
+</div>
+
+<!-- ====== Refresh Button ====== -->
+<div class="px-5 mt-4">
+  <button class="w-full bg-secondary-container text-white font-bold py-4 rounded-xl shadow-lg shadow-secondary-container/20 active:scale-95 transition-transform">
+    다른 코디 추천
+  </button>
+</div>
+
+<!-- ====== Comparison: Before (current) vs After (scrap) ====== -->
+<div class="px-5 mt-12 mb-8">
+  <h3 class="text-sm font-semibold text-outline mb-4 uppercase tracking-wider">Design Reference: 기존 vs 스크랩</h3>
+
+  <div class="grid grid-cols-2 gap-3">
+    <!-- Before -->
+    <div class="space-y-2">
+      <span class="text-[10px] font-bold text-outline uppercase">Before (v1)</span>
+      <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant/10">
+        <div class="grid grid-cols-2 gap-1.5">
+          <div class="bg-surface-container-low rounded-lg p-2 flex flex-col items-center gap-1 aspect-square justify-center">
+            <span class="material-symbols-outlined text-on-surface-variant text-[18px]">checkroom</span>
+            <span class="text-[8px] text-on-surface-variant">가디건</span>
+          </div>
+          <div class="bg-surface-container-low rounded-lg p-2 flex flex-col items-center gap-1 aspect-square justify-center">
+            <span class="material-symbols-outlined text-on-surface-variant text-[18px]">apparel</span>
+            <span class="text-[8px] text-on-surface-variant">맨투맨</span>
+          </div>
+          <div class="bg-surface-container-low rounded-lg p-2 flex flex-col items-center gap-1 aspect-square justify-center">
+            <span class="material-symbols-outlined text-on-surface-variant text-[18px]">layers</span>
+            <span class="text-[8px] text-on-surface-variant">청바지</span>
+          </div>
+          <div class="bg-surface-container-low rounded-lg p-2 flex flex-col items-center gap-1 aspect-square justify-center">
+            <span class="material-symbols-outlined text-on-surface-variant text-[18px]">steps</span>
+            <span class="text-[8px] text-on-surface-variant">운동화</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- After -->
+    <div class="space-y-2">
+      <span class="text-[10px] font-bold text-primary uppercase">After (Scrap v2)</span>
+      <div class="bg-surface-container-lowest rounded-xl p-3 border border-primary/20">
+        <div class="relative h-[120px]">
+          <div class="absolute top-0 left-0 w-[55%] bg-white rounded-md p-1.5 scrap-shadow" style="transform: rotate(-2deg);">
+            <div class="h-8 bg-[#F5E6D3]/30 rounded-sm mb-1"></div>
+            <span class="text-[7px] text-on-surface-variant">가디건</span>
+          </div>
+          <div class="absolute top-2 right-0 w-[42%] bg-white rounded-md p-1.5 scrap-shadow" style="transform: rotate(1.5deg);">
+            <div class="h-8 bg-surface-container-low rounded-sm mb-1"></div>
+            <span class="text-[7px] text-on-surface-variant">맨투맨</span>
+          </div>
+          <div class="absolute bottom-4 left-1 w-[48%] bg-white rounded-md p-1.5 scrap-shadow" style="transform: rotate(1deg);">
+            <div class="h-8 bg-[#2244AA]/20 rounded-sm mb-1"></div>
+            <span class="text-[7px] text-on-surface-variant">청바지</span>
+          </div>
+          <div class="absolute bottom-0 right-1 w-[40%] bg-white rounded-md p-1.5 scrap-shadow" style="transform: rotate(-1deg);">
+            <div class="h-8 bg-surface-container-low rounded-sm mb-1"></div>
+            <span class="text-[7px] text-on-surface-variant">운동화</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body></html>

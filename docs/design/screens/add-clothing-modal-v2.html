@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "outline-variant": "#c1c7d2",
+          "outline": "#717782",
+          "surface": "#f9f9fd",
+          "secondary": "#ae2f34",
+          "primary": "#005ea1",
+          "secondary-container": "#ff6b6b",
+          "error": "#ba1a1a",
+          "surface-container-lowest": "#ffffff",
+          "on-background": "#1a1c1f",
+          "primary-fixed": "#d2e4ff",
+          "surface-variant": "#e2e2e6",
+          "on-surface-variant": "#414751",
+          "surface-container-low": "#f3f3f7",
+          "on-surface": "#1a1c1f",
+          "on-primary": "#ffffff",
+          "on-primary-fixed-variant": "#00497e",
+          "primary-container": "#2b78bf",
+          "surface-container": "#ededf1",
+          "surface-container-high": "#e8e8ec",
+          "background": "#f9f9fd",
+          "success": "#4caf50",
+        },
+        fontFamily: {
+          "headline": ["Manrope"],
+          "body": ["Be Vietnam Pro"],
+          "label": ["Be Vietnam Pro"]
+        },
+        borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  body { font-family: 'Be Vietnam Pro', sans-serif; }
+  .font-manrope { font-family: 'Manrope', sans-serif; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  @keyframes pop-in {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .animate-pop-in { animation: pop-in 0.4s ease-out forwards; }
+  @keyframes typing {
+    0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+    30% { opacity: 1; transform: translateY(-4px); }
+  }
+  .typing-dot:nth-child(1) { animation: typing 1.4s infinite 0s; }
+  .typing-dot:nth-child(2) { animation: typing 1.4s infinite 0.2s; }
+  .typing-dot:nth-child(3) { animation: typing 1.4s infinite 0.4s; }
+</style>
+<style>
+  body { min-height: max(884px, 100dvh); }
+</style>
+</head>
+
+<body class="bg-surface font-body text-on-surface">
+<!-- Background Content (dimmed closet) -->
+<div class="fixed inset-0 z-0 overflow-y-auto pb-32 opacity-30">
+  <header class="p-6 flex justify-between items-center">
+    <h1 class="font-headline font-extrabold text-2xl tracking-tighter text-on-background">내 옷장</h1>
+  </header>
+  <div class="px-6 space-y-3">
+    <div class="h-16 rounded-xl bg-surface-container-low"></div>
+    <div class="h-16 rounded-xl bg-surface-container-low"></div>
+    <div class="h-16 rounded-xl bg-surface-container-low"></div>
+  </div>
+</div>
+
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-end justify-center bg-[#1a1c1f]/40 backdrop-blur-[8px]">
+<!-- Bottom Sheet Modal -->
+<div class="w-full max-w-md bg-surface-container-lowest rounded-t-[16px] shadow-[0px_-10px_30px_rgba(0,0,0,0.05)] max-h-[85dvh] flex flex-col">
+
+  <!-- Handle -->
+  <div class="w-full flex justify-center pt-3 pb-1 flex-shrink-0">
+    <div class="w-10 h-1 rounded-full bg-surface-variant/50"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="flex items-center justify-between px-6 py-3 flex-shrink-0">
+    <h2 class="font-headline font-bold text-[20px] text-on-background tracking-tight">옷 등록하기</h2>
+    <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors">
+      <span class="material-symbols-outlined text-on-surface-variant" data-icon="close">close</span>
+    </button>
+  </header>
+
+  <!-- ====== Tab Switcher ====== -->
+  <div class="flex mx-6 mb-4 bg-surface-container-low rounded-xl p-1 flex-shrink-0">
+    <button class="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-surface-container-lowest text-on-surface shadow-sm flex items-center justify-center gap-1.5" id="tab-manual">
+      <span class="material-symbols-outlined text-[16px]">touch_app</span>
+      직접 선택
+    </button>
+    <button class="flex-1 py-2.5 rounded-lg text-sm font-medium transition-all text-on-surface-variant flex items-center justify-center gap-1.5" id="tab-ai">
+      <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+      AI 입력
+    </button>
+  </div>
+
+  <!-- ====== Tab Content: 직접 선택 (기존 모달) ====== -->
+  <div class="px-6 pb-8 space-y-6 overflow-y-auto flex-1 no-scrollbar" id="content-manual">
+    <!-- Category -->
+    <section class="space-y-3">
+      <label class="block text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider">카테고리</label>
+      <div class="flex flex-wrap gap-2">
+        <button class="px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-primary-fixed text-on-primary-fixed-variant">아우터</button>
+        <button class="px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-surface-container-low text-on-surface-variant">상의</button>
+        <button class="px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-surface-container-low text-on-surface-variant">하의</button>
+        <button class="px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-surface-container-low text-on-surface-variant">신발</button>
+        <button class="px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-surface-container-low text-on-surface-variant">액세서리</button>
+      </div>
+    </section>
+    <!-- Sub-category -->
+    <section class="space-y-3">
+      <label class="block text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider">세부 카테고리</label>
+      <div class="flex overflow-x-auto no-scrollbar gap-2 -mx-1 px-1">
+        <button class="whitespace-nowrap px-4 py-2 rounded-lg text-sm bg-surface-container-low text-on-surface-variant">패딩</button>
+        <button class="whitespace-nowrap px-4 py-2 rounded-lg text-sm bg-primary-fixed text-on-primary-fixed-variant border border-primary/10">자켓</button>
+        <button class="whitespace-nowrap px-4 py-2 rounded-lg text-sm bg-surface-container-low text-on-surface-variant">코트</button>
+        <button class="whitespace-nowrap px-4 py-2 rounded-lg text-sm bg-surface-container-low text-on-surface-variant">가디건</button>
+        <button class="whitespace-nowrap px-4 py-2 rounded-lg text-sm bg-surface-container-low text-on-surface-variant">바람막이</button>
+        <button class="whitespace-nowrap px-4 py-2 rounded-lg text-sm bg-surface-container-low text-on-surface-variant">점퍼</button>
+      </div>
+    </section>
+    <!-- Color Picker -->
+    <section class="space-y-3">
+      <label class="block text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider">색상</label>
+      <div class="grid grid-cols-7 gap-y-4 gap-x-2">
+        <div class="flex flex-col items-center gap-1.5">
+          <div class="w-9 h-9 rounded-full bg-[#333333] border-2 border-white shadow-[0px_4px_12px_rgba(0,0,0,0.15)] ring-2 ring-primary-container/20"></div>
+          <span class="text-[10px] text-on-surface-variant font-medium">검정</span>
+        </div>
+        <div class="flex flex-col items-center gap-1.5 opacity-60">
+          <div class="w-9 h-9 rounded-full bg-[#FFFFFF] border border-outline-variant/30"></div>
+          <span class="text-[10px] text-on-surface-variant font-medium">하얀</span>
+        </div>
+        <div class="flex flex-col items-center gap-1.5 opacity-60">
+          <div class="w-9 h-9 rounded-full bg-[#808080]"></div>
+          <span class="text-[10px] text-on-surface-variant font-medium">회색</span>
+        </div>
+        <div class="flex flex-col items-center gap-1.5 opacity-60">
+          <div class="w-9 h-9 rounded-full bg-[#1E3A8A]"></div>
+          <span class="text-[10px] text-on-surface-variant font-medium">네이비</span>
+        </div>
+        <div class="flex flex-col items-center gap-1.5 opacity-60">
+          <div class="w-9 h-9 rounded-full bg-[#F5E6D3]"></div>
+          <span class="text-[10px] text-on-surface-variant font-medium">베이지</span>
+        </div>
+        <div class="flex flex-col items-center gap-1.5 opacity-60">
+          <div class="w-9 h-9 rounded-full bg-[#4B3621]"></div>
+          <span class="text-[10px] text-on-surface-variant font-medium">브라운</span>
+        </div>
+        <div class="flex flex-col items-center gap-1.5 opacity-60">
+          <div class="w-9 h-9 rounded-full bg-[#34D399]"></div>
+          <span class="text-[10px] text-on-surface-variant font-medium">민트</span>
+        </div>
+      </div>
+    </section>
+    <!-- Preview -->
+    <div class="pt-2 flex justify-center">
+      <div class="bg-surface-container px-4 py-2 rounded-full inline-flex items-center gap-2">
+        <span class="text-sm font-semibold text-on-surface-variant">🧥 자켓 · 블랙</span>
+      </div>
+    </div>
+    <!-- CTA -->
+    <button class="w-full h-[52px] bg-primary text-white font-semibold rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 active:scale-[0.98] transition-all">
+      등록하기
+    </button>
+  </div>
+
+  <!-- ====== Tab Content: AI 입력 (새로운) ====== -->
+  <div class="hidden flex-col flex-1 overflow-hidden" id="content-ai">
+
+    <!-- AI Chat Area -->
+    <div class="flex-1 overflow-y-auto px-6 py-4 space-y-4 no-scrollbar">
+
+      <!-- AI Welcome -->
+      <div class="flex gap-2.5 items-start">
+        <div class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0 mt-0.5">
+          <span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        </div>
+        <div class="bg-surface-container-low rounded-2xl rounded-bl-sm px-4 py-3 max-w-[85%]">
+          <p class="text-sm text-on-surface leading-relaxed">어떤 옷을 등록할까요?<br/><span class="text-on-surface-variant">예: "검정 패딩이랑 베이지 니트"</span></p>
+        </div>
+      </div>
+
+      <!-- User Message -->
+      <div class="flex justify-end">
+        <div class="bg-primary text-on-primary rounded-2xl rounded-br-sm px-4 py-2.5 max-w-[75%]">
+          <p class="text-sm">검정 패딩이랑 베이지 니트 등록해줘</p>
+        </div>
+      </div>
+
+      <!-- AI: Parsed Results -->
+      <div class="flex gap-2.5 items-start">
+        <div class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0 mt-0.5">
+          <span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        </div>
+        <div class="space-y-2 flex-1 max-w-[85%]">
+          <div class="bg-surface-container-low rounded-2xl rounded-bl-sm px-4 py-3">
+            <p class="text-sm text-on-surface">2개를 찾았어요!</p>
+          </div>
+          <!-- Parsed Card 1 -->
+          <div class="bg-surface-container-low rounded-xl px-3.5 py-3 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-base">🧥</div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold text-on-surface">패딩</p>
+              <div class="flex items-center gap-1.5 mt-0.5">
+                <div class="w-3 h-3 rounded-full bg-[#333333] ring-1 ring-black/10"></div>
+                <span class="text-xs text-on-surface-variant">검정</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-success text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          </div>
+          <!-- Parsed Card 2 -->
+          <div class="bg-surface-container-low rounded-xl px-3.5 py-3 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-base">👕</div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold text-on-surface">니트</p>
+              <div class="flex items-center gap-1.5 mt-0.5">
+                <div class="w-3 h-3 rounded-full bg-[#F5E6D3] ring-1 ring-black/10"></div>
+                <span class="text-xs text-on-surface-variant">베이지</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-success text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          </div>
+          <!-- Action -->
+          <div class="flex gap-2">
+            <button class="flex-1 h-9 bg-primary text-on-primary rounded-lg text-sm font-semibold active:scale-[0.97] transition-transform">등록하기</button>
+            <button class="h-9 px-3.5 bg-surface-container-high text-on-surface-variant rounded-lg text-sm font-medium">수정</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- User: Ambiguous -->
+      <div class="flex justify-end">
+        <div class="bg-primary text-on-primary rounded-2xl rounded-br-sm px-4 py-2.5 max-w-[75%]">
+          <p class="text-sm">갈색 옷 하나 추가</p>
+        </div>
+      </div>
+
+      <!-- AI: Clarification Chips -->
+      <div class="flex gap-2.5 items-start">
+        <div class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0 mt-0.5">
+          <span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        </div>
+        <div class="space-y-2.5 flex-1 max-w-[85%]">
+          <div class="bg-surface-container-low rounded-2xl rounded-bl-sm px-4 py-3">
+            <p class="text-sm text-on-surface">어떤 종류인가요?</p>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <button class="px-3 py-1.5 rounded-full bg-surface-container-low text-xs text-on-surface-variant font-medium active:bg-primary-fixed active:text-on-primary-fixed-variant transition-colors">🧥 코트</button>
+            <button class="px-3 py-1.5 rounded-full bg-surface-container-low text-xs text-on-surface-variant font-medium active:bg-primary-fixed active:text-on-primary-fixed-variant transition-colors">🧥 자켓</button>
+            <button class="px-3 py-1.5 rounded-full bg-surface-container-low text-xs text-on-surface-variant font-medium active:bg-primary-fixed active:text-on-primary-fixed-variant transition-colors">👕 니트</button>
+            <button class="px-3 py-1.5 rounded-full bg-surface-container-low text-xs text-on-surface-variant font-medium active:bg-primary-fixed active:text-on-primary-fixed-variant transition-colors">👕 맨투맨</button>
+            <button class="px-3 py-1.5 rounded-full bg-surface-container-low text-xs text-on-surface-variant font-medium active:bg-primary-fixed active:text-on-primary-fixed-variant transition-colors">👖 슬랙스</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Success State -->
+      <div class="flex gap-2.5 items-start">
+        <div class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0 mt-0.5">
+          <span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        </div>
+        <div class="bg-surface-container-low rounded-2xl rounded-bl-sm px-4 py-3 max-w-[85%]">
+          <div class="flex items-center gap-1.5 mb-1">
+            <div class="w-4 h-4 rounded-full bg-success/15 flex items-center justify-center animate-pop-in">
+              <span class="material-symbols-outlined text-success text-[12px]" style="font-variation-settings: 'FILL' 1;">check</span>
+            </div>
+            <span class="text-sm font-semibold text-success">등록 완료!</span>
+          </div>
+          <p class="text-xs text-on-surface-variant">브라운 코트가 옷장에 추가됐어요.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- AI Input Bar (modal 내부 하단) -->
+    <div class="px-6 py-4 border-t border-surface-variant/20 flex-shrink-0">
+      <div class="flex items-center gap-2">
+        <div class="flex-1 bg-surface-container-low rounded-xl px-4 py-2.5 min-h-[40px] flex items-center">
+          <span class="text-sm text-outline">옷을 알려주세요...</span>
+        </div>
+        <button class="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0 active:scale-90 transition-transform shadow-md shadow-primary/20">
+          <span class="material-symbols-outlined text-on-primary text-[18px]">send</span>
+        </button>
+      </div>
+      <!-- Quick suggestions -->
+      <div class="flex gap-1.5 mt-2 overflow-x-auto no-scrollbar">
+        <button class="whitespace-nowrap px-2.5 py-1 rounded-full bg-surface-container-low text-[11px] text-on-surface-variant">"검정 패딩"</button>
+        <button class="whitespace-nowrap px-2.5 py-1 rounded-full bg-surface-container-low text-[11px] text-on-surface-variant">"베이지 니트"</button>
+        <button class="whitespace-nowrap px-2.5 py-1 rounded-full bg-surface-container-low text-[11px] text-on-surface-variant">"네이비 슬랙스"</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+<!-- Tab switching script (for preview only) -->
+<script>
+  const tabManual = document.getElementById('tab-manual');
+  const tabAi = document.getElementById('tab-ai');
+  const contentManual = document.getElementById('content-manual');
+  const contentAi = document.getElementById('content-ai');
+
+  tabManual.addEventListener('click', () => {
+    tabManual.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-surface-container-lowest text-on-surface shadow-sm flex items-center justify-center gap-1.5';
+    tabAi.className = 'flex-1 py-2.5 rounded-lg text-sm font-medium transition-all text-on-surface-variant flex items-center justify-center gap-1.5';
+    contentManual.classList.remove('hidden');
+    contentManual.classList.add('flex-col');
+    contentAi.classList.add('hidden');
+    contentAi.classList.remove('flex', 'flex-col');
+  });
+
+  tabAi.addEventListener('click', () => {
+    tabAi.className = 'flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all bg-surface-container-lowest text-on-surface shadow-sm flex items-center justify-center gap-1.5';
+    tabManual.className = 'flex-1 py-2.5 rounded-lg text-sm font-medium transition-all text-on-surface-variant flex items-center justify-center gap-1.5';
+    contentAi.classList.remove('hidden');
+    contentAi.classList.add('flex', 'flex-col');
+    contentManual.classList.add('hidden');
+  });
+</script>
+
+</body></html>

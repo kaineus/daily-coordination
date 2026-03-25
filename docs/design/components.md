@@ -272,6 +272,71 @@
 - **라벨**: "AI 등록" (14px, semibold)
 - **액션**: 채팅 등록 화면으로 이동
 
+## 11. Scrap Layout (F5 코디 추천 비주얼)
+
+### Scrap Container
+- **배경**: `--color-surface-container-lowest` (#FFFFFF)
+- **radius**: 20px
+- **패딩**: 24px
+- **shadow**: `0 10px 30px rgba(0,0,0,0.04)`
+- **보더**: 1px `outline-variant/10`
+- **배경 텍스처**: subtle grid (40px 간격, 3% 불투명도)
+
+### Scrap Item Card
+- **배경**: white
+- **radius**: 8px
+- **패딩**: 16px
+- **shadow**: `2px 3px 8px rgba(26,28,31,0.08), 0 1px 2px rgba(26,28,31,0.04)`
+- **hover shadow**: `4px 6px 16px rgba(26,28,31,0.12)`
+- **기울기**: -2deg ~ 2deg (아이템별 랜덤)
+- **배치**: absolute positioning, 비대칭 오버랩
+- **내용**:
+  - SVG 일러스트 영역 (aspect 4:3, gradient 배경)
+  - 색상 도트 (16px) + 카테고리명 (12px bold) + 색상명 (10px)
+
+### Scrap Layout Positioning
+| 아이템 | 위치 | 너비 | 기울기 | z-index |
+|--------|------|------|--------|---------|
+| 아우터 | top-left | 52% | -2deg | 1 |
+| 상의 | top-right | 44% | +1.5deg | 2 |
+| 하의 | bottom-left | 46% | +1deg | 3 |
+| 신발 | bottom-right | 42% | -1.5deg | 4 |
+- 컨테이너 최소 높이: 420px (모바일)
+- 아이템 간 약 60% 오버랩
+
+### Tape Decoration
+- **배경**: `primary-fixed` 70% → 40% 불투명도 gradient
+- **backdrop-filter**: blur(4px)
+- **크기**: 40~48px x 20px
+- **위치**: 카드 상단 -8px, 랜덤 수평 위치
+
+### SVG Clothing Illustration
+- **뷰포트**: 120x100 (아우터/상의/하의), 120x80 (신발)
+- **색상**: `fill` 속성에 user_clothes의 hex 색상 동적 바인딩
+- **stroke**: hex 색상의 어두운 변형 (darken 15%)
+- **폴백**: SVG 없는 카테고리 → 이모지 (clothing_categories.icon)
+- **경로**: `src/assets/clothes/{category-name}.svg`
+
+### Color Palette Preview
+- 색상 도트: 20px 원형, 아이템 순서대로 나열
+- "Colors" 라벨 (10px, outline, uppercase tracking)
+- 색상 조합 설명 텍스트 (10px, outline)
+
+## 12. Tab Switcher (모달 내 탭)
+
+### Tab Container
+- **배경**: `--color-surface-container-low`
+- **radius**: 12px
+- **패딩**: 4px
+- **위치**: 모달 헤더 아래
+
+### Tab Item
+- **활성**: `--color-surface-container-lowest` 배경, `on-surface` 텍스트, semibold, shadow-sm
+- **비활성**: transparent 배경, `on-surface-variant` 텍스트, medium
+- **높이**: 40px
+- **radius**: 8px
+- **아이콘 + 라벨**: `touch_app` (직접 선택), `auto_awesome` filled (AI 입력)
+
 ## Stitch 참조
 
 ### 프로젝트
@@ -296,4 +361,6 @@
 | 내 옷장 | `screens/closet-page.html` | `screens/closet-page-desktop.html` |
 | 옷 등록 모달 | `screens/add-clothing-modal.html` | — |
 | 홈 (오늘의 코디) | `screens/home-page.html` | `screens/home-page-desktop.html` |
-| AI 채팅 등록 | `screens/chat-register.html` | `screens/chat-register-desktop.html` |
+| AI 채팅 등록 (참고용) | `screens/chat-register.html` | `screens/chat-register-desktop.html` |
+| 옷 등록 모달 v2 (탭) | `screens/add-clothing-modal-v2.html` | — |
+| 코디 스크랩 레이아웃 | `screens/outfit-scrap-layout.html` | — |
