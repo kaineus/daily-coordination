@@ -294,15 +294,20 @@
   - SVG 일러스트 영역 (aspect 4:3, gradient 배경)
   - 색상 도트 (16px) + 카테고리명 (12px bold) + 색상명 (10px)
 
-### Scrap Layout Positioning
-| 아이템 | 위치 | 너비 | 기울기 | z-index |
-|--------|------|------|--------|---------|
-| 아우터 | top-left | 52% | -2deg | 1 |
-| 상의 | top-right | 44% | +1.5deg | 2 |
-| 하의 | bottom-left | 46% | +1deg | 3 |
-| 신발 | bottom-right | 42% | -1.5deg | 4 |
-- 컨테이너 최소 높이: 420px (모바일)
-- 아이템 간 약 60% 오버랩
+### Scrap Layout Positioning (수직 착장 순서)
+배치 순서는 실제 착장 순서: **위→아래로 아우터 > 상의 > 하의 > 신발**
+
+| 순서 | 아이템 | 정렬 | 너비 | 기울기 | z-index | 텍스트 위치 |
+|------|--------|------|------|--------|---------|------------|
+| 1 | 아우터 | 좌측 | 60% | -1.5deg | 4 | 카드 우측 |
+| 2 | 상의 | 우측 | 55% | +1deg | 3 | 카드 좌측 |
+| 3 | 하의 | 좌측 | 52% | -0.5deg | 2 | 카드 우측 |
+| 4 | 신발 | 우측 | 48% | +1.5deg | 1 | 카드 좌측 |
+
+- **수직 오버랩**: `space-y-[-16px]` (SVG끼리만 살짝 겹침)
+- **텍스트는 오버랩 영역 밖에 배치** — 카드 옆 독립 영역, 항상 가독성 확보
+- 좌/우 교차 배치로 비대칭 밸런스
+- 악세서리: 메인 의류 흐름 옆에 보조 배치
 
 ### Tape Decoration
 - **배경**: `primary-fixed` 70% → 40% 불투명도 gradient
@@ -322,20 +327,20 @@
 - "Colors" 라벨 (10px, outline, uppercase tracking)
 - 색상 조합 설명 텍스트 (10px, outline)
 
-## 12. Tab Switcher (모달 내 탭)
+## 12. AI + Manual Divider (모달 내 구분선)
 
-### Tab Container
-- **배경**: `--color-surface-container-low`
-- **radius**: 12px
-- **패딩**: 4px
-- **위치**: 모달 헤더 아래
+### AI 입력 영역 (모달 상단)
+- **입력 필드**: `surface-container-low` 배경, 12px radius, `auto_awesome` 아이콘 (filled)
+- **전송 버튼**: 44px 원형, primary 배경
+- **파싱 결과**: AI 아바타 (24px, primary-fixed) + 메시지 + Parsed Item Cards
+- **되묻기**: Suggestion Chips (섹션 9 참조)
+- **등록 확인**: "등록하기" (primary) + "수정" (ghost)
 
-### Tab Item
-- **활성**: `--color-surface-container-lowest` 배경, `on-surface` 텍스트, semibold, shadow-sm
-- **비활성**: transparent 배경, `on-surface-variant` 텍스트, medium
-- **높이**: 40px
-- **radius**: 8px
-- **아이콘 + 라벨**: `touch_app` (직접 선택), `auto_awesome` filled (AI 입력)
+### "또는 직접 선택" 구분선
+- **레이아웃**: 좌 hr — 텍스트 — 우 hr
+- **hr**: 1px, `outline-variant/40`
+- **텍스트**: Caption (12px), `outline`, medium
+- **위치**: AI 영역과 수동 선택 영역 사이
 
 ## Stitch 참조
 
@@ -362,5 +367,6 @@
 | 옷 등록 모달 | `screens/add-clothing-modal.html` | — |
 | 홈 (오늘의 코디) | `screens/home-page.html` | `screens/home-page-desktop.html` |
 | AI 채팅 등록 (참고용) | `screens/chat-register.html` | `screens/chat-register-desktop.html` |
-| 옷 등록 모달 v2 (탭) | `screens/add-clothing-modal-v2.html` | — |
-| 코디 스크랩 레이아웃 | `screens/outfit-scrap-layout.html` | — |
+| 옷 등록 모달 v2 | `screens/add-clothing-modal-v2.html` | `screens/add-clothing-modal-v2-desktop.html` |
+| 홈 v2 (스크랩) | `screens/home-page-v2.html` | `screens/home-page-v2-desktop.html` |
+| 코디 스크랩 (참고용) | `screens/outfit-scrap-layout.html` | — |

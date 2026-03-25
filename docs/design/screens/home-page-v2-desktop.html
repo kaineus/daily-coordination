@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface": "#f9f9fd",
+          "surface-container-low": "#f3f3f7",
+          "surface-container": "#ededf1",
+          "surface-container-high": "#e8e8ec",
+          "surface-container-lowest": "#ffffff",
+          "surface-variant": "#e2e2e6",
+          "outline-variant": "#c1c7d2",
+          "outline": "#717782",
+          "on-background": "#1a1c1f",
+          "on-surface": "#1a1c1f",
+          "on-surface-variant": "#414751",
+          "primary": "#005ea1",
+          "primary-fixed": "#d2e4ff",
+          "primary-container": "#2b78bf",
+          "on-primary": "#ffffff",
+          "on-primary-fixed-variant": "#00497e",
+          "secondary-container": "#ff6b6b",
+          "background": "#f9f9fd",
+        },
+        fontFamily: { "headline": ["Manrope"], "body": ["Be Vietnam Pro"] },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { font-family: 'Be Vietnam Pro', sans-serif; min-height: 100dvh; }
+  .font-manrope { font-family: 'Manrope', sans-serif; }
+  .scrap-shadow { box-shadow: 2px 3px 8px rgba(26,28,31,0.08), 0 1px 2px rgba(26,28,31,0.04); }
+  .scrap-shadow-hover { box-shadow: 4px 6px 16px rgba(26,28,31,0.12), 0 2px 4px rgba(26,28,31,0.06); }
+  .tape { background: linear-gradient(135deg, rgba(210,228,255,0.7) 0%, rgba(210,228,255,0.4) 100%); backdrop-filter: blur(4px); }
+  .chart-container { position: relative; height: 120px; }
+</style>
+</head>
+
+<body class="bg-background text-on-background font-body antialiased">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-white/70 backdrop-blur-xl flex items-center px-8 h-16 w-full max-w-7xl mx-auto">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">cloud_queue</span>
+    <h1 class="text-xl font-extrabold tracking-tighter text-on-background font-headline">Atmospheric Curator</h1>
+  </div>
+  <div class="flex-1"></div>
+  <nav class="flex gap-1">
+    <a class="px-4 py-2 rounded-full text-sm font-bold text-primary bg-primary-fixed/50" href="#">오늘의 코디</a>
+    <a class="px-4 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:bg-surface-container-low transition-colors" href="#">내 옷장</a>
+  </nav>
+  <div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant/20 ml-4"></div>
+</header>
+
+<main class="max-w-7xl mx-auto px-8 py-8 flex gap-8">
+
+  <!-- Left Column: 날씨 + 시간대별 -->
+  <div class="w-[380px] flex-shrink-0 space-y-6">
+    <!-- Weather Hero -->
+    <div class="relative overflow-hidden rounded-[20px] h-[240px] p-6 text-white flex flex-col justify-between" style="background: linear-gradient(135deg, #FFC107 0%, #FF6B6B 100%);">
+      <div class="absolute top-[-20px] right-[-20px] w-48 h-48 bg-white/20 blur-[60px] rounded-full"></div>
+      <div class="relative z-10">
+        <p class="text-sm font-medium opacity-90 mb-1">서울특별시</p>
+        <div class="flex items-baseline gap-2">
+          <span class="text-[72px] font-extrabold font-headline leading-none tracking-tighter">18°</span>
+          <span class="text-xl font-semibold opacity-90">맑음</span>
+        </div>
+      </div>
+      <div class="flex gap-3 relative z-10">
+        <div class="bg-white/20 backdrop-blur-md rounded-full px-3 py-1.5 text-[11px] font-bold">↓ 11° ↑ 22°</div>
+        <div class="bg-white/20 backdrop-blur-md rounded-full px-3 py-1.5 flex items-center gap-1 text-[11px] font-bold">
+          <span class="material-symbols-outlined text-[14px]">water_drop</span><span>10%</span>
+        </div>
+        <div class="bg-white/20 backdrop-blur-md rounded-full px-3 py-1.5 flex items-center gap-1 text-[11px] font-bold">
+          <span class="material-symbols-outlined text-[14px]">air</span><span>2.3m/s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hourly Chart (compact) -->
+    <div class="bg-surface-container-lowest rounded-[16px] p-5 shadow-[0_10px_30px_rgba(0,0,0,0.04)]">
+      <h3 class="text-sm font-semibold text-on-surface mb-3">시간대별 날씨</h3>
+      <div class="flex justify-between text-center">
+        <div class="flex flex-col items-center gap-1">
+          <span class="text-[11px] text-outline">06시</span>
+          <span class="material-symbols-outlined text-[18px] opacity-60">wb_cloudy</span>
+          <span class="text-xs font-bold">11°</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+          <span class="text-[11px] text-outline">09시</span>
+          <span class="material-symbols-outlined text-[18px] opacity-60">wb_sunny</span>
+          <span class="text-xs font-bold">14°</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+          <span class="text-[11px] text-primary font-bold">12시</span>
+          <span class="material-symbols-outlined text-[20px] text-primary" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
+          <span class="text-sm font-extrabold text-primary">18°</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+          <span class="text-[11px] text-outline">15시</span>
+          <span class="material-symbols-outlined text-[18px] opacity-60">wb_sunny</span>
+          <span class="text-xs font-bold">20°</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+          <span class="text-[11px] text-outline">18시</span>
+          <span class="material-symbols-outlined text-[18px] opacity-60">wb_twilight</span>
+          <span class="text-xs font-bold">17°</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+          <span class="text-[11px] text-outline">21시</span>
+          <span class="material-symbols-outlined text-[18px] opacity-60">bedtime</span>
+          <span class="text-xs font-bold">13°</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column: 스크랩 코디 레이아웃 -->
+  <div class="flex-1">
+    <h2 class="text-[22px] font-bold tracking-tight text-on-surface font-headline mb-4">오늘의 코디</h2>
+
+    <div class="bg-surface-container-lowest rounded-[20px] p-8 shadow-[0_10px_30px_rgba(0,0,0,0.04)] border border-outline-variant/10 relative overflow-hidden">
+
+      <div class="absolute inset-0 opacity-[0.02]" style="background-image: repeating-linear-gradient(0deg, #1a1c1f 0px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, #1a1c1f 0px, transparent 1px, transparent 40px);"></div>
+
+      <!-- Summary -->
+      <div class="relative z-10 mb-6">
+        <h3 class="text-lg font-semibold text-on-surface leading-snug">선선한 봄 날씨에 어울리는 캐주얼 코디</h3>
+        <div class="flex items-center gap-2 mt-2">
+          <span class="text-[10px] text-outline font-medium uppercase tracking-wider">Colors</span>
+          <div class="w-5 h-5 rounded-full bg-[#1E3A8A] ring-1 ring-black/5"></div>
+          <div class="w-5 h-5 rounded-full bg-[#F5E6D3] ring-1 ring-black/5"></div>
+          <div class="w-5 h-5 rounded-full bg-[#333333] ring-1 ring-black/5"></div>
+          <div class="w-5 h-5 rounded-full bg-[#FFFFFF] border border-outline-variant/30"></div>
+        </div>
+      </div>
+
+      <!-- Vertical scrap layout -->
+      <div class="relative z-10 space-y-[-12px]">
+
+        <!-- 아우터 -->
+        <div class="relative z-[4] flex items-end gap-5" style="transform: rotate(-1deg);">
+          <div class="w-[55%] bg-white rounded-xl p-4 scrap-shadow hover:scrap-shadow-hover transition-shadow cursor-pointer relative">
+            <div class="tape absolute -top-2 left-10 w-14 h-5 rounded-sm z-10 opacity-80"></div>
+            <div class="aspect-[5/4] rounded-lg flex items-center justify-center mb-2" style="background: linear-gradient(135deg, #f8f8fc 0%, #ededf1 100%);">
+              <svg viewBox="0 0 140 110" width="130" height="100">
+                <path d="M40 22 L28 50 L34 52 L40 32 L45 95 L95 95 L100 32 L106 52 L112 50 L100 22 L88 16 L75 22 L70 19 L65 22 L52 16 Z" fill="#1E3A8A" stroke="#162d6e" stroke-width="1"/>
+                <path d="M65 22 L65 95 M75 22 L75 95" stroke="#162d6e" stroke-width="0.5" opacity="0.3"/>
+                <circle cx="68" cy="55" r="1.5" fill="#142460"/><circle cx="68" cy="65" r="1.5" fill="#142460"/><circle cx="68" cy="75" r="1.5" fill="#142460"/>
+              </svg>
+            </div>
+          </div>
+          <div class="pb-4">
+            <p class="text-base font-bold text-on-surface">패딩</p>
+            <div class="flex items-center gap-2 mt-1"><div class="w-4 h-4 rounded-full bg-[#1E3A8A] ring-1 ring-black/10"></div><span class="text-sm text-on-surface-variant">네이비</span></div>
+            <p class="text-xs text-outline mt-1">따뜻하게 보온</p>
+          </div>
+        </div>
+
+        <!-- 상의 -->
+        <div class="relative z-[3] flex flex-row-reverse items-end gap-5" style="transform: rotate(1deg);">
+          <div class="w-[50%] bg-white rounded-xl p-4 scrap-shadow hover:scrap-shadow-hover transition-shadow cursor-pointer relative">
+            <div class="tape absolute -top-2 right-8 w-12 h-5 rounded-sm z-10 opacity-80"></div>
+            <div class="aspect-[5/4] rounded-lg flex items-center justify-center mb-2" style="background: linear-gradient(135deg, #f8f8fc 0%, #ededf1 100%);">
+              <svg viewBox="0 0 140 110" width="120" height="92">
+                <path d="M35 22 L22 40 L40 46 L40 95 L100 95 L100 46 L118 40 L105 22 L88 28 Q70 36 52 28 Z" fill="#F5E6D3" stroke="#ddd0be" stroke-width="1"/>
+                <path d="M52 28 Q70 36 88 28" fill="none" stroke="#ddd0be" stroke-width="1"/>
+              </svg>
+            </div>
+          </div>
+          <div class="pb-4 text-right">
+            <p class="text-base font-bold text-on-surface">니트</p>
+            <div class="flex items-center gap-2 mt-1 justify-end"><span class="text-sm text-on-surface-variant">베이지</span><div class="w-4 h-4 rounded-full bg-[#F5E6D3] ring-1 ring-black/10"></div></div>
+            <p class="text-xs text-outline mt-1">부드러운 레이어링</p>
+          </div>
+        </div>
+
+        <!-- 하의 -->
+        <div class="relative z-[2] flex items-end gap-5" style="transform: rotate(-0.5deg);">
+          <div class="w-[48%] bg-white rounded-xl p-4 scrap-shadow hover:scrap-shadow-hover transition-shadow cursor-pointer relative">
+            <div class="tape absolute -top-2 left-8 w-11 h-5 rounded-sm z-10 opacity-80"></div>
+            <div class="aspect-[5/4] rounded-lg flex items-center justify-center mb-2" style="background: linear-gradient(135deg, #f8f8fc 0%, #ededf1 100%);">
+              <svg viewBox="0 0 120 110" width="110" height="100">
+                <path d="M35 10 L30 15 L28 100 L50 100 L58 50 L62 50 L70 100 L92 100 L90 15 L85 10 Z" fill="#333333" stroke="#222" stroke-width="1"/>
+                <path d="M58 50 L58 10 M62 50 L62 10" stroke="#222" stroke-width="0.5" opacity="0.3"/>
+                <path d="M35 10 L85 10" fill="none" stroke="#222" stroke-width="1.5"/>
+              </svg>
+            </div>
+          </div>
+          <div class="pb-4">
+            <p class="text-base font-bold text-on-surface">슬랙스</p>
+            <div class="flex items-center gap-2 mt-1"><div class="w-4 h-4 rounded-full bg-[#333333] ring-1 ring-black/10"></div><span class="text-sm text-on-surface-variant">블랙</span></div>
+            <p class="text-xs text-outline mt-1">깔끔한 라인</p>
+          </div>
+        </div>
+
+        <!-- 신발 -->
+        <div class="relative z-[1] flex flex-row-reverse items-end gap-5" style="transform: rotate(1deg);">
+          <div class="w-[44%] bg-white rounded-xl p-4 scrap-shadow hover:scrap-shadow-hover transition-shadow cursor-pointer relative">
+            <div class="tape absolute -top-2 right-10 w-12 h-5 rounded-sm z-10 opacity-80"></div>
+            <div class="aspect-[5/3] rounded-lg flex items-center justify-center mb-2" style="background: linear-gradient(135deg, #f8f8fc 0%, #ededf1 100%);">
+              <svg viewBox="0 0 130 80" width="110" height="68">
+                <path d="M20 50 L20 40 Q20 28 38 26 L75 22 Q92 20 98 28 L108 40 L114 46 Q118 54 108 58 L20 58 Z" fill="#FFFFFF" stroke="#e0e0e4" stroke-width="1"/>
+                <path d="M20 52 L108 52" stroke="#e0e0e4" stroke-width="1.5"/>
+                <ellipse cx="50" cy="38" rx="3" ry="2" fill="#e0e0e4"/><ellipse cx="62" cy="35" rx="3" ry="2" fill="#e0e0e4"/><ellipse cx="74" cy="32" rx="3" ry="2" fill="#e0e0e4"/>
+              </svg>
+            </div>
+          </div>
+          <div class="pb-4 text-right">
+            <p class="text-base font-bold text-on-surface">운동화</p>
+            <div class="flex items-center gap-2 mt-1 justify-end"><span class="text-sm text-on-surface-variant">화이트</span><div class="w-4 h-4 rounded-full bg-[#FFFFFF] border border-outline-variant/30"></div></div>
+            <p class="text-xs text-outline mt-1">캐주얼 마무리</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tip -->
+      <div class="mt-8 bg-primary/5 rounded-xl p-5 border border-primary/10 relative z-10">
+        <p class="text-sm leading-relaxed text-on-surface-variant">
+          <span class="font-semibold text-on-surface">💡 스타일 팁</span><br/>
+          오늘은 일교차가 11도! 밝은 톤으로 통일하면 깔끔해요. 실내에선 패딩을 벗어도 베이지 니트가 단독으로 잘 어울려요.
+        </p>
+      </div>
+
+      <!-- Refresh -->
+      <button class="mt-5 w-full bg-secondary-container text-white font-bold py-4 rounded-xl shadow-lg shadow-secondary-container/20 hover:brightness-110 transition-all relative z-10">
+        다른 코디 추천
+      </button>
+
+    </div>
+  </div>
+
+</main>
+
+</body></html>

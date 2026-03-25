@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "outline-variant": "#c1c7d2",
+          "outline": "#717782",
+          "surface": "#f9f9fd",
+          "primary": "#005ea1",
+          "secondary-container": "#ff6b6b",
+          "surface-container-lowest": "#ffffff",
+          "on-background": "#1a1c1f",
+          "primary-fixed": "#d2e4ff",
+          "surface-variant": "#e2e2e6",
+          "on-surface-variant": "#414751",
+          "surface-container-low": "#f3f3f7",
+          "on-surface": "#1a1c1f",
+          "on-primary": "#ffffff",
+          "on-primary-fixed-variant": "#00497e",
+          "primary-container": "#2b78bf",
+          "surface-container": "#ededf1",
+          "surface-container-high": "#e8e8ec",
+          "background": "#f9f9fd",
+          "success": "#4caf50",
+        },
+        fontFamily: {
+          "headline": ["Manrope"],
+          "body": ["Be Vietnam Pro"],
+          "label": ["Be Vietnam Pro"]
+        },
+        borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { font-family: 'Be Vietnam Pro', sans-serif; }
+  .font-manrope { font-family: 'Manrope', sans-serif; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  @keyframes pop-in { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.15); } 100% { transform: scale(1); opacity: 1; } }
+  .animate-pop-in { animation: pop-in 0.4s ease-out forwards; }
+</style>
+</head>
+
+<body class="bg-surface font-body text-on-surface min-h-screen flex items-center justify-center">
+
+<!-- Dimmed background -->
+<div class="fixed inset-0 bg-[#1a1c1f]/40 backdrop-blur-[8px] z-40"></div>
+
+<!-- Center Dialog -->
+<div class="relative z-50 w-full max-w-lg bg-surface-container-lowest rounded-2xl shadow-[0px_20px_60px_rgba(0,0,0,0.12)] max-h-[80vh] flex flex-col overflow-hidden">
+
+  <!-- Header -->
+  <header class="flex items-center justify-between px-8 py-5 flex-shrink-0 border-b border-surface-variant/20">
+    <h2 class="font-headline font-bold text-xl text-on-background tracking-tight">옷 등록하기</h2>
+    <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors">
+      <span class="material-symbols-outlined text-on-surface-variant">close</span>
+    </button>
+  </header>
+
+  <!-- Scrollable Content -->
+  <div class="flex-1 overflow-y-auto px-8 py-6 no-scrollbar">
+
+    <!-- ====== AI 입력 영역 ====== -->
+    <section class="mb-8">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="flex-1 bg-surface-container-low rounded-xl px-5 py-3.5 flex items-center gap-2.5 hover:bg-surface-container transition-colors">
+          <span class="material-symbols-outlined text-outline text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+          <span class="text-sm text-outline">예: "검정 패딩이랑 베이지 니트"</span>
+        </div>
+        <button class="w-11 h-11 bg-primary rounded-full flex items-center justify-center flex-shrink-0 hover:bg-primary-container transition-colors shadow-md shadow-primary/20">
+          <span class="material-symbols-outlined text-on-primary text-[18px]">send</span>
+        </button>
+      </div>
+
+      <!-- Parsed Results -->
+      <div class="space-y-2.5">
+        <div class="flex items-start gap-2.5">
+          <div class="w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center flex-shrink-0 mt-0.5">
+            <span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+          </div>
+          <p class="text-sm text-on-surface-variant pt-1">2개를 찾았어요!</p>
+        </div>
+
+        <!-- Cards — horizontal on desktop -->
+        <div class="flex gap-2.5 ml-9">
+          <div class="flex-1 bg-surface-container-low rounded-xl px-4 py-3.5 flex items-center gap-3 hover:bg-surface-container transition-colors">
+            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-lg">🧥</div>
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-on-surface">패딩</p>
+              <div class="flex items-center gap-1.5 mt-0.5">
+                <div class="w-3.5 h-3.5 rounded-full bg-[#333333] ring-1 ring-black/10"></div>
+                <span class="text-xs text-on-surface-variant">검정</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-success text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          </div>
+          <div class="flex-1 bg-surface-container-low rounded-xl px-4 py-3.5 flex items-center gap-3 hover:bg-surface-container transition-colors">
+            <div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-lg">👕</div>
+            <div class="flex-1">
+              <p class="text-sm font-semibold text-on-surface">니트</p>
+              <div class="flex items-center gap-1.5 mt-0.5">
+                <div class="w-3.5 h-3.5 rounded-full bg-[#F5E6D3] ring-1 ring-black/10"></div>
+                <span class="text-xs text-on-surface-variant">베이지</span>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-success text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-2 ml-9">
+          <button class="h-10 px-6 bg-primary text-on-primary rounded-xl text-sm font-semibold hover:bg-primary-container transition-colors">등록하기</button>
+          <button class="h-10 px-4 bg-surface-container-high text-on-surface-variant rounded-xl text-sm font-medium hover:bg-surface-container transition-colors">수정</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 구분선 ====== -->
+    <div class="flex items-center gap-4 mb-8">
+      <div class="flex-1 h-px bg-outline-variant/40"></div>
+      <span class="text-xs text-outline font-medium">또는 직접 선택</span>
+      <div class="flex-1 h-px bg-outline-variant/40"></div>
+    </div>
+
+    <!-- ====== 수동 선택 ====== -->
+    <div class="space-y-6">
+      <!-- Category -->
+      <section class="space-y-3">
+        <label class="block text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider">카테고리</label>
+        <div class="flex flex-wrap gap-2">
+          <button class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-primary-fixed text-on-primary-fixed-variant">아우터</button>
+          <button class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors">상의</button>
+          <button class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors">하의</button>
+          <button class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors">신발</button>
+          <button class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors">액세서리</button>
+        </div>
+      </section>
+
+      <!-- Sub-category -->
+      <section class="space-y-3">
+        <label class="block text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider">세부 카테고리</label>
+        <div class="flex flex-wrap gap-2">
+          <button class="px-4 py-2 rounded-lg text-sm bg-surface-container-low text-on-surface-variant">패딩</button>
+          <button class="px-4 py-2 rounded-lg text-sm bg-primary-fixed text-on-primary-fixed-variant border border-primary/10">자켓</button>
+          <button class="px-4 py-2 rounded-lg text-sm bg-surface-container-low text-on-surface-variant">코트</button>
+          <button class="px-4 py-2 rounded-lg text-sm bg-surface-container-low text-on-surface-variant">가디건</button>
+          <button class="px-4 py-2 rounded-lg text-sm bg-surface-container-low text-on-surface-variant">바람막이</button>
+          <button class="px-4 py-2 rounded-lg text-sm bg-surface-container-low text-on-surface-variant">점퍼</button>
+        </div>
+      </section>
+
+      <!-- Color Picker -->
+      <section class="space-y-3">
+        <label class="block text-[12px] font-semibold text-on-surface-variant uppercase tracking-wider">색상</label>
+        <div class="flex flex-wrap gap-3">
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="w-10 h-10 rounded-full bg-[#333333] border-2 border-white shadow-[0px_4px_12px_rgba(0,0,0,0.15)] ring-2 ring-primary-container/20 cursor-pointer"></div>
+            <span class="text-[10px] text-on-surface-variant font-medium">검정</span>
+          </div>
+          <div class="flex flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+            <div class="w-10 h-10 rounded-full bg-[#FFFFFF] border border-outline-variant/30"></div>
+            <span class="text-[10px] text-on-surface-variant font-medium">하얀</span>
+          </div>
+          <div class="flex flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+            <div class="w-10 h-10 rounded-full bg-[#808080]"></div>
+            <span class="text-[10px] text-on-surface-variant font-medium">회색</span>
+          </div>
+          <div class="flex flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+            <div class="w-10 h-10 rounded-full bg-[#1E3A8A]"></div>
+            <span class="text-[10px] text-on-surface-variant font-medium">네이비</span>
+          </div>
+          <div class="flex flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+            <div class="w-10 h-10 rounded-full bg-[#F5E6D3]"></div>
+            <span class="text-[10px] text-on-surface-variant font-medium">베이지</span>
+          </div>
+          <div class="flex flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+            <div class="w-10 h-10 rounded-full bg-[#4B3621]"></div>
+            <span class="text-[10px] text-on-surface-variant font-medium">브라운</span>
+          </div>
+          <div class="flex flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+            <div class="w-10 h-10 rounded-full bg-[#34D399]"></div>
+            <span class="text-[10px] text-on-surface-variant font-medium">민트</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Preview + CTA -->
+      <div class="flex items-center gap-4 pt-2">
+        <div class="bg-surface-container px-4 py-2 rounded-full inline-flex items-center gap-2">
+          <span class="text-sm font-semibold text-on-surface-variant">🧥 자켓 · 블랙</span>
+        </div>
+        <div class="flex-1"></div>
+        <button class="h-[48px] px-8 bg-primary text-white font-semibold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary-container transition-colors">
+          등록하기
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body></html>

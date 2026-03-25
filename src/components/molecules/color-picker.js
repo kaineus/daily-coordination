@@ -16,7 +16,7 @@ export class ColorPicker extends LitElement {
 
       .grid {
         display: grid;
-        grid-template-columns: repeat(7, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: var(--dc-space-4) var(--dc-space-2);
         justify-items: center;
       }

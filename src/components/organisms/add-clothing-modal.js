@@ -30,8 +30,7 @@ export class AddClothingModal extends LitElement {
   static properties = {
     open: { type: Boolean, reflect: true },
     categories: { type: Array },
-    _activeTab: { state: true },
-    // Manual tab state
+    // Manual state
     _selectedType: { state: true },
     _selectedCategory: { state: true },
     _selectedColor: { state: true },
@@ -126,36 +125,24 @@ export class AddClothingModal extends LitElement {
       }
       .close-btn:hover { background: var(--dc-surface-low); }
 
-      /* ===== Tabs ===== */
-      .tabs {
-        display: flex;
-        margin: 0 var(--dc-space-6) var(--dc-space-4);
-        background: var(--dc-surface-low);
-        border-radius: var(--dc-radius-md);
-        padding: 0.25rem;
-      }
-
-      .tab {
-        flex: 1;
+      /* ===== Divider ===== */
+      .divider {
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: var(--dc-space-1);
-        height: 2.5rem;
-        border-radius: var(--dc-radius-sm);
-        font-size: var(--dc-font-body);
-        font-weight: 500;
-        color: var(--dc-text-secondary);
-        cursor: pointer;
-        transition: all 0.2s;
+        gap: var(--dc-space-3);
+        margin: var(--dc-space-2) 0;
       }
-      .tab.active {
-        background: var(--dc-surface-lowest);
-        color: var(--dc-text);
-        font-weight: 600;
-        box-shadow: var(--dc-shadow-sm);
+      .divider-line {
+        flex: 1;
+        height: 1px;
+        background: var(--dc-outline-variant);
+        opacity: 0.3;
       }
-      .tab .material-symbols-outlined { font-size: 1rem; }
+      .divider-text {
+        font-size: var(--dc-font-caption);
+        color: var(--dc-outline);
+        white-space: nowrap;
+      }
 
       /* ===== Manual Body ===== */
       .body {
@@ -231,16 +218,14 @@ export class AddClothingModal extends LitElement {
         letter-spacing: -0.02em;
       }
 
-      /* ===== AI Tab ===== */
+      /* ===== AI Section ===== */
       .ai-body {
         display: flex;
         flex-direction: column;
-        flex: 1;
-        overflow: hidden;
       }
 
       .chat-area {
-        flex: 1;
+        max-height: 16rem;
         overflow-y: auto;
         padding: 0 var(--dc-space-6) var(--dc-space-4);
         display: flex;
@@ -439,7 +424,6 @@ export class AddClothingModal extends LitElement {
     super();
     this.open = false;
     this.categories = [];
-    this._activeTab = 'manual';
     this._selectedType = '';
     this._selectedCategory = null;
     this._selectedColor = '';
@@ -449,17 +433,11 @@ export class AddClothingModal extends LitElement {
   }
 
   updated(changed) {
-    if (changed.has('open') && this.open && this._activeTab === 'ai') {
+    if (changed.has('open') && this.open) {
       this.#initChat();
     }
-    if (changed.has('_activeTab') && this._activeTab === 'ai') {
-      this.#initChat();
-    }
-    // 스크롤 맨 아래
-    if (this._activeTab === 'ai') {
-      const area = this.shadowRoot?.querySelector('.chat-area');
-      if (area) requestAnimationFrame(() => { area.scrollTop = area.scrollHeight; });
-    }
+    const area = this.shadowRoot?.querySelector('.chat-area');
+    if (area) requestAnimationFrame(() => { area.scrollTop = area.scrollHeight; });
   }
 
   #initChat() {
@@ -612,21 +590,20 @@ export class AddClothingModal extends LitElement {
             </button>
           </div>
 
-          <!-- Tabs -->
-          <div class="tabs">
-            <button class="tab ${this._activeTab === 'manual' ? 'active' : ''}"
-              @click=${() => (this._activeTab = 'manual')}>
-              <span class="material-symbols-outlined">touch_app</span>
-              직접 선택
-            </button>
-            <button class="tab ${this._activeTab === 'ai' ? 'active' : ''}"
-              @click=${() => (this._activeTab = 'ai')}>
-              <span class="material-symbols-outlined">auto_awesome</span>
-              AI 입력
-            </button>
+          <!-- AI Input (상단) -->
+          ${this.#renderAI()}
+
+          <!-- 구분선 -->
+          <div class="body" style="padding-top:0;padding-bottom:0">
+            <div class="divider">
+              <span class="divider-line"></span>
+              <span class="divider-text">또는 직접 선택</span>
+              <span class="divider-line"></span>
+            </div>
           </div>
 
-          ${this._activeTab === 'manual' ? this.#renderManual() : this.#renderAI()}
+          <!-- Manual Selection (하단) -->
+          ${this.#renderManual()}
         </div>
       </div>
     `;

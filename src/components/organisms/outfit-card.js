@@ -1,4 +1,4 @@
-import { LitElement, html, css, unsafeCSS } from 'lit';
+import { LitElement, html, css } from 'lit';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
@@ -9,15 +9,9 @@ import { SVG_MAP } from '../../constants/svg-map.js';
 import { isWhiteColor } from '../../utils/color.js';
 
 /**
- * 스크랩 아이템 배치 프리셋 (최대 4개)
- * position, width, rotation, z-index
+ * 아이템별 살짝 다른 기울기 (비대칭 감성)
  */
-const SCRAP_LAYOUT = [
-  { top: '0', left: '0', width: '52%', rotate: '-2deg', z: 1 },
-  { top: '1rem', right: '0', width: '44%', rotate: '1.5deg', z: 2 },
-  { bottom: '3rem', left: '0.5rem', width: '46%', rotate: '1deg', z: 3 },
-  { bottom: '0', right: '0.25rem', width: '42%', rotate: '-1.5deg', z: 4 },
-];
+const ROTATIONS = ['-1.5deg', '1deg', '-0.5deg', '1.5deg'];
 
 export class OutfitCard extends LitElement {
   static properties = {
@@ -50,10 +44,24 @@ export class OutfitCard extends LitElement {
         margin-bottom: var(--dc-space-4);
       }
 
-      /* ===== Scrap Layout ===== */
+      /* ===== Color Palette ===== */
+      .palette {
+        display: flex;
+        align-items: center;
+        gap: var(--dc-space-2);
+        margin-bottom: var(--dc-space-4);
+      }
+      .palette-dot {
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: 50%;
+      }
+      .palette-dot.white { border: 1px solid var(--dc-outline-variant); }
+
+      /* ===== Scrap Container (수직 착장 순서) ===== */
       .scrap-container {
-        position: relative;
-        min-height: 20rem;
+        display: flex;
+        flex-direction: column;
         margin-bottom: var(--dc-space-4);
         background-image: repeating-linear-gradient(
           0deg, transparent, transparent 39px, rgba(193,199,210,0.03) 39px, rgba(193,199,210,0.03) 40px
@@ -63,19 +71,39 @@ export class OutfitCard extends LitElement {
         );
       }
 
-      .scrap-item {
-        position: absolute;
+      /* 겹침 효과 (2번째부터) */
+      .scrap-row + .scrap-row {
+        margin-top: -1rem;
+      }
+
+      /* ===== Scrap Row: 카드 + 텍스트 교차 배치 ===== */
+      .scrap-row {
+        display: flex;
+        align-items: center;
+        gap: var(--dc-space-3);
+        position: relative;
+      }
+
+      /* 홀수: 카드 좌 + 텍스트 우 / 짝수: 텍스트 좌 + 카드 우 */
+      .scrap-row.even {
+        flex-direction: row-reverse;
+      }
+
+      .scrap-card {
+        width: 55%;
         background: white;
         border-radius: var(--dc-radius-sm);
-        padding: var(--dc-space-4);
+        padding: var(--dc-space-3);
         box-shadow: 2px 3px 8px rgba(26,28,31,0.08), 0 1px 2px rgba(26,28,31,0.04);
+        position: relative;
         transition: box-shadow 0.3s;
+        flex-shrink: 0;
       }
-      .scrap-item:hover {
+      .scrap-card:hover {
         box-shadow: 4px 6px 16px rgba(26,28,31,0.12), 0 2px 4px rgba(26,28,31,0.06);
       }
 
-      /* Tape decoration */
+      /* Tape */
       .tape {
         position: absolute;
         top: -0.5rem;
@@ -97,55 +125,54 @@ export class OutfitCard extends LitElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: var(--dc-space-2);
         overflow: hidden;
       }
       .svg-wrap svg {
         width: 70%;
         height: 70%;
       }
+      .emoji-fallback { font-size: 2.5rem; }
 
-      .emoji-fallback {
-        font-size: 2.5rem;
+      /* ===== Scrap Text (카드 옆 독립 영역) ===== */
+      .scrap-text {
+        flex: 1;
+        min-width: 0;
       }
 
-      .scrap-info {
+      .scrap-type {
+        font-size: var(--dc-font-tiny);
+        font-weight: 600;
+        color: var(--dc-outline);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.125rem;
+      }
+
+      .scrap-name {
+        font-size: var(--dc-font-body);
+        font-weight: 700;
+        color: var(--dc-text);
+        margin-bottom: var(--dc-space-1);
+      }
+
+      .scrap-color-row {
         display: flex;
         align-items: center;
-        gap: var(--dc-space-2);
+        gap: var(--dc-space-1);
       }
 
       .color-dot {
-        width: 1rem;
-        height: 1rem;
+        width: 0.875rem;
+        height: 0.875rem;
         border-radius: 50%;
         border: 1px solid rgba(0,0,0,0.1);
         flex-shrink: 0;
       }
 
-      .scrap-name {
-        font-size: var(--dc-font-caption);
-        font-weight: 700;
-        color: var(--dc-text);
-      }
       .scrap-color-name {
-        font-size: var(--dc-font-tiny);
+        font-size: var(--dc-font-caption);
         color: var(--dc-text-secondary);
       }
-
-      /* ===== Color Palette ===== */
-      .palette {
-        display: flex;
-        align-items: center;
-        gap: var(--dc-space-2);
-        margin-bottom: var(--dc-space-4);
-      }
-      .palette-dot {
-        width: 1.25rem;
-        height: 1.25rem;
-        border-radius: 50%;
-      }
-      .palette-dot.white { border: 1px solid var(--dc-outline-variant); }
 
       /* ===== Tip & Refresh ===== */
       .tip-box {
@@ -185,7 +212,8 @@ export class OutfitCard extends LitElement {
           padding: var(--dc-space-10);
         }
         .summary { font-size: var(--dc-font-h1); margin-bottom: var(--dc-space-6); }
-        .scrap-container { min-height: 26rem; }
+        .scrap-card { width: 50%; }
+        .scrap-name { font-size: var(--dc-font-title); }
         .tip-box {
           padding: var(--dc-space-6);
           border-radius: var(--dc-radius-lg);
@@ -215,7 +243,6 @@ export class OutfitCard extends LitElement {
       <div class="card">
         ${this.summary ? html`<h3 class="summary">${this.summary}</h3>` : ''}
 
-        <!-- Color palette -->
         ${palette.length > 0 ? html`
           <div class="palette">
             ${palette.map((c) => html`
@@ -224,9 +251,8 @@ export class OutfitCard extends LitElement {
           </div>
         ` : ''}
 
-        <!-- Scrap Layout -->
         <div class="scrap-container">
-          ${this.items.slice(0, 4).map((item, i) => this.#renderScrapItem(item, i))}
+          ${this.items.slice(0, 4).map((item, i) => this.#renderScrapRow(item, i))}
         </div>
 
         ${this.tip ? html`
@@ -243,35 +269,27 @@ export class OutfitCard extends LitElement {
     `;
   }
 
-  #renderScrapItem(item, index) {
-    const layout = SCRAP_LAYOUT[index] ?? SCRAP_LAYOUT[0];
+  #renderScrapRow(item, index) {
+    const isEven = index % 2 === 1;
     const svg = SVG_MAP[item.name];
     const emoji = TYPE_EMOJI[item.category] ?? '👔';
-
-    const posStyle = [
-      layout.top != null ? `top:${layout.top}` : '',
-      layout.bottom != null ? `bottom:${layout.bottom}` : '',
-      layout.left != null ? `left:${layout.left}` : '',
-      layout.right != null ? `right:${layout.right}` : '',
-      `width:${layout.width}`,
-      `transform:rotate(${layout.rotate})`,
-      `z-index:${layout.z}`,
-    ].filter(Boolean).join(';');
+    const rotation = ROTATIONS[index] ?? '0deg';
 
     return html`
-      <div class="scrap-item" style=${posStyle}>
-        <div class="tape"></div>
-        <div class="svg-wrap" style="color: ${item.colorHex ?? '#666'}">
-          ${svg
-            ? unsafeSVG(svg)
-            : html`<span class="emoji-fallback">${emoji}</span>`}
+      <div class="scrap-row ${isEven ? 'even' : ''}">
+        <div class="scrap-card" style="transform: rotate(${rotation}); z-index: ${index + 1}">
+          <div class="tape"></div>
+          <div class="svg-wrap" style="color: ${item.colorHex ?? '#666'}">
+            ${svg ? unsafeSVG(svg) : html`<span class="emoji-fallback">${emoji}</span>`}
+          </div>
         </div>
-        <div class="scrap-info">
-          <div class="color-dot ${isWhiteColor(item.colorHex) ? 'white' : ''}"
-            style="background: ${item.colorHex ?? '#ccc'}"></div>
-          <div>
-            <div class="scrap-name">${item.name}</div>
-            <div class="scrap-color-name">${item.colorName ?? ''}</div>
+        <div class="scrap-text">
+          <div class="scrap-type">${item.category}</div>
+          <div class="scrap-name">${item.name}</div>
+          <div class="scrap-color-row">
+            <div class="color-dot ${isWhiteColor(item.colorHex) ? 'white' : ''}"
+              style="background: ${item.colorHex ?? '#ccc'}"></div>
+            <span class="scrap-color-name">${item.colorName ?? ''}</span>
           </div>
         </div>
       </div>
