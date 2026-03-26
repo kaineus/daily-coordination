@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { ContextProvider } from '@lit/context';
 import { supabaseContext } from '../../contexts/supabase.context.js';
 import { supabase } from '../../services/supabase.js';
-import { initAuth } from '../../services/auth.service.js';
+import { initAuth, fetchUserRole } from '../../services/auth.service.js';
 import { StoreController } from '../../store/store-controller.js';
 import { authStore } from '../../store/auth.store.js';
 import { HashRouter } from '../../router/routes.js';
@@ -10,6 +10,7 @@ import '../atoms/dc-spinner.js';
 import '../pages/login-page.js';
 import '../pages/home-page.js';
 import '../pages/closet-page.js';
+import '../pages/admin-categories-page.js';
 import '../templates/app-shell.js';
 
 export class DcApp extends LitElement {
@@ -19,6 +20,7 @@ export class DcApp extends LitElement {
   // Auth 상태 구독
   #authLoading = new StoreController(this, authStore, (s) => s.loading);
   #user = new StoreController(this, authStore, (s) => s.user);
+  #role = new StoreController(this, authStore, (s) => s.role);
 
   // Hash Router
   #router = new HashRouter(this, [
@@ -30,6 +32,10 @@ export class DcApp extends LitElement {
     {
       path: '/closet',
       render: () => html`<app-shell><closet-page></closet-page></app-shell>`,
+    },
+    {
+      path: '/admin/categories',
+      render: () => html`<app-shell><admin-categories-page></admin-categories-page></app-shell>`,
     },
     { path: '*', render: () => html`<login-page></login-page>` },
   ]);
@@ -50,8 +56,14 @@ export class DcApp extends LitElement {
   constructor() {
     super();
     // Supabase auth 초기화 (router보다 먼저)
-    initAuth(supabase, (session) => {
+    initAuth(supabase, async (session) => {
       authStore.actions.setSession(session);
+      if (session?.user) {
+        const role = await fetchUserRole(supabase);
+        authStore.actions.setRole(role);
+      } else {
+        authStore.actions.setRole(null);
+      }
     });
   }
 
@@ -71,6 +83,12 @@ export class DcApp extends LitElement {
     // 인증 완료인데 /login에 있으면 → 메인
     if (this.#user.value && hash === '/login') {
       window.location.hash = '/';
+    }
+
+    // admin 가드: /admin/* 접근 시 role !== 'admin'이면 리다이렉트
+    if (hash.startsWith('/admin') && this.#role.value !== 'admin') {
+      window.location.hash = '/';
+      return this.#router.outlet();
     }
 
     return this.#router.outlet();

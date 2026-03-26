@@ -13,6 +13,7 @@ import '../molecules/user-avatar.js';
 export class AppShell extends LitElement {
   #supabase = new ContextConsumer(this, { context: supabaseContext, subscribe: true });
   #user = new StoreController(this, authStore, (s) => s.user);
+  #role = new StoreController(this, authStore, (s) => s.role);
 
   static styles = [
     reset,
@@ -121,6 +122,17 @@ export class AppShell extends LitElement {
           border-bottom-color: var(--dc-primary);
         }
 
+        .admin-badge {
+          display: inline-block;
+          padding: 0.125rem 0.375rem;
+          border-radius: var(--dc-radius-full);
+          background: #ffdeab;
+          color: #7b5500;
+          font-size: 0.625rem;
+          font-weight: 600;
+          margin-left: var(--dc-space-2);
+        }
+
         .desktop-user {
           display: flex;
           align-items: center;
@@ -174,8 +186,12 @@ export class AppShell extends LitElement {
         <nav class="desktop-nav">
           <a class="${this.#isActive('/')}" href="#/">오늘의 코디</a>
           <a class="${this.#isActive('/closet')}" href="#/closet">내 옷장</a>
+          ${this.#role.value === 'admin' ? html`
+            <a class="${this.#isActive('/admin/categories')}" href="#/admin/categories">관리</a>
+          ` : ''}
         </nav>
         <div class="desktop-user">
+          ${this.#role.value === 'admin' ? html`<span class="admin-badge">ADMIN</span>` : ''}
           <user-avatar name=${name} image-url=${meta.avatar_url ?? ''} size="1.75"></user-avatar>
           <button class="logout-btn" @click=${this.#handleLogout}>
             <span class="material-symbols-outlined">logout</span>
@@ -195,6 +211,12 @@ export class AppShell extends LitElement {
           <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${this.#isActive('/closet') ? '1' : '0'}">checkroom</span>
           <span>옷장</span>
         </a>
+        ${this.#role.value === 'admin' ? html`
+          <a class="nav-item ${this.#isActive('/admin/categories')}" href="#/admin/categories">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${this.#isActive('/admin/categories') ? '1' : '0'}">admin_panel_settings</span>
+            <span>관리</span>
+          </a>
+        ` : ''}
       </nav>
     `;
   }

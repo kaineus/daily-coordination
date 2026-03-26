@@ -275,6 +275,115 @@ As a 사용자, I want 코디 추천 결과를 매거진 스크랩처럼 시각�
 
 ---
 
+## F6. 역할 기반 접근 제어 (RBAC)
+- **우선순위**: P0
+- **상태**: draft
+
+### 사용자 스토리
+As a 서비스 관리자, I want 일반 사용자와 관리자를 구분, So that 카테고리 관리 등 관리 기능을 관리자만 사용할 수 있다.
+
+### 역할 정의
+| Role | 설명 | 권한 |
+|------|------|------|
+| `user` | 일반 사용자 (기본값) | 옷 등록/삭제, 코디 추천, 프로필 |
+| `admin` | 관리자 | user 권한 + 카테고리 CRUD, 관리 페이지 접근 |
+
+### 인수 조건
+- [ ] Given 신규 가입 사용자, When 회원가입 완료, Then role = 'user'로 기본 설정
+- [ ] Given admin 사용자, When 네비게이션 확인, Then "관리" 메뉴 노출
+- [ ] Given user 사용자, When 네비게이션 확인, Then "관리" 메뉴 숨김
+- [ ] Given user 사용자, When 관리 페이지 URL 직접 접근, Then 403 또는 메인 페이지로 리다이렉트
+- [ ] Given admin 사용자, When 카테고리 관리 API 호출, Then 정상 처리
+- [ ] Given user 사용자, When 카테고리 관리 API 호출, Then RLS에 의해 거부
+
+### 기술 참고
+- `user_profiles` 테이블 신규 생성 (auth.users 1:1)
+- `role` 컬럼: text, default 'user', check ('user', 'admin')
+- RLS 정책: clothing_categories INSERT/UPDATE/DELETE → role = 'admin'만 허용
+- 첫 admin 지정: Supabase 대시보드에서 수동 UPDATE (admin 관리 UI는 스코프 외)
+- 프론트: role을 auth 세션 로드 시 함께 fetch → authStore에 저장
+
+### DB 스키마 추가
+
+#### user_profiles
+| 컬럼 | 타입 | 설명 |
+|------|------|------|
+| id | uuid PK FK → auth.users.id | |
+| role | text | 'user' \| 'admin' (default: 'user') |
+| created_at | timestamptz | |
+
+---
+
+## F7. 카테고리 관리 (Admin)
+- **우선순위**: P0
+- **상태**: draft
+
+### 사용자 스토리
+As a 관리자, I want 옷 카테고리를 추가/수정/삭제, So that 서비스의 카테고리 체계를 유연하게 관리할 수 있다.
+
+### 핵심 컨셉
+- 2depth 구조(type > category)를 직관적으로 관리하는 인터페이스
+- **아코디언 패널 방식**: type별 접히는 섹션 안에 카테고리 목록
+
+### UI 구성 제안 — 아코디언 + 인라인 편집
+
+```
+[관리] 카테고리 관리
+─────────────────────────
+▼ 🧥 아우터 (6)                    [+ 카테고리 추가]
+  ┌─────────────────────────────────────────┐
+  │ 패딩    🧥  -5°~10°   순서:1  [✏️] [🗑️] │
+  │ 코트    🧥   0°~15°   순서:2  [✏️] [🗑️] │
+  │ 자켓    🧥  10°~25°   순서:3  [✏️] [🗑️] │
+  │ ...                                     │
+  └─────────────────────────────────────────┘
+
+▶ 👕 상의 (7)                      [+ 카테고리 추가]
+▶ 👖 하의 (6)                      [+ 카테고리 추가]
+▶ 👟 신발 (5)                      [+ 카테고리 추가]
+▶ 🎩 액세서리 (4)                   [+ 카테고리 추가]
+─────────────────────────
+              [+ 새 상위분류 추가]
+```
+
+#### 인라인 편집 모드 (✏️ 클릭 시)
+```
+  │ [패딩  ] [🧥] [-5]~[10]°  순서:[1]  [저장] [취소] │
+```
+
+### 인수 조건
+
+#### 카테고리 조회
+- [ ] Given 관리 페이지, When 로드, Then type별 아코디언으로 전체 카테고리 표시
+- [ ] Given 아코디언, When type 클릭, Then 해당 섹션 펼침/접힘 토글
+
+#### 카테고리 추가
+- [ ] Given type 섹션, When "+ 카테고리 추가" 클릭, Then 인라인 입력 폼 표시 (이름, 아이콘, 온도 범위, 순서)
+- [ ] Given 입력 폼, When 저장, Then clothing_categories에 해당 type으로 INSERT
+- [ ] Given 입력 폼, When 이름 비어있음, Then 저장 불가 + 에러 표시
+
+#### 카테고리 수정
+- [ ] Given 카테고리 항목, When ✏️ 클릭, Then 인라인 편집 모드 전환
+- [ ] Given 편집 모드, When 이름/아이콘/온도범위/순서 수정 후 저장, Then clothing_categories UPDATE
+- [ ] Given 편집 모드, When 취소, Then 원래 값 복원
+
+#### 카테고리 삭제
+- [ ] Given 카테고리 항목, When 🗑️ 클릭, Then 삭제 확인 다이얼로그 표시
+- [ ] Given 삭제 확인, When 확인, Then clothing_categories DELETE
+- [ ] Given 삭제 대상 카테고리, When 해당 카테고리에 등록된 옷이 있을 때, Then "N개의 옷이 등록되어 있습니다" 경고 + 삭제 진행 여부 재확인
+
+#### 상위분류(type) 관리
+- [ ] Given 관리 페이지, When "+ 새 상위분류 추가" 클릭, Then type명 + 아이콘 + 이모지 입력 폼
+- [ ] Given type 추가, When 저장, Then 새 아코디언 섹션 생성 (빈 카테고리 목록)
+
+### 기술 참고
+- DB 변경: clothing_categories 테이블 그대로 사용 (type, name, icon, temp_min, temp_max, sort_order)
+- RLS: admin만 INSERT/UPDATE/DELETE 가능 (F6에서 설정)
+- 프론트: `/admin/categories` 라우트, admin role 체크 가드
+- 상위분류(type) 추가 시 프론트 상수(TYPE_ORDER, TYPE_ICONS, TYPE_EMOJI)도 DB 기반으로 전환 검토
+
+---
+
 ## 페이지 구성
 
 ### 1. 랜딩/로그인 페이지
@@ -286,6 +395,12 @@ As a 사용자, I want 코디 추천 결과를 매거진 스크랩처럼 시각�
 - "다른 코디" 버튼
 
 ### 3. 내 옷장 페이지
-- 카테고리별 옷 목록
+- 카테고리별 옷 목록 (2depth: type > category)
 - 옷 추가 폼 (카테고리 + 색상)
 - 옷 삭제
+
+### 4. 카테고리 관리 페이지 (Admin 전용)
+- 2depth 아코디언: type > category
+- 카테고리 CRUD (인라인 편집)
+- 상위분류(type) 추가
+- admin role 필수 — 일반 사용자 접근 차단

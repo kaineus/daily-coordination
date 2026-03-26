@@ -365,6 +365,67 @@
 - **텍스트**: Caption (12px), `outline`, medium
 - **위치**: AI 영역과 수동 선택 영역 사이
 
+## 13. Admin Components (F7 카테고리 관리)
+
+### Admin Badge
+- **배경**: `--color-tertiary-fixed` (#FFDEAB)
+- **텍스트**: `--color-tertiary` (#7B5500)
+- **폰트**: 모바일 10px / 데스크톱 11px, semibold
+- **radius**: full (pill)
+- **패딩**: 2px 10px
+- **위치**: 헤더 우측
+
+### Admin Navigation Tab
+- **3번째 탭**: "관리" — `admin_panel_settings` 아이콘
+- **admin role일 때만 노출**
+- 활성/비활성 스타일은 기존 탭과 동일
+
+### Accordion Panel (Type 그룹)
+- **컨테이너**: `--color-surface-lowest` 배경, 모바일 12px / 데스크톱 16px radius
+- **shadow**: ambient
+- **헤더**: 이모지 + type명 (font semibold) + 개수 뱃지 + "카테고리 추가" 버튼
+- **펼침 아이콘**: `expand_more` (펼침) / `chevron_right` (접힘)
+- **접힌 상태**: 헤더만 표시, 완전한 rounded
+- **펼친 상태**: 헤더 rounded-top + 하위 목록
+
+### Category Row (일반 상태)
+- **레이아웃**:
+  - 모바일: flex row — 아이콘 + 이름/메타 + 편집/삭제 버튼
+  - 데스크톱: grid 5열 — 이름 | 아이콘 | 온도 범위 | 순서 | 작업
+- **구분선**: `outline-variant/15` (tonal, "No-Line" 원칙 준수)
+- **메타**: 온도 범위 + 순서 (모바일 10px / 데스크톱 12px, outline)
+- **hover**: `surface-container-low/30` 배경 (데스크톱)
+
+### Category Row (인라인 편집 모드)
+- **배경**: `--color-primary-fixed/20`
+- **보더**: `primary/20` 상단
+- **입력 필드**: `surface-lowest` 배경, 모바일 8px / 데스크톱 8px radius
+  - 이름: text, flex-1 / grid 1열
+  - 아이콘: 48px 정사각 (이모지 입력)
+  - 온도 min/max: number, 각 56px 너비
+  - 순서: number, 48px 너비
+- **버튼**: "저장" (primary) + "취소" (surface-container-high)
+  - 모바일: flex-1 full width
+  - 데스크톱: 인라인 compact
+
+### Delete Confirmation Dialog
+- **오버레이**: black/30 + backdrop-blur-sm
+- **위치**: 모바일 bottom sheet / 데스크톱 center modal
+- **모바일**: rounded-t-2xl, 하단 정렬
+- **데스크톱**: rounded-2xl, max-width 420px, 중앙 정렬
+- **내용**:
+  - 제목: "카테고리 삭제" (Heading, bold)
+  - 메시지: "{카테고리명}을 삭제하시겠습니까?"
+  - 경고 (조건부): 옷이 있으면 error-container 배경 + warning 아이콘 + "N개의 옷이 함께 삭제됩니다"
+  - 버튼: "취소" (surface-container-high) + "삭제" (error 배경)
+
+### Add Type Button (새 상위분류 추가)
+- **스타일**: dashed border, `outline-variant/40`
+- **텍스트**: `on-surface-variant`, 14px medium
+- **아이콘**: `add_circle_outline`
+- **hover**: border → primary/30, text → primary
+- **위치**: 모바일 전체 너비 / 데스크톱 헤더 우측
+
 ## Stitch 참조
 
 ### 프로젝트
@@ -393,3 +454,4 @@
 | 옷 등록 모달 v2 | `screens/add-clothing-modal-v2.html` | `screens/add-clothing-modal-v2-desktop.html` |
 | 홈 v2 (스크랩) | `screens/home-page-v2.html` | `screens/home-page-v2-desktop.html` |
 | 코디 스크랩 (참고용) | `screens/outfit-scrap-layout.html` | — |
+| Admin 카테고리 관리 | `screens/admin-categories.html` | `screens/admin-categories-desktop.html` |

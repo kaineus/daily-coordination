@@ -46,6 +46,21 @@ export async function signInWithEmail(supabase, email, password) {
   return { data, error };
 }
 
+export async function fetchUserRole(supabase) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return 'user';
+  const { data, error } = await supabase
+    .from('user_profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single();
+  if (error) {
+    console.error('[DC] role fetch 실패:', error.message);
+    return 'user';
+  }
+  return data.role;
+}
+
 export async function signOut(supabase) {
   const { error } = await supabase.auth.signOut();
   if (error) console.error('[DC] 로그아웃 실패:', error.message);

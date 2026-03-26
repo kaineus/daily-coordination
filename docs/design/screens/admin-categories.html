@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>카테고리 관리 — Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#005ea1",
+          "on-primary": "#ffffff",
+          "primary-container": "#2b78bf",
+          "primary-fixed": "#d2e4ff",
+          "on-primary-fixed-variant": "#00497e",
+          "secondary": "#ae2f34",
+          "secondary-container": "#ff6b6b",
+          "surface": "#f9f9fd",
+          "surface-container-low": "#f3f3f7",
+          "surface-container": "#ededf1",
+          "surface-container-high": "#e8e8ec",
+          "surface-container-lowest": "#ffffff",
+          "on-surface": "#1a1c1f",
+          "on-surface-variant": "#414751",
+          "outline": "#717782",
+          "outline-variant": "#c1c7d2",
+          "error": "#ba1a1a",
+          "error-container": "#ffdad6",
+          "on-error-container": "#93000a",
+          "background": "#f9f9fd",
+          "tertiary": "#7b5500",
+          "tertiary-fixed": "#ffdeab",
+        },
+        fontFamily: {
+          "headline": ["Manrope"],
+          "body": ["Be Vietnam Pro"],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  body { font-family: 'Be Vietnam Pro', sans-serif; }
+  .font-manrope { font-family: 'Manrope', sans-serif; }
+</style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-24">
+
+<!-- Top Header -->
+<header class="sticky top-0 z-50 bg-white/70 backdrop-blur-xl flex justify-between items-center px-4 h-16 w-full">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-primary">admin_panel_settings</span>
+    <h1 class="font-manrope font-bold text-xl tracking-tight text-on-surface">카테고리 관리</h1>
+  </div>
+  <div class="flex items-center gap-1">
+    <span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-[10px] font-semibold text-tertiary">ADMIN</span>
+  </div>
+</header>
+
+<main class="px-4 mt-4 max-w-md mx-auto">
+
+  <!-- Accordion: 아우터 (펼침 상태) -->
+  <section class="mb-3">
+    <button class="w-full flex items-center justify-between bg-surface-container-lowest p-4 rounded-t-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)]">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-variation-settings: 'FILL' 1;">expand_more</span>
+        <span class="text-lg">🧥</span>
+        <h2 class="text-[15px] font-semibold text-on-surface">아우터</h2>
+        <span class="text-xs text-outline font-medium bg-surface-container-high px-1.5 py-0.5 rounded">(6)</span>
+      </div>
+      <button class="text-primary text-xs font-semibold flex items-center gap-0.5">
+        <span class="material-symbols-outlined text-[16px]">add</span>
+        추가
+      </button>
+    </button>
+    <!-- 카테고리 목록 -->
+    <div class="bg-surface-container-lowest rounded-b-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] overflow-hidden">
+      <!-- Row: 패딩 (일반 상태) -->
+      <div class="flex items-center px-4 py-3 border-t border-outline-variant/15">
+        <span class="text-base mr-3">🧥</span>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-on-surface">패딩</p>
+          <p class="text-[10px] text-outline">-5° ~ 10°  ·  순서 1</p>
+        </div>
+        <div class="flex items-center gap-1">
+          <button class="p-1.5 rounded-lg hover:bg-surface-container-high transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">edit</span>
+          </button>
+          <button class="p-1.5 rounded-lg hover:bg-error-container transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">delete</span>
+          </button>
+        </div>
+      </div>
+      <!-- Row: 코트 (일반 상태) -->
+      <div class="flex items-center px-4 py-3 border-t border-outline-variant/15">
+        <span class="text-base mr-3">🧥</span>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-on-surface">코트</p>
+          <p class="text-[10px] text-outline">0° ~ 15°  ·  순서 2</p>
+        </div>
+        <div class="flex items-center gap-1">
+          <button class="p-1.5 rounded-lg hover:bg-surface-container-high transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">edit</span>
+          </button>
+          <button class="p-1.5 rounded-lg hover:bg-error-container transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">delete</span>
+          </button>
+        </div>
+      </div>
+      <!-- Row: 자켓 (인라인 편집 모드) -->
+      <div class="px-4 py-3 border-t border-primary/20 bg-primary-fixed/20">
+        <div class="flex items-center gap-2 mb-2">
+          <input type="text" value="자켓" class="w-full bg-surface-container-lowest text-sm font-medium text-on-surface px-3 py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary/30" />
+          <input type="text" value="🧥" class="w-12 bg-surface-container-lowest text-center text-sm px-1 py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary/30" />
+        </div>
+        <div class="flex items-center gap-2 mb-3">
+          <div class="flex items-center gap-1 flex-1">
+            <input type="number" value="10" class="w-14 bg-surface-container-lowest text-xs text-center px-2 py-1.5 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary/30" />
+            <span class="text-[10px] text-outline">~</span>
+            <input type="number" value="25" class="w-14 bg-surface-container-lowest text-xs text-center px-2 py-1.5 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary/30" />
+            <span class="text-[10px] text-outline">°C</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="text-[10px] text-outline">순서</span>
+            <input type="number" value="3" class="w-12 bg-surface-container-lowest text-xs text-center px-2 py-1.5 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary/30" />
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button class="flex-1 bg-primary text-on-primary text-xs font-semibold py-2 rounded-lg">저장</button>
+          <button class="flex-1 bg-surface-container-high text-on-surface-variant text-xs font-medium py-2 rounded-lg">취소</button>
+        </div>
+      </div>
+      <!-- Row: 가디건 -->
+      <div class="flex items-center px-4 py-3 border-t border-outline-variant/15">
+        <span class="text-base mr-3">🧥</span>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-on-surface">가디건</p>
+          <p class="text-[10px] text-outline">10° ~ 20°  ·  순서 4</p>
+        </div>
+        <div class="flex items-center gap-1">
+          <button class="p-1.5 rounded-lg hover:bg-surface-container-high transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">edit</span>
+          </button>
+          <button class="p-1.5 rounded-lg hover:bg-error-container transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">delete</span>
+          </button>
+        </div>
+      </div>
+      <!-- Row: 바람막이 -->
+      <div class="flex items-center px-4 py-3 border-t border-outline-variant/15">
+        <span class="text-base mr-3">🧥</span>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-on-surface">바람막이</p>
+          <p class="text-[10px] text-outline">5° ~ 20°  ·  순서 5</p>
+        </div>
+        <div class="flex items-center gap-1">
+          <button class="p-1.5 rounded-lg hover:bg-surface-container-high transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">edit</span>
+          </button>
+          <button class="p-1.5 rounded-lg hover:bg-error-container transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">delete</span>
+          </button>
+        </div>
+      </div>
+      <!-- Row: 점퍼 -->
+      <div class="flex items-center px-4 py-3 border-t border-outline-variant/15">
+        <span class="text-base mr-3">🧥</span>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-on-surface">점퍼</p>
+          <p class="text-[10px] text-outline">0° ~ 15°  ·  순서 6</p>
+        </div>
+        <div class="flex items-center gap-1">
+          <button class="p-1.5 rounded-lg hover:bg-surface-container-high transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">edit</span>
+          </button>
+          <button class="p-1.5 rounded-lg hover:bg-error-container transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-on-surface-variant">delete</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accordion: 상의 (접힌 상태) -->
+  <section class="mb-3">
+    <button class="w-full flex items-center justify-between bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)]">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+        <span class="text-lg">👕</span>
+        <h2 class="text-[15px] font-semibold text-on-surface">상의</h2>
+        <span class="text-xs text-outline font-medium bg-surface-container-high px-1.5 py-0.5 rounded">(7)</span>
+      </div>
+      <button class="text-primary text-xs font-semibold flex items-center gap-0.5">
+        <span class="material-symbols-outlined text-[16px]">add</span>
+        추가
+      </button>
+    </button>
+  </section>
+
+  <!-- Accordion: 하의 (접힌 상태) -->
+  <section class="mb-3">
+    <button class="w-full flex items-center justify-between bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)]">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+        <span class="text-lg">👖</span>
+        <h2 class="text-[15px] font-semibold text-on-surface">하의</h2>
+        <span class="text-xs text-outline font-medium bg-surface-container-high px-1.5 py-0.5 rounded">(6)</span>
+      </div>
+      <button class="text-primary text-xs font-semibold flex items-center gap-0.5">
+        <span class="material-symbols-outlined text-[16px]">add</span>
+        추가
+      </button>
+    </button>
+  </section>
+
+  <!-- Accordion: 신발 (접힌 상태) -->
+  <section class="mb-3">
+    <button class="w-full flex items-center justify-between bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)]">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+        <span class="text-lg">👟</span>
+        <h2 class="text-[15px] font-semibold text-on-surface">신발</h2>
+        <span class="text-xs text-outline font-medium bg-surface-container-high px-1.5 py-0.5 rounded">(5)</span>
+      </div>
+      <button class="text-primary text-xs font-semibold flex items-center gap-0.5">
+        <span class="material-symbols-outlined text-[16px]">add</span>
+        추가
+      </button>
+    </button>
+  </section>
+
+  <!-- Accordion: 액세서리 (접힌 상태) -->
+  <section class="mb-3">
+    <button class="w-full flex items-center justify-between bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)]">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+        <span class="text-lg">🎩</span>
+        <h2 class="text-[15px] font-semibold text-on-surface">액세서리</h2>
+        <span class="text-xs text-outline font-medium bg-surface-container-high px-1.5 py-0.5 rounded">(4)</span>
+      </div>
+      <button class="text-primary text-xs font-semibold flex items-center gap-0.5">
+        <span class="material-symbols-outlined text-[16px]">add</span>
+        추가
+      </button>
+    </button>
+  </section>
+
+  <!-- 새 상위분류 추가 버튼 -->
+  <button class="w-full mt-6 py-3 rounded-xl border-2 border-dashed border-outline-variant/40 text-on-surface-variant text-sm font-medium flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+    <span class="material-symbols-outlined text-[20px]">add_circle_outline</span>
+    새 상위분류 추가
+  </button>
+
+</main>
+
+<!-- Delete Confirmation Dialog (overlay) -->
+<div class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-end justify-center" style="display: none;" id="delete-dialog">
+  <div class="bg-surface-container-lowest w-full max-w-md rounded-t-2xl p-6 pb-8 shadow-[0px_-20px_40px_rgba(26,28,31,0.1)]">
+    <h3 class="font-manrope font-bold text-lg text-on-surface mb-2">카테고리 삭제</h3>
+    <p class="text-sm text-on-surface-variant mb-1">"패딩"을 삭제하시겠습니까?</p>
+    <p class="text-xs text-error mb-6">이 카테고리에 등록된 옷 3개도 함께 삭제됩니다.</p>
+    <div class="flex gap-3">
+      <button class="flex-1 py-3 rounded-xl bg-surface-container-high text-on-surface-variant text-sm font-medium">취소</button>
+      <button class="flex-1 py-3 rounded-xl bg-error text-on-error text-sm font-semibold">삭제</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Dialog (basic - no clothes) -->
+<div class="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-end justify-center" id="delete-dialog-basic">
+  <div class="bg-surface-container-lowest w-full max-w-md rounded-t-2xl p-6 pb-8 shadow-[0px_-20px_40px_rgba(26,28,31,0.1)]">
+    <h3 class="font-manrope font-bold text-lg text-on-surface mb-2">카테고리 삭제</h3>
+    <p class="text-sm text-on-surface-variant mb-6">"바람막이"를 삭제하시겠습니까?</p>
+    <div class="flex gap-3">
+      <button class="flex-1 py-3 rounded-xl bg-surface-container-high text-on-surface-variant text-sm font-medium">취소</button>
+      <button class="flex-1 py-3 rounded-xl bg-error text-on-error text-sm font-semibold">삭제</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Tab Bar (3탭: admin 포함) -->
+<nav class="fixed bottom-0 left-0 w-full h-[64px] flex justify-around items-center px-4 pb-safe bg-white/80 backdrop-blur-2xl shadow-[0px_-20px_40px_rgba(26,28,31,0.06)] z-40 rounded-t-3xl">
+  <a class="flex flex-col items-center justify-center text-outline px-4 py-2" href="#">
+    <span class="material-symbols-outlined">wb_sunny</span>
+    <span class="font-manrope text-[10px] font-medium tracking-wide">오늘의 코디</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-outline px-4 py-2" href="#">
+    <span class="material-symbols-outlined">checkroom</span>
+    <span class="font-manrope text-[10px] font-medium tracking-wide">내 옷장</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-primary bg-blue-50/50 rounded-2xl px-4 py-2" href="#">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+    <span class="font-manrope text-[10px] font-bold tracking-wide">관리</span>
+  </a>
+</nav>
+
+</body></html>
