@@ -21,7 +21,7 @@ export async function signInWithGoogle(supabase) {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: window.location.origin + window.location.pathname,
+      redirectTo: window.location.origin,
     },
   });
   if (error) console.error('[DC] Google 로그인 실패:', error.message);

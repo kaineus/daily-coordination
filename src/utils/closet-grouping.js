@@ -19,7 +19,18 @@ export function groupByCategory(clothes, filterType = '전체') {
       icon: TYPE_ICONS[t],
       emoji: TYPE_EMOJI[t],
       items: groups[t],
+      subGroups: groupItemsByName(groups[t]),
     }));
+}
+
+function groupItemsByName(items) {
+  const map = {};
+  for (const item of items) {
+    const name = item.category?.name ?? '기타';
+    if (!map[name]) map[name] = [];
+    map[name].push(item);
+  }
+  return Object.entries(map).map(([name, list]) => ({ name, items: list }));
 }
 
 export function groupByColor(clothes) {

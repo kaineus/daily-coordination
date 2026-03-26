@@ -106,75 +106,101 @@
                 색상별
             </button>
 </div>
-<!-- Closet Items List -->
+<!-- Closet Items List (2depth: type > category) -->
 <div class="space-y-12">
 <!-- Group 1: 아우터 -->
 <section class="group-container">
-<div class="flex items-center gap-2 mb-4 px-1">
+<div class="flex items-center gap-2 mb-5 px-1">
 <span class="material-symbols-outlined text-on-surface-variant" data-icon="jacket">apparel</span>
 <h2 class="text-base font-semibold text-on-surface">아우터</h2>
 <span class="text-outline text-sm font-medium">(3)</span>
 </div>
-<div class="space-y-2">
-<!-- Card 1 -->
+<!-- Sub-group: 패딩 -->
+<div class="mb-4">
+<div class="flex items-center gap-1.5 mb-2 pl-3">
+<h3 class="text-xs font-semibold text-on-surface-variant tracking-wide">패딩</h3>
+<span class="text-[10px] text-outline font-medium">(2)</span>
+</div>
+<div class="space-y-2 pl-3">
 <div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
-<div class="w-6 h-6 rounded-full bg-[#2244AA] mr-4 ring-1 ring-black/5"></div>
+<div class="w-6 h-6 rounded-full bg-[#333333] mr-4 ring-1 ring-black/5"></div>
 <div class="flex-1">
-<p class="text-sm font-bold text-on-surface">패딩</p>
+<p class="text-sm font-bold text-on-surface">검정 패딩</p>
+<p class="text-xs text-on-surface-variant">검정</p>
+</div>
+<button class="text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
+<div class="w-6 h-6 rounded-full bg-[#1E3A8A] mr-4 ring-1 ring-black/5"></div>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">네이비 패딩</p>
 <p class="text-xs text-on-surface-variant">네이비</p>
 </div>
 <button class="text-outline hover:text-error transition-colors">
 <span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
 </button>
 </div>
-<!-- Card 2 -->
+</div>
+</div>
+<!-- Sub-group: 코트 -->
+<div class="mb-4">
+<div class="flex items-center gap-1.5 mb-2 pl-3">
+<h3 class="text-xs font-semibold text-on-surface-variant tracking-wide">코트</h3>
+<span class="text-[10px] text-outline font-medium">(1)</span>
+</div>
+<div class="space-y-2 pl-3">
 <div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
-<div class="w-6 h-6 rounded-full bg-[#D2B48C] mr-4 ring-1 ring-black/5"></div>
+<div class="w-6 h-6 rounded-full bg-[#F5E6D3] mr-4 ring-1 ring-black/5"></div>
 <div class="flex-1">
-<p class="text-sm font-bold text-on-surface">코트</p>
+<p class="text-sm font-bold text-on-surface">베이지 코트</p>
 <p class="text-xs text-on-surface-variant">베이지</p>
 </div>
 <button class="text-outline hover:text-error transition-colors">
 <span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
 </button>
 </div>
-<!-- Card 3 -->
-<div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
-<div class="w-6 h-6 rounded-full bg-[#333333] mr-4 ring-1 ring-black/5"></div>
-<div class="flex-1">
-<p class="text-sm font-bold text-on-surface">자켓</p>
-<p class="text-xs text-on-surface-variant">블랙</p>
-</div>
-<button class="text-outline hover:text-error transition-colors">
-<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
-</button>
 </div>
 </div>
 </section>
 <!-- Group 2: 상의 -->
 <section class="group-container">
-<div class="flex items-center gap-2 mb-4 px-1">
+<div class="flex items-center gap-2 mb-5 px-1">
 <span class="material-symbols-outlined text-on-surface-variant" data-icon="checkroom">checkroom</span>
 <h2 class="text-base font-semibold text-on-surface">상의</h2>
 <span class="text-outline text-sm font-medium">(2)</span>
 </div>
-<div class="space-y-2">
-<!-- Card 1 -->
+<!-- Sub-group: 맨투맨 -->
+<div class="mb-4">
+<div class="flex items-center gap-1.5 mb-2 pl-3">
+<h3 class="text-xs font-semibold text-on-surface-variant tracking-wide">맨투맨</h3>
+<span class="text-[10px] text-outline font-medium">(1)</span>
+</div>
+<div class="space-y-2 pl-3">
 <div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
 <div class="w-6 h-6 rounded-full bg-[#FFFFFF] mr-4 border border-outline-variant/30"></div>
 <div class="flex-1">
-<p class="text-sm font-bold text-on-surface">맨투맨</p>
+<p class="text-sm font-bold text-on-surface">화이트 맨투맨</p>
 <p class="text-xs text-on-surface-variant">화이트</p>
 </div>
 <button class="text-outline hover:text-error transition-colors">
 <span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
 </button>
 </div>
-<!-- Card 2 -->
+</div>
+</div>
+<!-- Sub-group: 셔츠 -->
+<div class="mb-4">
+<div class="flex items-center gap-1.5 mb-2 pl-3">
+<h3 class="text-xs font-semibold text-on-surface-variant tracking-wide">셔츠</h3>
+<span class="text-[10px] text-outline font-medium">(1)</span>
+</div>
+<div class="space-y-2 pl-3">
 <div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
 <div class="w-6 h-6 rounded-full bg-[#4488FF] mr-4 ring-1 ring-black/5"></div>
 <div class="flex-1">
-<p class="text-sm font-bold text-on-surface">셔츠</p>
+<p class="text-sm font-bold text-on-surface">파랑 셔츠</p>
 <p class="text-xs text-on-surface-variant">파랑</p>
 </div>
 <button class="text-outline hover:text-error transition-colors">
@@ -182,56 +208,78 @@
 </button>
 </div>
 </div>
+</div>
 </section>
 <!-- Group 3: 하의 -->
 <section class="group-container">
-<div class="flex items-center gap-2 mb-4 px-1">
+<div class="flex items-center gap-2 mb-5 px-1">
 <span class="material-symbols-outlined text-on-surface-variant" data-icon="apparel">apparel</span>
 <h2 class="text-base font-semibold text-on-surface">하의</h2>
 <span class="text-outline text-sm font-medium">(2)</span>
 </div>
-<div class="space-y-2">
-<!-- Card 1 -->
+<!-- Sub-group: 청바지 -->
+<div class="mb-4">
+<div class="flex items-center gap-1.5 mb-2 pl-3">
+<h3 class="text-xs font-semibold text-on-surface-variant tracking-wide">청바지</h3>
+<span class="text-[10px] text-outline font-medium">(1)</span>
+</div>
+<div class="space-y-2 pl-3">
 <div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
-<div class="w-6 h-6 rounded-full bg-[#2244AA] mr-4 ring-1 ring-black/5"></div>
+<div class="w-6 h-6 rounded-full bg-[#1560BD] mr-4 ring-1 ring-black/5"></div>
 <div class="flex-1">
-<p class="text-sm font-bold text-on-surface">청바지</p>
-<p class="text-xs text-on-surface-variant">인디고</p>
+<p class="text-sm font-bold text-on-surface">데님 청바지</p>
+<p class="text-xs text-on-surface-variant">데님</p>
 </div>
 <button class="text-outline hover:text-error transition-colors">
 <span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
 </button>
 </div>
-<!-- Card 2 -->
+</div>
+</div>
+<!-- Sub-group: 슬랙스 -->
+<div class="mb-4">
+<div class="flex items-center gap-1.5 mb-2 pl-3">
+<h3 class="text-xs font-semibold text-on-surface-variant tracking-wide">슬랙스</h3>
+<span class="text-[10px] text-outline font-medium">(1)</span>
+</div>
+<div class="space-y-2 pl-3">
 <div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
-<div class="w-6 h-6 rounded-full bg-[#999999] mr-4 ring-1 ring-black/5"></div>
+<div class="w-6 h-6 rounded-full bg-[#808080] mr-4 ring-1 ring-black/5"></div>
 <div class="flex-1">
-<p class="text-sm font-bold text-on-surface">슬랙스</p>
-<p class="text-xs text-on-surface-variant">그레이</p>
+<p class="text-sm font-bold text-on-surface">회색 슬랙스</p>
+<p class="text-xs text-on-surface-variant">회색</p>
 </div>
 <button class="text-outline hover:text-error transition-colors">
 <span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
 </button>
+</div>
 </div>
 </div>
 </section>
 <!-- Group 4: 신발 -->
 <section class="group-container">
-<div class="flex items-center gap-2 mb-4 px-1">
+<div class="flex items-center gap-2 mb-5 px-1">
 <span class="material-symbols-outlined text-on-surface-variant" data-icon="steps">steps</span>
 <h2 class="text-base font-semibold text-on-surface">신발</h2>
 <span class="text-outline text-sm font-medium">(1)</span>
 </div>
-<div class="space-y-2">
+<!-- Sub-group: 운동화 -->
+<div class="mb-4">
+<div class="flex items-center gap-1.5 mb-2 pl-3">
+<h3 class="text-xs font-semibold text-on-surface-variant tracking-wide">운동화</h3>
+<span class="text-[10px] text-outline font-medium">(1)</span>
+</div>
+<div class="space-y-2 pl-3">
 <div class="flex items-center bg-surface-container-lowest p-4 rounded-xl shadow-[0px_20px_40px_rgba(26,28,31,0.06)] active:scale-[0.98] transition-transform">
 <div class="w-6 h-6 rounded-full bg-[#FFFFFF] mr-4 border border-outline-variant/30"></div>
 <div class="flex-1">
-<p class="text-sm font-bold text-on-surface">운동화</p>
+<p class="text-sm font-bold text-on-surface">화이트 운동화</p>
 <p class="text-xs text-on-surface-variant">화이트</p>
 </div>
 <button class="text-outline hover:text-error transition-colors">
 <span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
 </button>
+</div>
 </div>
 </div>
 </section>

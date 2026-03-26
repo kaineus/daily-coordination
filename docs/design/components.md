@@ -79,6 +79,29 @@
   - 색상명 (Caption)
   - 삭제 버튼 (아이콘, 우측)
 
+## 2.5 Closet Subgroup Header (2depth 카테고리)
+
+### Type Header (1depth — 기존)
+- **태그**: `<h2>`
+- **폰트**: 모바일 16px semibold / 데스크톱 20px bold (headline)
+- **아이콘**: Material Symbols (또는 이모지)
+- **개수 뱃지**: `text-outline`, 14px medium
+
+### Category Subheader (2depth — 신규)
+- **태그**: `<h3>`
+- **폰트**: 모바일 12px semibold / 데스크톱 13px semibold
+- **색상**: `--color-on-surface-variant`
+- **자간**: `tracking-wide`
+- **개수**: 모바일 10px / 데스크톱 11px, `--color-outline`
+- **들여쓰기**: `padding-left: 12px` (모바일/데스크톱 동일)
+- **간격**: 서브헤더 → 아이템 카드 `margin-bottom: 8px` (모바일) / `12px` (데스크톱)
+- **서브그룹 간 간격**: `margin-bottom: 16px` (모바일) / `24px` (데스크톱)
+
+### 아이템 카드 표시명 변경
+- 기존: 카테고리명만 표시 (예: "패딩")
+- 변경: **색상명 + 카테고리명** (예: "검정 패딩", "네이비 패딩")
+- 이유: 서브헤더에 카테고리명이 있으므로, 카드에서는 색상으로 구분
+
 ## 3. Form Elements
 
 ### Text Input

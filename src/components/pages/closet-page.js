@@ -135,6 +135,26 @@ export class ClosetPage extends LitElement {
         gap: var(--dc-space-2);
       }
 
+      .sub-group { margin-bottom: 1rem; }
+      .sub-group:last-child { margin-bottom: 0; }
+      .sub-header {
+        display: flex;
+        align-items: center;
+        gap: var(--dc-space-2);
+        margin-bottom: 0.5rem;
+        padding-left: 0.75rem;
+      }
+      .sub-name {
+        font-size: var(--dc-font-caption);
+        font-weight: 600;
+        color: var(--dc-text-secondary);
+        letter-spacing: 0.025em;
+      }
+      .sub-count {
+        font-size: var(--dc-font-tiny);
+        color: var(--dc-outline);
+      }
+
       /* ===== Desktop ===== */
       @media (min-width: ${bp.lg}) {
         h1 {
@@ -199,6 +219,11 @@ export class ClosetPage extends LitElement {
           grid-template-columns: repeat(3, 1fr);
           gap: var(--dc-space-6);
         }
+
+        .sub-group { margin-bottom: 1.5rem; }
+        .sub-header { padding-left: 0.75rem; margin-bottom: 0.75rem; }
+        .sub-name { font-size: 0.8125rem; }
+        .sub-count { font-size: 0.6875rem; }
       }
     `,
   ];
@@ -297,17 +322,39 @@ export class ClosetPage extends LitElement {
                 <span class="group-name">${group.emoji ? `${group.emoji} ` : ''}${group.type}</span>
                 <span class="group-count">${group.items.length}</span>
               </div>
-              <div class="items">
-                ${group.items.map((item) => html`
-                  <closet-item
-                    item-id=${item.id}
-                    category-name=${item.category?.name ?? ''}
-                    color-name=${item.color_name}
-                    color-hex=${item.color}
-                    @dc-delete=${this.#handleDelete}
-                  ></closet-item>
-                `)}
-              </div>
+              ${group.subGroups
+                ? group.subGroups.map((sub) => html`
+                  <div class="sub-group">
+                    <div class="sub-header">
+                      <span class="sub-name">${sub.name}</span>
+                      <span class="sub-count">${sub.items.length}</span>
+                    </div>
+                    <div class="items">
+                      ${sub.items.map((item) => html`
+                        <closet-item
+                          item-id=${item.id}
+                          category-name="${item.color_name} ${item.category?.name ?? ''}"
+                          color-name=${item.color_name}
+                          color-hex=${item.color}
+                          @dc-delete=${this.#handleDelete}
+                        ></closet-item>
+                      `)}
+                    </div>
+                  </div>
+                `)
+                : html`
+                  <div class="items">
+                    ${group.items.map((item) => html`
+                      <closet-item
+                        item-id=${item.id}
+                        category-name=${item.category?.name ?? ''}
+                        color-name=${item.color_name}
+                        color-hex=${item.color}
+                        @dc-delete=${this.#handleDelete}
+                      ></closet-item>
+                    `)}
+                  </div>
+                `}
             </section>
           `)}
         </div>
