@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { signInWithGoogle, signOut, initAuth } from '../../src/services/auth.service.js';
+import { signInWithGoogle, signOut, initAuth, fetchUserRole } from '../../src/services/auth.service.js';
 
 function createMockSupabase({ session = null } = {}) {
   return {
@@ -74,6 +74,74 @@ describe('signInWithEmail', () => {
     };
     const result = await signInWithEmail(supabase, 'test@test.com', 'wrong');
     expect(result.error.message).toBe('Invalid credentials');
+  });
+});
+
+// --- F6 RBAC: fetchUserRole ---
+
+describe('fetchUserRole', () => {
+  it('TC-F6-006: admin 사용자 → "admin" 반환', async () => {
+    const supabase = {
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u1' } } }) },
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnThis(),
+        eq: vi.fn().mockReturnThis(),
+        single: vi.fn().mockResolvedValue({ data: { role: 'admin' }, error: null }),
+      }),
+    };
+    const role = await fetchUserRole(supabase);
+    expect(role).toBe('admin');
+    expect(supabase.from).toHaveBeenCalledWith('user_profiles');
+  });
+
+  it('TC-F6-007: user 사용자 → "user" 반환', async () => {
+    const supabase = {
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u2' } } }) },
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnThis(),
+        eq: vi.fn().mockReturnThis(),
+        single: vi.fn().mockResolvedValue({ data: { role: 'user' }, error: null }),
+      }),
+    };
+    expect(await fetchUserRole(supabase)).toBe('user');
+  });
+
+  it('TC-F6-008: 미로그인 (user null) → "user" 폴백', async () => {
+    const supabase = {
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: null } }) },
+      from: vi.fn(),
+    };
+    expect(await fetchUserRole(supabase)).toBe('user');
+    expect(supabase.from).not.toHaveBeenCalled();
+  });
+
+  it('TC-F6-009: user_profiles 조회 에러 → "user" 폴백 + console.error', async () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const supabase = {
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u3' } } }) },
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnThis(),
+        eq: vi.fn().mockReturnThis(),
+        single: vi.fn().mockResolvedValue({ data: null, error: { message: 'not found' } }),
+      }),
+    };
+    expect(await fetchUserRole(supabase)).toBe('user');
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+  it('TC-F6-010: user_profiles 행 없음 (single 에러) → "user" 폴백', async () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const supabase = {
+      auth: { getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'u4' } } }) },
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnThis(),
+        eq: vi.fn().mockReturnThis(),
+        single: vi.fn().mockResolvedValue({ data: null, error: { message: 'Row not found' } }),
+      }),
+    };
+    expect(await fetchUserRole(supabase)).toBe('user');
+    spy.mockRestore();
   });
 });
 

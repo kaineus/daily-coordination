@@ -60,4 +60,38 @@ describe('authStore', () => {
     authStore.actions.setLoading(true);
     expect(authStore.getState().loading).toBe(true);
   });
+
+  // --- F6 RBAC: role 관리 ---
+
+  it('TC-F6-005: 초기 상태 role === null', () => {
+    expect(authStore.getState().role).toBeNull();
+  });
+
+  it('TC-F6-001: setRole("admin")', () => {
+    authStore.actions.setRole('admin');
+    expect(authStore.getState().role).toBe('admin');
+  });
+
+  it('TC-F6-002: setRole("user")', () => {
+    authStore.actions.setRole('user');
+    expect(authStore.getState().role).toBe('user');
+  });
+
+  it('TC-F6-003: setRole(null) — 로그아웃 시', () => {
+    authStore.actions.setRole('admin');
+    authStore.actions.setRole(null);
+    expect(authStore.getState().role).toBeNull();
+  });
+
+  it('TC-F6-004: clear() → role도 null', () => {
+    authStore.actions.setRole('admin');
+    authStore.actions.clear();
+    expect(authStore.getState().role).toBeNull();
+  });
+
+  it('setSession은 role을 변경하지 않음', () => {
+    authStore.actions.setRole('admin');
+    authStore.actions.setSession(mockSession);
+    expect(authStore.getState().role).toBe('admin');
+  });
 });
