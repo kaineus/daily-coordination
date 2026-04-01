@@ -26,6 +26,7 @@ export class ClosetPage extends LitElement {
   #clothes = new StoreController(this, closetStore, (s) => s.clothes);
   #categories = new StoreController(this, closetStore, (s) => s.categories);
   #loading = new StoreController(this, closetStore, (s) => s.loading);
+  #error = new StoreController(this, closetStore, (s) => s.error);
   #groupBy = new StoreController(this, closetStore, (s) => s.groupBy);
 
   static styles = [
@@ -95,6 +96,16 @@ export class ClosetPage extends LitElement {
 
       .filter-chips {
         display: none;
+      }
+
+      /* ===== Error ===== */
+      .error-box {
+        background: rgba(186,26,26,0.08);
+        color: #ba1a1a;
+        font-size: var(--dc-font-body);
+        padding: var(--dc-space-3) var(--dc-space-4);
+        border-radius: var(--dc-radius-sm);
+        margin-bottom: var(--dc-space-6);
       }
 
       /* ===== Loading ===== */
@@ -243,10 +254,14 @@ export class ClosetPage extends LitElement {
     const sb = this.#supabase.value;
     if (!sb) return;
     closetStore.actions.setLoading(true);
+    closetStore.actions.setError(null);
     const [catRes, clothesRes] = await Promise.all([
       getCategories(sb),
       getUserClothes(sb),
     ]);
+    if (catRes.error || clothesRes.error) {
+      closetStore.actions.setError(catRes.error?.message || clothesRes.error?.message || '데이터를 불러오지 못했습니다');
+    }
     if (catRes.data) closetStore.actions.setCategories(catRes.data);
     if (clothesRes.data) closetStore.actions.setClothes(clothesRes.data);
     closetStore.actions.setLoading(false);
@@ -254,8 +269,13 @@ export class ClosetPage extends LitElement {
 
   async #handleDelete(e) {
     const { id } = e.detail;
+    closetStore.actions.setError(null);
     const { error } = await deleteClothing(this.#supabase.value, id);
-    if (!error) closetStore.actions.removeItem(id);
+    if (error) {
+      closetStore.actions.setError('삭제에 실패했습니다');
+    } else {
+      closetStore.actions.removeItem(id);
+    }
   }
 
   async #handleAddClothing(e) {
@@ -267,6 +287,7 @@ export class ClosetPage extends LitElement {
   render() {
     const clothes = this.#clothes.value ?? [];
     const loading = this.#loading.value;
+    const error = this.#error.value;
     const groupBy = this.#groupBy.value;
 
     return html`
@@ -277,6 +298,8 @@ export class ClosetPage extends LitElement {
           <span>추가</span>
         </button>
       </div>
+
+      ${error ? html`<div class="error-box">${error}</div>` : ''}
 
       ${loading ? html`<div class="loading"><dc-spinner size="2"></dc-spinner></div>`
       : clothes.length === 0 ? html`

@@ -32,9 +32,17 @@ describe('getCategories', () => {
 
 describe('getUserClothes', () => {
   it('user_clothes 조회 + created_at 내림차순', async () => {
-    const supabase = createMockSupabase({ selectData: [] });
+    const session = { user: { id: 'user-1' } };
+    const supabase = createMockSupabase({ session, selectData: [] });
     await getUserClothes(supabase);
     expect(supabase.from).toHaveBeenCalledWith('user_clothes');
+  });
+
+  it('세션 없으면 인증 필요 에러 반환', async () => {
+    const supabase = createMockSupabase({ session: null });
+    const { data, error } = await getUserClothes(supabase);
+    expect(data).toBeNull();
+    expect(error.message).toBe('인증 필요');
   });
 });
 
@@ -56,13 +64,29 @@ describe('addClothing', () => {
       color_name: '검정',
     });
   });
+
+  it('세션 없으면 인증 필요 에러 반환', async () => {
+    const supabase = createMockSupabase({ session: null });
+    const { data, error } = await addClothing(supabase, {
+      categoryId: 'cat-1', color: '#333', colorName: '검정',
+    });
+    expect(data).toBeNull();
+    expect(error.message).toBe('인증 필요');
+  });
 });
 
 describe('deleteClothing', () => {
   it('해당 id로 delete 호출', async () => {
-    const supabase = createMockSupabase();
+    const session = { user: { id: 'user-1' } };
+    const supabase = createMockSupabase({ session });
     await deleteClothing(supabase, 'item-1');
     expect(supabase.from).toHaveBeenCalledWith('user_clothes');
     expect(supabase._chain.eq).toHaveBeenCalledWith('id', 'item-1');
+  });
+
+  it('세션 없으면 인증 필요 에러 반환', async () => {
+    const supabase = createMockSupabase({ session: null });
+    const { error } = await deleteClothing(supabase, 'item-1');
+    expect(error.message).toBe('인증 필요');
   });
 });

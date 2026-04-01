@@ -22,6 +22,15 @@ describe('signInWithGoogle', () => {
       expect.objectContaining({ provider: 'google' }),
     );
   });
+
+  it('OAuth 실패 → { error } 반환', async () => {
+    const supabase = createMockSupabase();
+    supabase.auth.signInWithOAuth.mockResolvedValue({
+      error: { message: 'popup_closed_by_user' },
+    });
+    const { error } = await signInWithGoogle(supabase);
+    expect(error.message).toBe('popup_closed_by_user');
+  });
 });
 
 describe('signOut', () => {

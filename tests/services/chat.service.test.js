@@ -66,4 +66,14 @@ describe('sendChatMessage', () => {
     expect(result.data).toBeNull();
     expect(result.error).toBeTruthy();
   });
+
+  it('네트워크 에러 (fetch throw) → { data: null, error }', async () => {
+    const session = { access_token: 'tok-123' };
+    const supabase = createMockSupabase(session);
+    globalThis.fetch.mockRejectedValue(new Error('Network offline'));
+
+    const result = await sendChatMessage(supabase, [{ role: 'user', content: '검정 패딩' }]);
+    expect(result.data).toBeNull();
+    expect(result.error.message).toBe('Network offline');
+  });
 });

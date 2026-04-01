@@ -47,6 +47,13 @@ describe('recommend.service', () => {
       expect(result.data).toBeNull();
       expect(result.error).toBeTruthy();
     });
+
+    it('네트워크 에러 (fetch throw) → { data: null, error }', async () => {
+      globalThis.fetch.mockRejectedValue(new Error('Network failure'));
+      const result = await getWeather();
+      expect(result.data).toBeNull();
+      expect(result.error.message).toBe('Network failure');
+    });
   });
 
   describe('getRecommendation', () => {
@@ -88,6 +95,14 @@ describe('recommend.service', () => {
       expect(result.data).toBeNull();
       expect(result.error).toBeTruthy();
     });
+
+    it('네트워크 에러 (fetch throw) → { data: null, error }', async () => {
+      const supabase = createMockSupabase({ access_token: 'tok' });
+      globalThis.fetch.mockRejectedValue(new Error('Failed to fetch'));
+      const result = await getRecommendation(supabase);
+      expect(result.data).toBeNull();
+      expect(result.error.message).toBe('Failed to fetch');
+    });
   });
 
   describe('getRecommendationWithRefresh', () => {
@@ -109,6 +124,14 @@ describe('recommend.service', () => {
         expect.stringContaining('refresh=true'),
         expect.any(Object),
       );
+    });
+
+    it('네트워크 에러 (fetch throw) → { data: null, error }', async () => {
+      const supabase = createMockSupabase({ access_token: 'tok' });
+      globalThis.fetch.mockRejectedValue(new Error('timeout'));
+      const result = await getRecommendationWithRefresh(supabase);
+      expect(result.data).toBeNull();
+      expect(result.error.message).toBe('timeout');
     });
   });
 });

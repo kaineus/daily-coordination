@@ -454,7 +454,11 @@ export class LoginPage extends LitElement {
     this._submitting = false;
   }
 
-  #handleGoogle() { signInWithGoogle(this.#supabase.value); }
+  async #handleGoogle() {
+    authStore.actions.clearError();
+    const { error } = await signInWithGoogle(this.#supabase.value);
+    if (error) authStore.actions.setError('Google 로그인에 실패했습니다');
+  }
 
   #openInBrowser() {
     const url = window.location.href;

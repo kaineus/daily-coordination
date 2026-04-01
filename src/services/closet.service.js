@@ -12,6 +12,9 @@ export async function getCategories(supabase) {
 }
 
 export async function getUserClothes(supabase) {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return { data: null, error: { message: '인증 필요' } };
+
   const { data, error } = await supabase
     .from('user_clothes')
     .select(CLOTHES_SELECT)
@@ -21,6 +24,8 @@ export async function getUserClothes(supabase) {
 
 export async function addClothing(supabase, { categoryId, color, colorName }) {
   const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return { data: null, error: { message: '인증 필요' } };
+
   const { data, error } = await supabase
     .from('user_clothes')
     .insert({
@@ -35,6 +40,9 @@ export async function addClothing(supabase, { categoryId, color, colorName }) {
 }
 
 export async function deleteClothing(supabase, id) {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return { error: { message: '인증 필요' } };
+
   const { error } = await supabase
     .from('user_clothes')
     .delete()

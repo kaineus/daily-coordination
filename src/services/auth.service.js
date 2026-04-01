@@ -24,7 +24,7 @@ export async function signInWithGoogle(supabase) {
       redirectTo: window.location.origin,
     },
   });
-  if (error) console.error('[DC] Google 로그인 실패:', error.message);
+  return { error };
 }
 
 export async function signUpWithEmail(supabase, email, password) {

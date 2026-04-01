@@ -21,6 +21,7 @@ export class AdminCategoriesPage extends LitElement {
     _addForm: { state: true },
     _addingNewType: { state: true },
     _newTypeForm: { state: true },
+    _error: { state: true },
   };
 
   #supabase = new ContextConsumer(this, { context: supabaseContext, subscribe: true });
@@ -45,6 +46,12 @@ export class AdminCategoriesPage extends LitElement {
       }
 
       .loading { display: flex; justify-content: center; padding: var(--dc-space-12); }
+
+      .error-box {
+        background: rgba(186,26,26,0.08); color: #ba1a1a;
+        font-size: var(--dc-font-body); padding: var(--dc-space-3) var(--dc-space-4);
+        border-radius: var(--dc-radius-sm); margin-bottom: var(--dc-space-6);
+      }
 
       /* Accordion */
       .accordion { margin-bottom: var(--dc-space-3); }
@@ -243,6 +250,7 @@ export class AdminCategoriesPage extends LitElement {
     this._addForm = {};
     this._addingNewType = false;
     this._newTypeForm = { name: '', emoji: '' };
+    this._error = null;
   }
 
   connectedCallback() {
@@ -254,7 +262,9 @@ export class AdminCategoriesPage extends LitElement {
     const sb = this.#supabase.value;
     if (!sb) return;
     this._loading = true;
-    const { data } = await getCategories(sb);
+    this._error = null;
+    const { data, error } = await getCategories(sb);
+    if (error) this._error = '카테고리를 불러오지 못했습니다';
     if (data) this._categories = data;
     this._loading = false;
   }
@@ -292,6 +302,7 @@ export class AdminCategoriesPage extends LitElement {
 
   async #saveEdit() {
     const sb = this.#supabase.value;
+    this._error = null;
     const { error } = await updateCategory(sb, this._editingId, {
       name: this._editForm.name,
       icon: this._editForm.icon,
@@ -299,7 +310,9 @@ export class AdminCategoriesPage extends LitElement {
       tempMax: this._editForm.tempMax === '' ? null : Number(this._editForm.tempMax),
       sortOrder: Number(this._editForm.sortOrder),
     });
-    if (!error) {
+    if (error) {
+      this._error = '카테고리 수정에 실패했습니다';
+    } else {
       this._editingId = null;
       await this.#loadCategories();
     }
@@ -315,8 +328,12 @@ export class AdminCategoriesPage extends LitElement {
 
   async #executeDelete() {
     const sb = this.#supabase.value;
+    this._error = null;
     const { error } = await deleteCategory(sb, this._deleteTarget.id);
-    if (!error) {
+    if (error) {
+      this._deleteTarget = null;
+      this._error = '카테고리 삭제에 실패했습니다';
+    } else {
       this._deleteTarget = null;
       await this.#loadCategories();
     }
@@ -334,6 +351,7 @@ export class AdminCategoriesPage extends LitElement {
 
   async #saveAdd(type) {
     const sb = this.#supabase.value;
+    this._error = null;
     const { error } = await createCategory(sb, {
       name: this._addForm.name, type,
       icon: this._addForm.icon,
@@ -341,7 +359,9 @@ export class AdminCategoriesPage extends LitElement {
       tempMax: this._addForm.tempMax === '' ? null : Number(this._addForm.tempMax),
       sortOrder: Number(this._addForm.sortOrder),
     });
-    if (!error) {
+    if (error) {
+      this._error = '카테고리 추가에 실패했습니다';
+    } else {
       this._addingToType = null;
       this._addForm = {};
       if (!this._expandedTypes.has(type)) {
@@ -358,13 +378,16 @@ export class AdminCategoriesPage extends LitElement {
 
   async #saveNewType() {
     const sb = this.#supabase.value;
+    this._error = null;
     const { error } = await createCategory(sb, {
       name: `${this._newTypeForm.name} 기본`,
       type: this._newTypeForm.name,
       icon: this._newTypeForm.emoji,
       tempMin: null, tempMax: null, sortOrder: 1,
     });
-    if (!error) {
+    if (error) {
+      this._error = '상위분류 추가에 실패했습니다';
+    } else {
       this._addingNewType = false;
       const next = new Set(this._expandedTypes);
       next.add(this._newTypeForm.name);
@@ -511,6 +534,8 @@ export class AdminCategoriesPage extends LitElement {
           <span class="admin-badge">ADMIN</span>
         </div>
       </div>
+
+      ${this._error ? html`<div class="error-box">${this._error}</div>` : ''}
 
       ${groups.map((g) => {
         const expanded = this._expandedTypes.has(g.type);

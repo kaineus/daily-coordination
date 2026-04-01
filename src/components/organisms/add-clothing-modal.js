@@ -558,7 +558,8 @@ export class AddClothingModal extends LitElement {
       }
     });
 
-    this._successIndices = [...this._successIndices, { idx, count: succeeded.length, total: items.length }];
+    const failed = items.length - succeeded.length;
+    this._successIndices = [...this._successIndices, { idx, count: succeeded.length, total: items.length, failed }];
     this._registering = false;
 
     // 모달 닫기 이벤트 (옷장 리스트 갱신)
@@ -764,11 +765,21 @@ export class AddClothingModal extends LitElement {
 
           ${success ? html`
             <div>
-              <div class="success-row">
-                <div class="success-icon"><span class="material-symbols-outlined">check</span></div>
-                <span class="success-text">등록 완료!</span>
-              </div>
-              <div class="success-detail">${success.count}개 옷장에 추가됐어요</div>
+              ${success.failed > 0 ? html`
+                <div class="success-row">
+                  <div class="success-icon" style="background:rgba(186,26,26,0.12)">
+                    <span class="material-symbols-outlined" style="color:#ba1a1a">warning</span>
+                  </div>
+                  <span class="success-text" style="color:#ba1a1a">${success.total}개 중 ${success.failed}개 등록 실패</span>
+                </div>
+                ${success.count > 0 ? html`<div class="success-detail">${success.count}개는 옷장에 추가됐어요</div>` : ''}
+              ` : html`
+                <div class="success-row">
+                  <div class="success-icon"><span class="material-symbols-outlined">check</span></div>
+                  <span class="success-text">등록 완료!</span>
+                </div>
+                <div class="success-detail">${success.count}개 옷장에 추가됐어요</div>
+              `}
             </div>
           ` : ''}
         </div>

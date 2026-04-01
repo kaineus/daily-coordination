@@ -11,12 +11,12 @@
 |--------|---------|-------|------|-------|-------|
 | constants | 4 | 36 | **passed** | 100% | 100% |
 | router | 1 | 9 | **passed** | 100% | 100% |
-| services | 5 | 32 | **passed** | 93% | 98% |
+| services | 5 | 37 | **passed** | 93% | 98% |
 | stores | 6 | 37 | **passed** | 100% | 100% |
 | utils | 5 | 30 | **passed** | 100% | 100% |
 | edge-functions | 1 | 11 | **passed** | — | — |
 | integration | 2 | 10 | **passed** | — | — |
-| **전체** | **27** | **240** | **all passed** | **98%** | **99%** |
+| **전체** | **27** | **248** | **all passed** | **98%** | **99%** |
 
 ---
 
@@ -55,6 +55,14 @@
   1. signInWithGoogle(mockSupabase) 호출
   2. supabase.auth.signInWithOAuth가 provider: 'google'로 호출되는지 확인
 - **기대 결과**: signInWithOAuth({ provider: 'google' }) 호출됨
+
+### TC-F1-001b Google OAuth 로그인 실패 → error 반환
+- **우선순위**: P1
+- **상태**: passed
+- **사전조건**: Supabase 모킹, signInWithOAuth 에러 반환
+- **단계**:
+  1. signInWithGoogle(mockSupabase) 호출 (OAuth 실패 시나리오)
+- **기대 결과**: { error: { message: 'popup_closed_by_user' } } 반환
 
 ### TC-F1-002 로그아웃
 - **우선순위**: P1
@@ -289,6 +297,42 @@
 - **단계**:
   1. getRecommendationWithRefresh(mockSupabase) 호출
 - **기대 결과**: ?refresh=true 쿼리 파라미터 포함 호출
+
+### TC-F3-013 getWeather — 네트워크 에러 (fetch throw)
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: fetch가 reject되도록 모킹
+- **단계**:
+  1. globalThis.fetch를 Network failure로 reject 설정
+  2. getWeather() 호출
+- **기대 결과**: { data: null, error: { message: 'Network failure' } }
+
+### TC-F3-014 getRecommendation — 네트워크 에러 (fetch throw)
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: fetch가 reject되도록 모킹, 세션 있음
+- **단계**:
+  1. globalThis.fetch를 reject 설정
+  2. getRecommendation(supabase) 호출
+- **기대 결과**: { data: null, error: { message } }
+
+### TC-F3-015 getRecommendationWithRefresh — 네트워크 에러 (fetch throw)
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: fetch가 reject되도록 모킹, 세션 있음
+- **단계**:
+  1. globalThis.fetch를 reject 설정
+  2. getRecommendationWithRefresh(supabase) 호출
+- **기대 결과**: { data: null, error: { message } }
+
+### TC-CHAT-001 sendChatMessage — 네트워크 에러 (fetch throw)
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: fetch가 reject되도록 모킹, 세션 있음
+- **단계**:
+  1. globalThis.fetch를 Network offline으로 reject 설정
+  2. sendChatMessage(supabase, messages) 호출
+- **기대 결과**: { data: null, error: { message: 'Network offline' } }
 
 ---
 
