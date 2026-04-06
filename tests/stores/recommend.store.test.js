@@ -20,6 +20,7 @@ describe('recommendStore', () => {
     expect(s.weather).toBeNull();
     expect(s.hourly).toEqual([]);
     expect(s.recommendation).toBeNull();
+    expect(s.mode).toBeNull();
     expect(s.loading).toBe(false);
     expect(s.error).toBeNull();
   });
@@ -68,10 +69,30 @@ describe('recommendStore', () => {
 
   it('clear → 모든 필드 초기화', () => {
     recommendStore.actions.setData(mockWeather, mockRec);
+    recommendStore.actions.setMode('general');
     recommendStore.actions.clear();
     const s = recommendStore.getState();
     expect(s.weather).toBeNull();
     expect(s.hourly).toEqual([]);
     expect(s.recommendation).toBeNull();
+    expect(s.mode).toBeNull();
+  });
+
+  // --- F8: mode 필드 ---
+
+  it('setMode("general")', () => {
+    recommendStore.actions.setMode('general');
+    expect(recommendStore.getState().mode).toBe('general');
+  });
+
+  it('setMode("personal")', () => {
+    recommendStore.actions.setMode('personal');
+    expect(recommendStore.getState().mode).toBe('personal');
+  });
+
+  it('setMode(null) → 초기화', () => {
+    recommendStore.actions.setMode('general');
+    recommendStore.actions.setMode(null);
+    expect(recommendStore.getState().mode).toBeNull();
   });
 });

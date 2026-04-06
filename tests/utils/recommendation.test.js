@@ -29,6 +29,7 @@ describe('normalizeOutfitItems', () => {
       colorHex: '#333333',  // color → colorHex
       colorName: '검정',
       reason: '추움',
+      imageUrl: null,
     });
   });
 
@@ -59,5 +60,23 @@ describe('normalizeOutfitItems', () => {
 
   it('빈 items + 빈 accessories', () => {
     expect(normalizeOutfitItems({ items: [], accessories: [] })).toEqual([]);
+  });
+
+  // --- F8: imageUrl 패스스루 ---
+
+  it('imageUrl 있는 아이템 → imageUrl 유지', () => {
+    const rec = {
+      items: [{ type: '상의', category: '셔츠', color: '#FFF', colorName: '흰색', reason: '깔끔', imageUrl: 'https://images.pexels.com/photo.jpg' }],
+    };
+    const result = normalizeOutfitItems(rec);
+    expect(result[0].imageUrl).toBe('https://images.pexels.com/photo.jpg');
+  });
+
+  it('imageUrl 없는 아이템 → imageUrl: null', () => {
+    const rec = {
+      items: [{ type: '상의', category: '셔츠', color: '#FFF', colorName: '흰색', reason: '깔끔' }],
+    };
+    const result = normalizeOutfitItems(rec);
+    expect(result[0].imageUrl).toBeNull();
   });
 });

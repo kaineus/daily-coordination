@@ -1,22 +1,22 @@
-# Test Plan — Daily Coordination v0.3.0
+# Test Plan — Daily Coordination v0.4.0
 
-> 작성일: 2026-03-22 (업데이트: 2026-04-01)
-> 대상: F1 (Google 로그인), F2 (옷 등록), F3 (날씨 기반 AI 코디 추천), F6 (RBAC), F7 (카테고리 관리 Admin)
+> 작성일: 2026-03-22 (업데이트: 2026-04-06)
+> 대상: F1 (Google 로그인), F2 (옷 등록), F3 (날씨 기반 AI 코디 추천), F6 (RBAC), F7 (카테고리 관리 Admin), F8 (일반 코디 추천)
 
 ---
 
-## 실행 결과 요약 (2026-04-01)
+## 실행 결과 요약 (2026-04-06)
 
 | 레이어 | 파일 수 | TC 수 | 상태 | Stmts | Lines |
 |--------|---------|-------|------|-------|-------|
 | constants | 4 | 36 | **passed** | 100% | 100% |
 | router | 1 | 9 | **passed** | 100% | 100% |
-| services | 5 | 37 | **passed** | 93% | 98% |
-| stores | 6 | 37 | **passed** | 100% | 100% |
-| utils | 5 | 30 | **passed** | 100% | 100% |
+| services | 5 | 44 | **passed** | 93% | 98% |
+| stores | 6 | 40 | **passed** | 100% | 100% |
+| utils | 5 | 32 | **passed** | 100% | 100% |
 | edge-functions | 1 | 11 | **passed** | — | — |
 | integration | 2 | 10 | **passed** | — | — |
-| **전체** | **27** | **248** | **all passed** | **98%** | **99%** |
+| **전체** | **27** | **260** | **all passed** | **98%** | **99%** |
 
 ---
 
@@ -40,8 +40,9 @@
 6. **P1**: Edge Function 파싱 로직 — ✅ 완료
 7. **P0**: F6 RBAC (store + service + 통합) — ✅ 완료
 8. **P0**: F7 Admin CRUD (service + 통합) — ✅ 완료
-9. **P3**: Lit 컴포넌트 — 보류
-10. **P3**: E2E — 보류
+9. **P0**: F8 일반 코디 추천 (service + store + utils) — ✅ 완료
+10. **P3**: Lit 컴포넌트 — 보류
+11. **P3**: E2E — 보류
 
 ---
 
@@ -652,6 +653,107 @@
 - **단계**:
   1. navigate('/home') 호출
 - **기대 결과**: window.location.hash가 '#/home'으로 변경, host.requestUpdate() 호출
+
+---
+
+## F8. 일반 코디 추천 테스트
+
+### TC-F8-001 getGeneralRecommendation — 성공
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: fetch 모킹
+- **단계**:
+  1. getGeneralRecommendation() 호출
+- **기대 결과**: { data, error: null }, recommend-general 엔드포인트 호출
+
+### TC-F8-002 getGeneralRecommendation — 인증 없이 호출
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: fetch 모킹
+- **단계**:
+  1. getGeneralRecommendation() 호출
+  2. fetch 헤더 확인
+- **기대 결과**: Authorization 헤더 없음 (비인증 API)
+
+### TC-F8-003 getGeneralRecommendation — 서버 에러
+- **우선순위**: P1
+- **상태**: passed
+- **사전조건**: fetch 모킹 (ok: false)
+- **단계**:
+  1. getGeneralRecommendation() 호출
+- **기대 결과**: { data: null, error }
+
+### TC-F8-004 getGeneralRecommendation — 네트워크 에러
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: fetch가 reject되도록 모킹
+- **단계**:
+  1. getGeneralRecommendation() 호출
+- **기대 결과**: { data: null, error: { message: 'Network offline' } }
+
+### TC-F8-005 getGeneralRecommendationWithRefresh — refresh 파라미터
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: fetch 모킹
+- **단계**:
+  1. getGeneralRecommendationWithRefresh() 호출
+- **기대 결과**: URL에 refresh=true 포함, recommend-general 엔드포인트
+
+### TC-F8-006 getGeneralRecommendationWithRefresh — 엔드포인트 확인
+- **우선순위**: P1
+- **상태**: passed
+- **사전조건**: fetch 모킹
+- **단계**:
+  1. getGeneralRecommendationWithRefresh() 호출
+- **기대 결과**: recommend-general 엔드포인트 호출
+
+### TC-F8-007 getGeneralRecommendationWithRefresh — 네트워크 에러
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: fetch가 reject되도록 모킹
+- **단계**:
+  1. getGeneralRecommendationWithRefresh() 호출
+- **기대 결과**: { data: null, error: { message } }
+
+### TC-F8-008 Recommend Store — 초기 mode === null
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: recommendStore 초기 상태
+- **단계**:
+  1. getState().mode 확인
+- **기대 결과**: null
+
+### TC-F8-009 Recommend Store — setMode("general")
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: recommendStore 초기 상태
+- **단계**:
+  1. setMode('general') 호출
+- **기대 결과**: mode === 'general'
+
+### TC-F8-010 Recommend Store — setMode("personal")
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: recommendStore 초기 상태
+- **단계**:
+  1. setMode('personal') 호출
+- **기대 결과**: mode === 'personal'
+
+### TC-F8-011 Recommend Store — clear() → mode도 null
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: mode 설정 완료
+- **단계**:
+  1. setMode('general') → clear() 호출
+- **기대 결과**: mode === null
+
+### TC-F8-012 normalizeOutfitItems — imageUrl 패스스루
+- **우선순위**: P0
+- **상태**: passed
+- **사전조건**: imageUrl 포함 아이템
+- **단계**:
+  1. normalizeOutfitItems({ items: [{ ..., imageUrl: 'https://...' }] }) 호출
+- **기대 결과**: result[0].imageUrl === 'https://...'
 
 ---
 

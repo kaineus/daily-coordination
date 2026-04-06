@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { getWeather, getRecommendation, getRecommendationWithRefresh } from '../../src/services/recommend.service.js';
+import { getWeather, getRecommendation, getRecommendationWithRefresh, getGeneralRecommendation, getGeneralRecommendationWithRefresh } from '../../src/services/recommend.service.js';
 
 function createMockSupabase(session = null) {
   return {
@@ -130,6 +130,90 @@ describe('recommend.service', () => {
       const supabase = createMockSupabase({ access_token: 'tok' });
       globalThis.fetch.mockRejectedValue(new Error('timeout'));
       const result = await getRecommendationWithRefresh(supabase);
+      expect(result.data).toBeNull();
+      expect(result.error.message).toBe('timeout');
+    });
+  });
+
+  // --- F8: 일반 코디 추천 (비인증) ---
+
+  describe('getGeneralRecommendation', () => {
+    it('성공 → { data, error: null }', async () => {
+      const mockData = { items: [{ type: '상의', imageUrl: 'https://example.com/img.jpg' }] };
+      globalThis.fetch.mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve(mockData),
+      });
+
+      const result = await getGeneralRecommendation();
+      expect(result.data).toEqual(mockData);
+      expect(result.error).toBeNull();
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        expect.stringContaining('recommend-general'),
+        expect.any(Object),
+      );
+    });
+
+    it('인증 없이 호출 (supabase 불필요)', async () => {
+      globalThis.fetch.mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({ items: [] }),
+      });
+
+      await getGeneralRecommendation();
+      const callArgs = globalThis.fetch.mock.calls[0][1];
+      expect(callArgs.headers).not.toHaveProperty('Authorization');
+    });
+
+    it('서버 에러 → { data: null, error }', async () => {
+      globalThis.fetch.mockResolvedValue({
+        ok: false,
+        json: () => Promise.resolve({ message: 'server error' }),
+      });
+
+      const result = await getGeneralRecommendation();
+      expect(result.data).toBeNull();
+      expect(result.error).toBeTruthy();
+    });
+
+    it('네트워크 에러 (fetch throw) → { data: null, error }', async () => {
+      globalThis.fetch.mockRejectedValue(new Error('Network offline'));
+      const result = await getGeneralRecommendation();
+      expect(result.data).toBeNull();
+      expect(result.error.message).toBe('Network offline');
+    });
+  });
+
+  describe('getGeneralRecommendationWithRefresh', () => {
+    it('?refresh=true 쿼리 파라미터 포함', async () => {
+      globalThis.fetch.mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({ items: [] }),
+      });
+
+      await getGeneralRecommendationWithRefresh();
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        expect.stringContaining('refresh=true'),
+        expect.any(Object),
+      );
+    });
+
+    it('recommend-general 엔드포인트 호출', async () => {
+      globalThis.fetch.mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({ items: [] }),
+      });
+
+      await getGeneralRecommendationWithRefresh();
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        expect.stringContaining('recommend-general'),
+        expect.any(Object),
+      );
+    });
+
+    it('네트워크 에러 → { data: null, error }', async () => {
+      globalThis.fetch.mockRejectedValue(new Error('timeout'));
+      const result = await getGeneralRecommendationWithRefresh();
       expect(result.data).toBeNull();
       expect(result.error.message).toBe('timeout');
     });
