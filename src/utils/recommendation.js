@@ -7,5 +7,6 @@ export function normalizeOutfitItems(recommendation) {
     colorHex: item.color,
     colorName: item.colorName,
     reason: item.reason,
+    imageUrl: item.imageUrl ?? null,
   }));
 }

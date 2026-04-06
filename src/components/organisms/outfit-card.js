@@ -133,6 +133,13 @@ export class OutfitCard extends LitElement {
       }
       .emoji-fallback { font-size: 2.5rem; }
 
+      .item-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: var(--dc-radius-sm);
+      }
+
       /* ===== Scrap Text (카드 옆 독립 영역) ===== */
       .scrap-text {
         flex: 1;
@@ -280,7 +287,12 @@ export class OutfitCard extends LitElement {
         <div class="scrap-card" style="transform: rotate(${rotation}); z-index: ${index + 1}">
           <div class="tape"></div>
           <div class="svg-wrap" style="color: ${item.colorHex ?? '#666'}">
-            ${svg ? unsafeSVG(svg) : html`<span class="emoji-fallback">${emoji}</span>`}
+            ${item.imageUrl
+              ? html`<img class="item-image" src="${item.imageUrl}" alt="${item.name}" loading="lazy"
+                  @error=${(e) => { e.target.style.display = 'none'; e.target.nextElementSibling?.style.removeProperty('display'); }}
+                ><span class="emoji-fallback" style="display:none">${emoji}</span>`
+              : svg ? unsafeSVG(svg) : html`<span class="emoji-fallback">${emoji}</span>`
+            }
           </div>
         </div>
         <div class="scrap-text">

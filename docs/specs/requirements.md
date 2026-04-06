@@ -384,15 +384,72 @@ As a 관리자, I want 옷 카테고리를 추가/수정/삭제, So that 서비�
 
 ---
 
+## F8. 일반 코디 추천 (옷장 없이 + 이미지 검색)
+- **우선순위**: P1
+- **상태**: in-progress
+
+### 사용자 스토리
+As a 비로그인/신규 사용자, I want 옷장 등록 없이 날씨 기반 코디 추천을 받고 싶다, So that 서비스 가치를 바로 체험하고 가입 동기가 생긴다.
+
+### 핵심 컨셉
+- 옷장 없이 한국 패션 트렌드 기반 일반 코디 추천
+- Pexels API로 실제 패션 이미지 검색 포함
+- 비로그인 사용자도 홈에서 바로 코디 확인 가능
+- 로그인 + 빈 옷장 사용자도 일반 추천으로 폴백
+
+### 인수 조건
+
+#### 비로그인 사용자
+- [ ] Given 비로그인 상태, When 홈(`/`) 접속, Then 날씨 + 일반 코디 추천 표시 (Pexels 이미지 포함)
+- [ ] Given 비로그인 상태, When 코디 추천 하단 확인, Then "로그인하면 맞춤 코디를 받아보세요" 배너 표시
+- [ ] Given ��로그인 상태, When "다른 코��� 추천" 클릭, Then 새로운 일반 추천 생성
+- [ ] Given 비로그인 상태, When 네비게이션 확인, Then "코디" + "로그인" 탭만 표시
+
+#### 로그인 사용자 (옷장 있음)
+- [ ] Given 로그인 + 옷장 등록 상태, When 홈 접속, Then 기존 옷장 기반 코디 추천 (SVG, F3)
+
+#### 로그인 사용자 (빈 옷장)
+- [ ] Given 로그��� + 빈 옷장, When 홈 접속, Then 일반 코디 추천 (Pexels 이미지) + "옷장 등록" 유도 배너
+
+#### 이미지
+- [ ] Given 일반 추천 아이템, When 표시, Then Pexels에서 검색한 패션 이미지 표시
+- [ ] Given 이미지 로드 실패, When 표시, Then SVG/emoji 폴백
+
+#### 캐시
+- [ ] Given 동일 날씨 조건, When 여러 사용자 접속, Then 캐시된 추천 재사용 (Gemini API 절약)
+- [ ] Given "다른 코디" 클릭, When 새 추천 생성, Then 캐시 무시 + 새 Gemini 호출
+
+### 기술 참고
+- 이미지 검색: Pexels API (무료, 200req/hour)
+- Edge Function: `recommend-general` (인증 불필요)
+- DB: `general_recommendations` 테이블 (date + weather_hash 키)
+- Gemini 프롬프트에 `searchQuery` 필드 추가 → Pexels 검색어로 활용
+- 기존 `recommend` Edge Function 변경 없음
+
+### DB 스키마 추가
+
+#### general_recommendations
+| 컬럼 | 타입 | 설명 |
+|------|------|------|
+| id | uuid PK | |
+| date | date | 추천 날짜 |
+| weather_hash | text | 날씨 조건 해시 (date_temp_condition) |
+| weather_data | jsonb | 날씨 정보 |
+| recommendation | jsonb | 추천 JSON (이미지 URL 포함) |
+| created_at | timestamptz | |
+
+---
+
 ## 페이지 구성
 
 ### 1. 랜딩/로그인 페이지
 - 앱 소개 + Google 로그인 버튼
 
-### 2. 메인 (오늘의 코디) 페이지
+### 2. 메인 (오늘의 코디) 페이지 — 공개 (비로그인 접근 가능)
 - 날씨 요약
-- A2UI 코디 추천 카드
+- 코디 추천 카드 (로그인: 옷장 기반 SVG / 비로그인: 일반 추천 + Pexels 이미지)
 - "다른 코디" 버튼
+- 유도 배너 (비로그인 → 로그인, 빈 옷장 → 옷장 등록)
 
 ### 3. 내 옷장 페이지
 - 카테고리별 옷 목록 (2depth: type > category)

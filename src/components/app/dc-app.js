@@ -75,7 +75,7 @@ export class DcApp extends LitElement {
 
     // 미인증 → 로그인 페이지
     const hash = window.location.hash.slice(1) || '/';
-    if (!this.#user.value && hash !== '/login') {
+    if (!this.#user.value && hash !== '/login' && hash !== '/') {
       window.location.hash = '/login';
       return html`<login-page></login-page>`;
     }

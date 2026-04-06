@@ -33,6 +33,32 @@ export async function getRecommendation(supabase) {
   }
 }
 
+export async function getGeneralRecommendation() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/recommend-general`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY },
+    });
+    const data = await res.json();
+    if (!res.ok) return { data: null, error: data };
+    return { data, error: null };
+  } catch (err) {
+    return { data: null, error: { message: err.message } };
+  }
+}
+
+export async function getGeneralRecommendationWithRefresh() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/recommend-general?refresh=true`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY },
+    });
+    const data = await res.json();
+    if (!res.ok) return { data: null, error: data };
+    return { data, error: null };
+  } catch (err) {
+    return { data: null, error: { message: err.message } };
+  }
+}
+
 export async function getRecommendationWithRefresh(supabase) {
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) return { data: null, error: { message: '인증 필요' } };

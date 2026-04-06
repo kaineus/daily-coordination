@@ -185,17 +185,26 @@ export class AppShell extends LitElement {
         <span class="desktop-brand">오늘 뭐 입지?</span>
         <nav class="desktop-nav">
           <a class="${this.#isActive('/')}" href="#/">오늘의 코디</a>
-          <a class="${this.#isActive('/closet')}" href="#/closet">내 옷장</a>
-          ${this.#role.value === 'admin' ? html`
-            <a class="${this.#isActive('/admin/categories')}" href="#/admin/categories">관리</a>
+          ${user ? html`
+            <a class="${this.#isActive('/closet')}" href="#/closet">내 옷장</a>
+            ${this.#role.value === 'admin' ? html`
+              <a class="${this.#isActive('/admin/categories')}" href="#/admin/categories">관리</a>
+            ` : ''}
           ` : ''}
         </nav>
         <div class="desktop-user">
-          ${this.#role.value === 'admin' ? html`<span class="admin-badge">ADMIN</span>` : ''}
-          <user-avatar name=${name} image-url=${meta.avatar_url ?? ''} size="1.75"></user-avatar>
-          <button class="logout-btn" @click=${this.#handleLogout}>
-            <span class="material-symbols-outlined">logout</span>
-          </button>
+          ${user ? html`
+            ${this.#role.value === 'admin' ? html`<span class="admin-badge">ADMIN</span>` : ''}
+            <user-avatar name=${name} image-url=${meta.avatar_url ?? ''} size="1.75"></user-avatar>
+            <button class="logout-btn" @click=${this.#handleLogout}>
+              <span class="material-symbols-outlined">logout</span>
+            </button>
+          ` : html`
+            <a class="nav-item" href="#/login" style="color: var(--dc-primary); font-weight: 600;">
+              <span class="material-symbols-outlined">login</span>
+              로그인
+            </a>
+          `}
         </div>
       </header>
 
@@ -207,16 +216,23 @@ export class AppShell extends LitElement {
           <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${this.#isActive('/') ? '1' : '0'}">light_mode</span>
           <span>코디</span>
         </a>
-        <a class="nav-item ${this.#isActive('/closet')}" href="#/closet">
-          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${this.#isActive('/closet') ? '1' : '0'}">checkroom</span>
-          <span>옷장</span>
-        </a>
-        ${this.#role.value === 'admin' ? html`
-          <a class="nav-item ${this.#isActive('/admin/categories')}" href="#/admin/categories">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${this.#isActive('/admin/categories') ? '1' : '0'}">admin_panel_settings</span>
-            <span>관리</span>
+        ${user ? html`
+          <a class="nav-item ${this.#isActive('/closet')}" href="#/closet">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${this.#isActive('/closet') ? '1' : '0'}">checkroom</span>
+            <span>옷장</span>
           </a>
-        ` : ''}
+          ${this.#role.value === 'admin' ? html`
+            <a class="nav-item ${this.#isActive('/admin/categories')}" href="#/admin/categories">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${this.#isActive('/admin/categories') ? '1' : '0'}">admin_panel_settings</span>
+              <span>관리</span>
+            </a>
+          ` : ''}
+        ` : html`
+          <a class="nav-item" href="#/login">
+            <span class="material-symbols-outlined">login</span>
+            <span>로그인</span>
+          </a>
+        `}
       </nav>
     `;
   }

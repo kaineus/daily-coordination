@@ -3,7 +3,8 @@ import { ContextConsumer } from '@lit/context';
 import { supabaseContext } from '../../contexts/supabase.context.js';
 import { StoreController } from '../../store/store-controller.js';
 import { recommendStore } from '../../store/recommend.store.js';
-import { getWeather, getRecommendation, getRecommendationWithRefresh } from '../../services/recommend.service.js';
+import { getWeather, getRecommendation, getRecommendationWithRefresh, getGeneralRecommendation, getGeneralRecommendationWithRefresh } from '../../services/recommend.service.js';
+import { authStore } from '../../store/auth.store.js';
 import { tokens } from '../../styles/tokens.css.js';
 import { reset } from '../../styles/reset.css.js';
 import { bp } from '../../styles/breakpoints.css.js';
@@ -20,6 +21,7 @@ export class HomePage extends LitElement {
   #weather = new StoreController(this, recommendStore, (s) => s.weather);
   #hourly = new StoreController(this, recommendStore, (s) => s.hourly);
   #recommendation = new StoreController(this, recommendStore, (s) => s.recommendation);
+  #mode = new StoreController(this, recommendStore, (s) => s.mode);
   #loading = new StoreController(this, recommendStore, (s) => s.loading);
   #error = new StoreController(this, recommendStore, (s) => s.error);
 
@@ -55,6 +57,29 @@ export class HomePage extends LitElement {
         font-weight: 600;
         color: var(--dc-text);
         margin-bottom: var(--dc-space-4);
+      }
+
+      .prompt-banner {
+        display: flex;
+        align-items: center;
+        gap: var(--dc-space-3);
+        padding: var(--dc-space-3) var(--dc-space-4);
+        background: rgba(193, 199, 210, 0.08);
+        backdrop-filter: blur(8px);
+        border-radius: var(--dc-radius-md);
+        font-size: var(--dc-font-body-sm);
+        color: var(--dc-text-secondary);
+        margin-top: var(--dc-space-4);
+      }
+      .prompt-banner .material-symbols-outlined {
+        font-size: 1.25rem;
+        color: var(--dc-secondary);
+      }
+      .prompt-link {
+        margin-left: auto;
+        color: var(--dc-primary);
+        font-weight: 600;
+        white-space: nowrap;
       }
 
       .error-box {
@@ -113,31 +138,63 @@ export class HomePage extends LitElement {
 
   async #loadData() {
     const sb = this.#supabase.value;
-    if (!sb) return;
     recommendStore.actions.setLoading(true);
 
-    const [weatherRes, recRes] = await Promise.all([
-      getWeather(),
-      getRecommendation(sb),
-    ]);
-
+    // 날씨는 항상 fetch (인증 불필요)
+    const weatherRes = await getWeather();
     if (weatherRes.data) recommendStore.actions.setWeather(weatherRes.data);
-    if (recRes.error) {
-      recommendStore.actions.setError(
-        recRes.error.code === 'EMPTY_CLOSET' ? 'EMPTY_CLOSET' : (recRes.error.message ?? recRes.error.error ?? '추천 실패')
-      );
-    } else if (recRes.data) {
-      recommendStore.actions.setRecommendation(recRes.data.recommendation);
-      if (recRes.data.weather && !weatherRes.data) recommendStore.actions.setWeather(recRes.data.weather);
+
+    const user = authStore.getState().user;
+
+    if (!user) {
+      // 비로그인 → 일반 추천
+      const res = await getGeneralRecommendation();
+      if (res.data) {
+        recommendStore.actions.setRecommendation(res.data.recommendation);
+        recommendStore.actions.setMode('general');
+        if (res.data.weather && !weatherRes.data) recommendStore.actions.setWeather(res.data.weather);
+      } else if (res.error) {
+        recommendStore.actions.setError(res.error.message ?? '추천 실패');
+      }
+    } else if (sb) {
+      // 로그인 → 옷장 기반 추천 시도
+      const recRes = await getRecommendation(sb);
+      if (recRes.error?.code === 'EMPTY_CLOSET') {
+        // 빈 옷장 → 일반 추천 폴백
+        const fallback = await getGeneralRecommendation();
+        if (fallback.data) {
+          recommendStore.actions.setRecommendation(fallback.data.recommendation);
+          recommendStore.actions.setMode('general');
+          if (fallback.data.weather && !weatherRes.data) recommendStore.actions.setWeather(fallback.data.weather);
+        } else {
+          recommendStore.actions.setError('EMPTY_CLOSET');
+        }
+      } else if (recRes.error) {
+        recommendStore.actions.setError(recRes.error.message ?? recRes.error.error ?? '추천 실패');
+      } else if (recRes.data) {
+        recommendStore.actions.setRecommendation(recRes.data.recommendation);
+        recommendStore.actions.setMode('closet');
+        if (recRes.data.weather && !weatherRes.data) recommendStore.actions.setWeather(recRes.data.weather);
+      }
     }
+
     recommendStore.actions.setLoading(false);
   }
 
   async #handleRefresh() {
-    const sb = this.#supabase.value;
-    if (!sb) return;
+    const mode = recommendStore.getState().mode;
     recommendStore.actions.setLoading(true);
-    const { data, error } = await getRecommendationWithRefresh(sb);
+
+    let result;
+    if (mode === 'general') {
+      result = await getGeneralRecommendationWithRefresh();
+    } else {
+      const sb = this.#supabase.value;
+      if (!sb) { recommendStore.actions.setLoading(false); return; }
+      result = await getRecommendationWithRefresh(sb);
+    }
+
+    const { data, error } = result;
     if (error) recommendStore.actions.setError(error.message ?? '추천 실패');
     else if (data) recommendStore.actions.setRecommendation(data.recommendation);
     recommendStore.actions.setLoading(false);
@@ -147,8 +204,10 @@ export class HomePage extends LitElement {
     const weather = this.#weather.value;
     const hourly = this.#hourly.value;
     const rec = this.#recommendation.value;
+    const mode = this.#mode.value;
     const loading = this.#loading.value;
     const error = this.#error.value;
+    const user = authStore.getState().user;
 
     if (loading) {
       return html`
@@ -185,7 +244,10 @@ export class HomePage extends LitElement {
                 @dc-navigate=${(e) => window.location.hash = e.detail.href}></empty-state>`
             : error
               ? html`<div class="error-box">${error}</div>`
-              : this.#renderOutfit(rec)
+              : html`
+                ${this.#renderOutfit(rec)}
+                ${mode === 'general' ? this.#renderPromptBanner(user) : ''}
+              `
           }
         </div>
       </div>
@@ -210,6 +272,25 @@ export class HomePage extends LitElement {
           wind-speed="${w.windSpeed ?? weather.windSpeed}m/s"
         ></weather-card>
       </section>
+    `;
+  }
+
+  #renderPromptBanner(user) {
+    if (user) {
+      return html`
+        <div class="prompt-banner">
+          <span class="material-symbols-outlined">checkroom</span>
+          <span>옷장에 옷을 등록하면 맞춤 코디를 받아보세요</span>
+          <a href="#/closet" class="prompt-link">옷장 가기</a>
+        </div>
+      `;
+    }
+    return html`
+      <div class="prompt-banner">
+        <span class="material-symbols-outlined">person</span>
+        <span>로그인하면 내 옷장 맞춤 코디를 받아보세요</span>
+        <a href="#/login" class="prompt-link">로그인</a>
+      </div>
     `;
   }
 
