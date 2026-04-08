@@ -85,6 +85,55 @@ PM은 **발신만** 하며, 수신은 각 역할의 산출물 디렉토리(`docs
 | `src/` | Developer | 소스 코드 |
 | `tests/` | Tester | 테스트 코드 |
 
+## LLM-Wiki 패턴 (지식 유지보수)
+
+Karpathy의 LLM-Wiki 패턴을 차용. 사람은 **결정·판단**, LLM은 **유지보수**를 담당한다.
+
+### 구조 매핑
+| 계층 | 파일/경로 | 역할 |
+|------|-----------|------|
+| 원본 소스 | `src/`, `git log`, `docs/handoff/archive/` | 불변, 읽기 전용 참조 |
+| 위키 | `docs/specs/`, `docs/design/`, `docs/test-plans/`, `docs/log.md` | LLM이 유지보수 |
+| 스키마 | `CLAUDE.md` (이 파일) | 사람+LLM 공동 진화 |
+
+### docs/log.md (프로젝트 내러티브 로그)
+- **append-only** — 과거 엔트리 수정 금지
+- git log와 **보완 관계**: git = 커밋 단위 / log.md = 세션·결정 단위
+- 모든 역할이 작성 가능 (PM, Designer, Developer, Tester)
+- 세션 종료 시 중요 사건 1~3줄 append
+
+**포맷**:
+```markdown
+## [YYYY-MM-DD] type | title
+(선택) 1~3줄 본문 — 결정 이유, 컨텍스트
+```
+
+**타입**:
+- `feat` — 기능 구현
+- `fix` — 버그 수정
+- `research` — 조사, 학습, 외부 자료 검토
+- `decision` — 방향 전환, 주요 결정
+- `handoff` — 세션 간 중요 인계
+- `lint` — 드리프트 점검 결과
+- `release` — 버전 릴리즈
+
+**언제 쓰나** (커밋 메시지로 충분한 건 제외):
+- 커밋에 안 담기는 **결정·연구·논의**
+- 방향 전환, 피벗, 트레이드오프
+- 외부 자료 검토 후 결론
+
+### /lint 커맨드 (드리프트 점검)
+- PM 세션 시작 시 권장 실행
+- `docs` vs `src` / `git log` / `tests` 간 모순 자동 탐지
+- 상세: `.claude/commands/lint.md`
+
+### 역할 분담 원칙
+- **Ingest** (새 정보 추가): **사람이 판단** — 코드 변경은 자동화 금지
+- **Query** (질의): LLM이 위키 읽고 답변
+- **Lint** (정리): **LLM이 실행** — 피로 없는 반복 작업
+
+---
+
 ## 폴더 구조
 ```
 daily-coordination/
@@ -92,6 +141,7 @@ daily-coordination/
 ├── .mcp.json
 ├── .claude/commands/    # 역할별 슬래시 커맨드
 ├── docs/
+│   ├── log.md           # 프로젝트 내러티브 로그 (append-only)
 │   ├── specs/           # PM 산출물
 │   ├── design/          # Designer 산출물
 │   │   └── screens/     # Stitch HTML/스크린샷
