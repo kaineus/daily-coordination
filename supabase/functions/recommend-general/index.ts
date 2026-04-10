@@ -30,15 +30,30 @@ async function fetchWeather(): Promise<any> {
 }
 
 async function searchImage(query: string): Promise<string | null> {
+  if (!PEXELS_API_KEY) {
+    console.error('[Pexels] PEXELS_API_KEY env var missing');
+    return null;
+  }
   try {
     const res = await fetch(
-      `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1&orientation=portrait`,
+      `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=5&orientation=portrait`,
       { headers: { Authorization: PEXELS_API_KEY } }
     );
-    if (!res.ok) return null;
+    if (!res.ok) {
+      const body = await res.text();
+      console.error(`[Pexels] ${res.status} for "${query}":`, body.slice(0, 200));
+      return null;
+    }
     const data = await res.json();
-    return data.photos?.[0]?.src?.medium ?? null;
-  } catch {
+    const photos = data.photos ?? [];
+    if (photos.length === 0) {
+      console.warn(`[Pexels] no photo for "${query}"`);
+      return null;
+    }
+    const portraitPhoto = photos.find((p: any) => p.height > p.width);
+    return (portraitPhoto ?? photos[0]).src.medium;
+  } catch (err) {
+    console.error(`[Pexels] fetch error for "${query}":`, err.message);
     return null;
   }
 }
@@ -54,15 +69,15 @@ async function callGemini(weather: any): Promise<any> {
 
 한국 패션 트렌드를 반영하여 오늘 날씨에 어울리는 코디를 추천해줘.
 구체적인 아이템명과 색상을 포함하고, 친근하게 추천 이유를 설명해줘.
-각 아이템에 이미지 검색용 searchQuery도 포함해줘 (한국어 패션 검색어).
+각 아이템에 Pexels 이미지 검색용 searchQuery도 포함해줘 (반드시 영어로, 예: "beige trench coat fashion").
 
 반드시 아래 JSON 형식으로만 응답:
 {
   "items": [
-    { "type": "아우터", "category": "트렌치코트", "color": "#D2B48C", "colorName": "베이지", "reason": "설명", "searchQuery": "베이지 트렌치코트 패션" }
+    { "type": "아우터", "category": "트렌치코트", "color": "#D2B48C", "colorName": "베이지", "reason": "설명", "searchQuery": "beige trench coat fashion" }
   ],
   "accessories": [
-    { "type": "액세서리", "category": "토트백", "color": "#4B3621", "colorName": "브라운", "reason": "설명", "searchQuery": "브라운 토트백 코디" }
+    { "type": "액세서리", "category": "토트백", "color": "#4B3621", "colorName": "브라운", "reason": "설명", "searchQuery": "brown tote bag outfit" }
   ],
   "summary": "전체 코디 요약 한 줄",
   "tip": "추가 스타일링 팁"
@@ -100,6 +115,7 @@ async function enrichWithImages(recommendation: any): Promise<any> {
     if (!items) return [];
     return Promise.all(
       items.map(async (item: any) => {
+        if (item.imageUrl) return item;
         const imageUrl = item.searchQuery
           ? await searchImage(item.searchQuery)
           : null;
@@ -144,9 +160,24 @@ Deno.serve(async (req: Request) => {
         .single();
 
       if (cached) {
+        let rec = cached.recommendation;
+
+        // 이미지 누락 아이템이 있으면 이미지만 재검색
+        const hasNullImage = [
+          ...(rec.items ?? []),
+          ...(rec.accessories ?? []),
+        ].some((item: any) => item.searchQuery && !item.imageUrl);
+
+        if (hasNullImage) {
+          rec = await enrichWithImages(rec);
+          await supabase.from('general_recommendations').update({
+            recommendation: rec,
+          }).eq('id', cached.id);
+        }
+
         return new Response(JSON.stringify({
           weather: cached.weather_data,
-          recommendation: cached.recommendation,
+          recommendation: rec,
           cached: true,
         }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
